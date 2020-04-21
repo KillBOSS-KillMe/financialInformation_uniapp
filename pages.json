@@ -1,0 +1,57 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "首页",
+				"enablePullDownRefresh": true,
+				// #ifdef H5
+				"navigationStyle": "custom",
+				// #endif
+				"app-plus": {
+					"bounce": "none",
+					"titleView": false
+				}
+			}
+		}
+	    ,{
+            "path" : "pages/news/news",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/user/user",
+            "style" : {}
+        }
+    ],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#FFFFFF",
+		"backgroundColor": "#FFFFFF"
+	},
+	"tabBar": {
+		"color": "#333333",
+		"selectedColor": "#265ED7",
+		"backgroundColor": "#FFFFFF",
+		// "borderStyle":"black",
+		"list": [{
+				"pagePath": "pages/index/index",
+				"text": "首页",
+				"iconPath": "./static/images/tabBar/home.png",
+				"selectedIconPath": "static/images/tabBar/home@selected.png"
+			},
+			{
+				"pagePath": "pages/news/news",
+				"text": "消息",
+				"iconPath": "static/images/tabBar/activity.png",
+				"selectedIconPath": "static/images/tabBar/activity@selected.png"
+			},
+			{
+				"pagePath": "pages/user/user",
+				"text": "我的",
+				"iconPath": "static/images/tabBar/user.png",
+				"selectedIconPath": "static/images/tabBar/user@selected.png"
+			}
+		]
+	}
+}
