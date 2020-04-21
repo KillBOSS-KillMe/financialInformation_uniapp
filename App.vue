@@ -67,8 +67,9 @@ text-overflow: ellipsis; -->
 <style lang="less">
 	@import url("/static/css/reset.css");
 	@import url("/static/css/icon.css");
+	// @import url("/static/css/variable.less");
 	page {
-	  background-color: #F1F1F1;
+	  background-color: #ffffff;
 	  width: 100vw;
 	  min-height: 100vh;
 	  height: auto;
@@ -148,6 +149,24 @@ text-overflow: ellipsis; -->
 	.iconfont {
 	  display: flex;
 	  align-items: center;
-	  justify-content: space-between;
+	  justify-content: center;
+	}
+	.titleModel {
+		width: 690rpx;
+		height: 36rpx;
+		margin: 30rpx;
+		font-size: 32rpx;
+		font-weight: 700;
+		color: #343434;
+		display: flex;
+		align-items: center;
+		justify-content: flex-start;
+		view {
+			width: 10rpx;
+			height: 36rpx;
+			border-radius: 5rpx;
+			background-color: #265ED7;
+			margin-right: 10rpx;
+		}
 	}
 </style>
