@@ -16,7 +16,7 @@
 			<view class="item">
 				<image src="../../static/images/test.png" mode=""></image>
 				<view class="info">
-					<view class="Details">
+					<view class="details">
 						<view>李莉 / 交通银行</view>
 						<text>西安甜水井街支行客户经理</text>
 					</view>
@@ -26,7 +26,7 @@
 			<view class="item">
 				<image src="../../static/images/test.png" mode=""></image>
 				<view class="info">
-					<view class="Details">
+					<view class="details">
 						<view>李莉 / 交通银行</view>
 						<text>西安甜水井街支行客户经理</text>
 					</view>
@@ -38,7 +38,22 @@
 			<view></view>最新资讯
 		</view>
 		<view class="articleList">
-			最新资讯LIst
+			<view class="item">
+				<icon class="iconfont iconchongzhi"></icon>
+				<view class="info">
+					<view class="details">
+						<view class="title">一个科技爱好者的EDC和桌面</view>
+						<view>西安甜水井街支行客户经理西安甜水井街支行客户经理西安甜水井街支行客户经理西安甜水井街支行客户经理西安甜水井街支行客户经理</view>
+					</view>
+					<view class="features">
+						<view>会飞的鱼</view>
+						<view>
+							<icon class="iconfont iconchongzhi"></icon>
+							<text>4小时</text>
+						</view>
+					</view>
+				</view>
+			</view>
 		</view>
 	</view>
 
@@ -102,8 +117,6 @@
 	.managerList, .articleList {
 		width: 750rpx;
 		height: auto;
-	}
-	.managerList {
 		.item {
 			width: 630rpx;
 			height: 170rpx;
@@ -115,6 +128,10 @@
 			justify-content: space-between;
 			background-color: #ffffff;
 			box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+		}
+	}
+	.managerList {
+		.item {
 			image {
 				width: 140rpx;
 				height: 100%;
@@ -127,7 +144,7 @@
 				align-items: flex-start;
 				justify-content: space-between;
 				flex-direction: column;
-				.Details {
+				.details {
 					view {
 						font-size: @fontSize_1;
 						font-weight: @mainFontWeight;
@@ -154,6 +171,67 @@
 				}
 				.noActive {
 					background-color: @themeColor_2;
+				}
+			}
+		}
+	}
+	.articleList {
+		.item {
+			align-items: flex-start !important;
+			.iconfont {
+				width: 30rpx;
+				height: 30rpx;
+				font-size: @fontSize_2;
+				color: @themeColor_1;
+			}
+			.info {
+				width: 590rpx;
+				height: 100%;
+				display: flex;
+				align-items: flex-start;
+				justify-content: space-between;
+				flex-direction: column;
+				.details {
+					width: 100%;
+					.title {
+						width: 100%;
+						font-size: @fontSize_1;
+						font-weight: @mainFontWeight;
+						color: @fontColor_1;
+						margin-bottom: 10rpx;
+						padding-bottom: 10rpx;
+						border-bottom: 1rpx solid @borderColor_1;
+						-webkit-line-clamp: 1;
+					}
+					view {
+						line-height: @fontSize_1;
+						font-size: @fontSize_2;
+						color: @fontColor_3;
+						overflow : hidden;
+						text-overflow: ellipsis;
+						display: -webkit-box;
+						-webkit-line-clamp: 2;
+						-webkit-box-orient: vertical;
+					}
+				}
+				.features {
+					width: 100%;
+					display: flex;
+					align-items: center;
+					justify-content: flex-end;
+					view {
+						margin-left: 30rpx;
+						font-size: @fontSize_2;
+						color: @fontColor_2;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+					}
+					.iconfont {
+						font-size: @fontSize_2;
+						color: @fontColor_2;
+						margin-right: 10rpx;
+					}
 				}
 			}
 		}
