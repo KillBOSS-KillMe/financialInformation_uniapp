@@ -132,7 +132,11 @@
 			}
 		}
 
-	],
+	    ,{
+            "path" : "pages/userVIP/userVIP",
+            "style" : {}
+        }
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "金融咨询",

@@ -9,7 +9,8 @@
     "pages/sysNews/sysNews",
     "pages/newsChat/newsChat",
     "pages/userAttention/userAttention",
-    "pages/userQualification/userQualification"
+    "pages/userQualification/userQualification",
+    "pages/userVIP/userVIP"
   ],
   "subPackages": [],
   "window": {
