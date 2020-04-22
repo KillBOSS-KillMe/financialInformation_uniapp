@@ -10,7 +10,8 @@
     "pages/newsChat/newsChat",
     "pages/userAttention/userAttention",
     "pages/userQualification/userQualification",
-    "pages/userVIP/userVIP"
+    "pages/userVIP/userVIP",
+    "pages/certification/certification"
   ],
   "subPackages": [],
   "window": {

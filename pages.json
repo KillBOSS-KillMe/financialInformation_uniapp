@@ -130,13 +130,34 @@
 					"titleView": false
 				}
 			}
+		}, {
+			"path": "pages/userVIP/userVIP",
+			"style": {
+				"navigationBarTitleText": "我的会员",
+				"enablePullDownRefresh": true,
+				// #ifdef H5
+				"navigationStyle": "custom",
+				// #endif
+				"app-plus": {
+					"bounce": "none",
+					"titleView": false
+				}
+			}
+		}, {
+			"path": "pages/certification/certification",
+			"style": {
+				"navigationBarTitleText": "资质认证",
+				"enablePullDownRefresh": true,
+				// #ifdef H5
+				"navigationStyle": "custom",
+				// #endif
+				"app-plus": {
+					"bounce": "none",
+					"titleView": false
+				}
+			}
 		}
-
-	    ,{
-            "path" : "pages/userVIP/userVIP",
-            "style" : {}
-        }
-    ],
+	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "金融咨询",
