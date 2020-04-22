@@ -3,12 +3,13 @@
     "pages/index/index",
     "pages/news/news",
     "pages/user/user",
-    "pages/IdentitySel/IdentitySel"
+    "pages/IdentitySel/IdentitySel",
+    "pages/managerDetails/managerDetails"
   ],
   "subPackages": [],
   "window": {
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "uni-app",
+    "navigationBarTitleText": "金融咨询",
     "navigationBarBackgroundColor": "#FFFFFF",
     "backgroundColor": "#FFFFFF"
   },

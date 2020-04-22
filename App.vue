@@ -169,4 +169,16 @@ text-overflow: ellipsis; -->
 			margin-right: 10rpx;
 		}
 	}
+	.pageTopBorder {
+		width: 750rpx;
+		height: auto;
+		background-color: #265ED7;
+		padding-top: 10rpx;
+		.content {
+			width: 100%;
+			border-radius: 20rpx 20rpx 0 0;
+			background-color: #fff;
+			padding-top: 30rpx;
+		}
+	}
 </style>

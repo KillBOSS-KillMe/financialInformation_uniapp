@@ -52,11 +52,24 @@
 					"titleView": false
 				}
 			}
+		}, {
+			"path": "pages/managerDetails/managerDetails",
+			"style": {
+				"navigationBarTitleText": "个人主页",
+				"enablePullDownRefresh": true,
+				// #ifdef H5
+				"navigationStyle": "custom",
+				// #endif
+				"app-plus": {
+					"bounce": "none",
+					"titleView": false
+				}
+			}
 		}
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app",
+		"navigationBarTitleText": "金融咨询",
 		"navigationBarBackgroundColor": "#FFFFFF",
 		"backgroundColor": "#FFFFFF"
 	},
