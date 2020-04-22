@@ -8,7 +8,8 @@
     "pages/informationDetails/informationDetails",
     "pages/sysNews/sysNews",
     "pages/newsChat/newsChat",
-    "pages/userAttention/userAttention"
+    "pages/userAttention/userAttention",
+    "pages/userQualification/userQualification"
   ],
   "subPackages": [],
   "window": {
