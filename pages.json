@@ -178,8 +178,8 @@
 			{
 				"pagePath": "pages/news/news",
 				"text": "消息",
-				"iconPath": "static/images/tabBar/activity.png",
-				"selectedIconPath": "static/images/tabBar/activity@selected.png"
+				"iconPath": "static/images/tabBar/news.png",
+				"selectedIconPath": "static/images/tabBar/news@selected.png"
 			},
 			{
 				"pagePath": "pages/user/user",
