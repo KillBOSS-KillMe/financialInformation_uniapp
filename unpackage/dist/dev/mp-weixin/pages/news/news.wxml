@@ -1,1 +1,1 @@
-<view></view>
+<view class="pageTopBorder"><view class="content"><block wx:for="{{20}}" wx:for-item="item" wx:for-index="index" wx:key="index"><view class="item"><view class="info"><image src="../../static/images/test.png" mode></image><view class="con"><view>系统通知</view><text>客服消息为您推送两条新的信息</text></view></view><icon class="iconfont iconchongzhi"></icon></view></block></view></view>
