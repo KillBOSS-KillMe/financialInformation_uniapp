@@ -159,7 +159,7 @@
   font-weight: 800;
   color: #343434;
   margin-bottom: 10rpx;
-  padding-bottom: 10rpx;
+  padding-bottom: 20rpx;
   border-bottom: 1rpx solid #B5B5B5;
   -webkit-line-clamp: 1;
 }

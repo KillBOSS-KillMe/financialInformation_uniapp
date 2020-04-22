@@ -199,7 +199,7 @@
 						font-weight: @mainFontWeight;
 						color: @fontColor_1;
 						margin-bottom: 10rpx;
-						padding-bottom: 10rpx;
+						padding-bottom: 20rpx;
 						border-bottom: 1rpx solid @borderColor_1;
 						-webkit-line-clamp: 1;
 					}

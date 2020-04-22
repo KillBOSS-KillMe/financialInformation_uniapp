@@ -2,7 +2,8 @@
   "pages": [
     "pages/index/index",
     "pages/news/news",
-    "pages/user/user"
+    "pages/user/user",
+    "pages/IdentitySel/IdentitySel"
   ],
   "subPackages": [],
   "window": {
@@ -36,6 +37,5 @@
       }
     ]
   },
-  "usingComponents": {},
-  "sitemapLocation": "sitemap16.json"
+  "usingComponents": {}
 }
