@@ -1,0 +1,90 @@
+.content {
+  width: 690rpx;
+  height: auto;
+  padding: 30rpx;
+}
+.item {
+  wwidth: 630rpx;
+  padding: 30rpx;
+  margin: 30rpx 0;
+  border-radius: 10rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+}
+.item image {
+  width: 140rpx;
+  height: 170rpx;
+  border-radius: 10rpx;
+}
+.item .info {
+  width: 460rpx;
+  height: 170rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+          align-items: flex-start;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+}
+.item .info .con {
+  width: 536rpx;
+  height: 64rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+          align-items: flex-start;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+}
+.item .info .con view {
+  font-size: 29rpx;
+  font-weight: 800;
+  color: #343434;
+}
+.item .info .con text {
+  font-size: 25rpx;
+  color: #666666;
+}
+.item .info button {
+  width: 140rpx;
+  height: 50rpx;
+  border-radius: 10rpx;
+  color: #fff;
+  font-size: 25rpx;
+  background-color: #81A7F9;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+}
+.item .info .active {
+  background-color: #265ED7;
+}
+

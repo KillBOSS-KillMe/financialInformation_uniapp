@@ -7,7 +7,8 @@
     "pages/managerDetails/managerDetails",
     "pages/informationDetails/informationDetails",
     "pages/sysNews/sysNews",
-    "pages/newsChat/newsChat"
+    "pages/newsChat/newsChat",
+    "pages/userAttention/userAttention"
   ],
   "subPackages": [],
   "window": {
