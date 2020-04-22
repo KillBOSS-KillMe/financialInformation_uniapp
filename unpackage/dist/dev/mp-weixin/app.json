@@ -5,7 +5,8 @@
     "pages/user/user",
     "pages/IdentitySel/IdentitySel",
     "pages/managerDetails/managerDetails",
-    "pages/informationDetails/informationDetails"
+    "pages/informationDetails/informationDetails",
+    "pages/sysNews/sysNews"
   ],
   "subPackages": [],
   "window": {

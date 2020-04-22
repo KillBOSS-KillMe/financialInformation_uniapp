@@ -1,0 +1,153 @@
+.content {
+  width: 690rpx;
+  padding: 30rpx;
+}
+.articleTitle,
+.articleTitle,
+.articleTitle,
+.articleTitle,
+.articleTitle {
+  width: 100%;
+}
+.articleTitle {
+  font-size: 32rpx;
+  font-weight: 800;
+  color: #343434;
+}
+.articleInfo {
+  font-size: 25rpx;
+  color: #898989;
+  padding: 30rpx 0;
+}
+.articleInfo text {
+  margin-right: 20rpx;
+}
+.articleContent {
+  font-size: 29rpx;
+  color: #666666;
+  border-bottom: 20rpx solid #F8F8F8;
+}
+.articleCommentList {
+  margin-bottom: 110rpx;
+}
+.articleCommentList .item {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+          align-items: flex-start;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+  padding: 30rpx 0;
+  border-bottom: 1rpx solid #EEEEEE;
+}
+.articleCommentList .item image {
+  width: 66rpx;
+  height: 66rpx;
+  border-radius: 66rpx;
+}
+.articleCommentList .item .comment {
+  width: 594rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+}
+.articleCommentList .item .comment .name,
+.articleCommentList .item .comment .commentCon,
+.articleCommentList .item .comment .features {
+  width: 100%;
+}
+.articleCommentList .item .comment .name {
+  font-size: 25rpx;
+  color: #898989;
+}
+.articleCommentList .item .comment .commentCon {
+  font-size: 25rpx;
+  color: #666666;
+  padding: 30rpx 0;
+}
+.articleCommentList .item .comment .features {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+  font-size: 25rpx;
+  color: #898989;
+}
+.articleCommentList .item .comment .features view {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+}
+.articleCommentList .item .comment .features view .iconfont {
+  font-size: 25rpx;
+  color: #81A7F9;
+  margin-right: 10rpx;
+}
+.articleCommentList .item .comment .features view .active {
+  color: #265ED7 !important;
+}
+.articleComment {
+  position: fixed;
+  left: 30rpx;
+  bottom: 0;
+  width: 690rpx;
+  height: auto;
+  padding: 30rpx 0;
+  background-color: #fff;
+}
+.articleComment .con {
+  width: 100%;
+  height: auto;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+}
+.articleComment .con button {
+  width: 166rpx;
+  height: 60rpx;
+  border-radius: 60rpx;
+  background-color: #265ED7;
+  font-size: 25rpx;
+  color: #fff;
+}
+.articleComment .con input {
+  width: 434rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  font-size: 25rpx;
+  padding: 0 30rpx;
+  border-radius: 60rpx;
+  background-color: #F8F8F8;
+}
+
