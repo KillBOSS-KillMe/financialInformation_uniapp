@@ -1,6 +1,6 @@
 <template>
-	<view scroll-y="true" class="pageTopBorder">
-		<scroll-view  class="content">
+	<view class="pageTopBorder">
+		<scroll-view scroll-y="true" class="content">
 			<view class="item1" v-for="(item,index) in 20" :key="index">
 				<image src="../../static/images/test.png" mode=""></image>
 				<view class="info">我想咨询一下银行现在对于个人贷款这块有什么政策？</view>
@@ -15,7 +15,6 @@
 				<input type="text" value="" placeholder="请填写您的评论信息" />
 				<button type="default">发送</button>
 			</view>
-			
 		</view>
 	</view>
 </template>

@@ -1,0 +1,70 @@
+.userInfo {
+  width: 750rpx;
+  height: 285rpx;
+  background-color: #265ED7;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+          justify-content: flex-end;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+}
+.userInfo image {
+  width: 89rpx;
+  height: 89rpx;
+  border-radius: 89rpx;
+}
+.userInfo text {
+  font-size: 29rpx;
+  font-weight: 800;
+  color: #fff;
+  padding: 20rpx 0;
+}
+.content {
+  width: 690rpx;
+  height: auto;
+  padding: 30rpx;
+}
+.content .item {
+  width: 100%;
+  padding: 30rpx 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+}
+.content .item view {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+          justify-content: flex-start;
+  font-size: 29rpx;
+  color: #343434;
+}
+.content .item view .iconfont {
+  margin-right: 20rpx;
+  font-size: 29rpx;
+  color: #265ED7;
+}
+.content .item .iconfont {
+  font-size: 29rpx;
+  color: 25rpx;
+}
+
