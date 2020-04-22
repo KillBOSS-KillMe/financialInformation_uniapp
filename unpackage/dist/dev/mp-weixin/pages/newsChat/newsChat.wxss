@@ -1,0 +1,100 @@
+scroll-view {
+  height: 100vh;
+}
+.content {
+  width: 690rpx;
+  height: auto;
+  padding: 30rpx;
+  padding-bottom: 110rpx;
+}
+.content .item1,
+.content .item2 {
+  width: 100%;
+  height: auto;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+          align-items: flex-start;
+  padding: 30rpx 0;
+}
+.content .item1 image,
+.content .item2 image {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 64rpx;
+}
+.content .item1 .info,
+.content .item2 .info {
+  width: auto;
+  max-width: 442rpx;
+  font-size: 25rpx;
+  padding: 30rpx;
+}
+.content .item1 {
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+          justify-content: flex-start;
+}
+.content .item1 image {
+  margin-right: 30rpx;
+}
+.content .item1 .info {
+  color: #343434;
+  border-radius: 0 20rpx 20rpx 20rpx;
+  background-color: #F8F8F8;
+}
+.content .item2 {
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+          justify-content: flex-end;
+}
+.content .item2 image {
+  margin-left: 30rpx;
+}
+.content .item2 .info {
+  color: #fff;
+  border-radius: 20rpx 0 20rpx 20rpx;
+  background-color: #265ED7;
+}
+.sendMessage {
+  position: fixed;
+  left: 30rpx;
+  bottom: 0;
+  width: 690rpx;
+  height: auto;
+  padding: 30rpx 0;
+  background-color: #fff;
+}
+.sendMessage .con {
+  width: 100%;
+  height: auto;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+}
+.sendMessage .con button {
+  width: 166rpx;
+  height: 60rpx;
+  border-radius: 60rpx;
+  background-color: #265ED7;
+  font-size: 25rpx;
+  color: #fff;
+}
+.sendMessage .con input {
+  width: 434rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  font-size: 25rpx;
+  padding: 0 30rpx;
+  border-radius: 60rpx;
+  background-color: #F8F8F8;
+}
+

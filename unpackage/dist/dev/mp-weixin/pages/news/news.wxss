@@ -1,5 +1,6 @@
 .content {
   width: 690rpx;
+  height: auto;
   padding: 30rpx;
 }
 .item {

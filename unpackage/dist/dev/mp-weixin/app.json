@@ -6,7 +6,8 @@
     "pages/IdentitySel/IdentitySel",
     "pages/managerDetails/managerDetails",
     "pages/informationDetails/informationDetails",
-    "pages/sysNews/sysNews"
+    "pages/sysNews/sysNews",
+    "pages/newsChat/newsChat"
   ],
   "subPackages": [],
   "window": {

@@ -1,6 +1,6 @@
 <template>
-	<view class="pageTopBorder">
-		<view class="content">
+	<view scroll-y="true" class="pageTopBorder">
+		<scroll-view  class="content">
 			<view class="item" v-for="(item,index) in 20" :key="index">
 				<view class="info">
 					<image src="../../static/images/test.png" mode=""></image>
@@ -11,7 +11,7 @@
 				</view>
 				<icon class="iconfont iconchongzhi"></icon>
 			</view>
-		</view>
+		</scroll-view>
 	</view>
 </template>
 
@@ -29,6 +29,7 @@
 	@import url("../../static/css/variable.less");
 	.content {
 		width: 690rpx;
+		height: auto;
 		padding: 30rpx;
 	}
 	.item {
