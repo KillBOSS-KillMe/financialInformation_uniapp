@@ -160,7 +160,7 @@
   color: #343434;
   margin-bottom: 10rpx;
   padding-bottom: 20rpx;
-  border-bottom: 1rpx solid #B5B5B5;
+  border-bottom: 1rpx solid #EEEEEE;
   -webkit-line-clamp: 1;
 }
 .articleList .item .info .details view {

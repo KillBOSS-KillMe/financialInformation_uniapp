@@ -65,6 +65,19 @@
 					"titleView": false
 				}
 			}
+		}, {
+			"path": "pages/informationDetails/informationDetails",
+			"style": {
+				"navigationBarTitleText": "咨询详情",
+				"enablePullDownRefresh": true,
+				// #ifdef H5
+				"navigationStyle": "custom",
+				// #endif
+				"app-plus": {
+					"bounce": "none",
+					"titleView": false
+				}
+			}
 		}
 	],
 	"globalStyle": {

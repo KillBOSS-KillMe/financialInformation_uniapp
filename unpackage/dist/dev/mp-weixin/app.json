@@ -4,7 +4,8 @@
     "pages/news/news",
     "pages/user/user",
     "pages/IdentitySel/IdentitySel",
-    "pages/managerDetails/managerDetails"
+    "pages/managerDetails/managerDetails",
+    "pages/informationDetails/informationDetails"
   ],
   "subPackages": [],
   "window": {
