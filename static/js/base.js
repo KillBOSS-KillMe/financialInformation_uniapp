@@ -43,37 +43,38 @@ class Base {
 		// var token_type = '';
 		// that.get_storage('token', (res) => {
 		// 	token = res;
-			// that.get_storage('token_type', (res) => {
-				// token_type = res;
-				uni.request({
-					url: url,
-					data: params.data || {},
-					header: {
-						'content-type': 'application/json',
-						// 'apikey': that.apikey,
-						// 'Authorization': token_type + ' ' + token
-					},
-					method: params.method || 'GET',
-					success: function (ret) {
-						ret = that.null2str(ret);
-						var code = ret.statusCode.toString().charAt(0);
-						if (code == '2' || code == '4' || code == '5') {
-							that.hide_loading();
-							// token实效,更新token
-							// if (ret.data.status_code == 500) {
-							// 	that.refresh_token(params); return;
-							// }
-							// 返回请求到的数据
-							params.sCallBack && params.sCallBack(ret); return;
-						}
-					},
-					fail: function (err) {
-						// that.remove_storage('token');
-						// that.remove_storage('token_type');
-						that.hide_loading();
-					}
-				})
-			// })
+		// that.get_storage('token_type', (res) => {
+		// token_type = res;
+		uni.request({
+			url: url,
+			data: params.data || {},
+			header: {
+				'content-type': 'application/json',
+				// 'apikey': that.apikey,
+				// 'Authorization': token_type + ' ' + token
+			},
+			method: params.method || 'GET',
+			success: function(ret) {
+				ret = that.null2str(ret);
+				var code = ret.statusCode.toString().charAt(0);
+				if (code == '2' || code == '4' || code == '5') {
+					that.hide_loading();
+					// token实效,更新token
+					// if (ret.data.status_code == 500) {
+					// 	that.refresh_token(params); return;
+					// }
+					// 返回请求到的数据
+					params.sCallBack && params.sCallBack(ret);
+					return;
+				}
+			},
+			fail: function(err) {
+				// that.remove_storage('token');
+				// that.remove_storage('token_type');
+				that.hide_loading();
+			}
+		})
+		// })
 		// })
 	}
 	//图片上传
@@ -88,33 +89,54 @@ class Base {
 				token_type = res;
 				uni.chooseImage({
 					count: count,
-					success: function (res) {
+					success: function(res) {
 						console.log(res.tempFilePaths)
-						for (var i = 0; i < res.tempFilePaths.length; i++) {
-							that.show_loading('上传中...');
-							uni.uploadFile({
-								url: url,
-								filePath: res.tempFilePaths[i],
-								name: 'qrcode',
-								header: {
-									'apikey': that.apikey,
-									'Authorization': token_type + ' ' + token
-								},
-								success: function (uploadFileRes) {
-									var data = JSON.parse(uploadFileRes.data);
-									// var data = uploadFileRes;
-									that.hide_loading();
-									// token实效,更新token
-									if (data.status_code == 500) {
-										that.refresh_token(count); return;
+						that.show_loading('上传中...');
+						Promise.all(res.tempFiles.map(item => {
+							return new Promise((resolve, reject) => {
+								wx.uploadFile({
+									url: `${self.globalData.requestUrl}/work/upload_file`,
+									filePath: item.path,
+									name: 'qrcode',
+									success(res) {
+										resolve({
+											path: JSON.parse(res.data).data
+										})
 									}
-									console.log(data)
-									data.data = that.base_image_url + data.data
-									// 返回请求到的数据
-									count.sCallBack && count.sCallBack(data); return;
-								}
-							});
-						}
+								})
+							})
+						})).then(e => {
+							that.hide_loading();
+							count.sCallBack && count.sCallBack(e); return;
+							// that.setData({
+							// 	imgArr: imgArr.concat(e)
+							// })
+						}).catch(err => console.log(err))
+						// for (var i = 0; i < res.tempFilePaths.length; i++) {
+						// 	that.show_loading('上传中...');
+						// 	uni.uploadFile({
+						// 		url: url,
+						// 		filePath: res.tempFilePaths[i],
+						// 		name: 'qrcode',
+						// 		header: {
+						// 			'apikey': that.apikey,
+						// 			'Authorization': token_type + ' ' + token
+						// 		},
+						// 		success: function (uploadFileRes) {
+						// 			var data = JSON.parse(uploadFileRes.data);
+						// 			// var data = uploadFileRes;
+						// 			that.hide_loading();
+						// 			// token实效,更新token
+						// 			if (data.status_code == 500) {
+						// 				that.refresh_token(count); return;
+						// 			}
+						// 			console.log(data)
+						// 			data.data = that.base_image_url + data.data
+						// 			// 返回请求到的数据
+						// 			count.sCallBack && count.sCallBack(data); return;
+						// 		}
+						// 	});
+						// }
 					}
 				});
 			})
@@ -126,14 +148,14 @@ class Base {
 		that.request({
 			url: 'auth/refresh',
 			method: 'POST',
-			sCallBack: function (res) {
+			sCallBack: function(res) {
 				// console.log('+++++++++++++++++++++11111111111111+++++++++++++++++++')
 				// console.log(res)
 				if (res.status_code == 'ok') {
 					// that.set_storage('token', res.data.data.token);
 					// that.set_storage('token_type', res.data.data.token_type);
-					that.set_storage('token',res.access_token);
-					that.set_storage('token_type',res.token_type);
+					that.set_storage('token', res.access_token);
+					that.set_storage('token_type', res.token_type);
 				} else {
 					that.remove_storage('token');
 					that.remove_storage('token_type');
@@ -171,12 +193,12 @@ class Base {
 	get_storage(key, callBack) {
 		uni.getStorage({
 			key: key,
-			success: function (res) {
+			success: function(res) {
 				console.log('|+|+|+|+|+|||||||||||||||||||||||||||||||||||||')
 				console.log(res)
 				callBack(res.data);
 			},
-			fail: function (e) {
+			fail: function(e) {
 				console.log('|||||||||||||||||||||||||||||||||||||+|+|+|+|+|')
 				callBack('');
 			}
@@ -196,7 +218,7 @@ class Base {
 			content: params.content || '网络错误...',
 			showCancel: params.showCancel === false ? false : true,
 			cancelText: params.cancelText || '取消',
-			success: function (res) {
+			success: function(res) {
 				callBack(res);
 			}
 		});
@@ -290,7 +312,7 @@ class Base {
 						return this.null2str(z)
 					})
 				}
-				if(typeof(data[x]) === 'object'){ // 是json 递归继续处理
+				if (typeof(data[x]) === 'object') { // 是json 递归继续处理
 					data[x] = this.null2str(data[x])
 				}
 			}

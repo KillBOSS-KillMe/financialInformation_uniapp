@@ -9002,7 +9002,8 @@ Base = /*#__PURE__*/function () {
             // 	that.refresh_token(params); return;
             // }
             // 返回请求到的数据
-            params.sCallBack && params.sCallBack(ret);return;
+            params.sCallBack && params.sCallBack(ret);
+            return;
           }
         },
         fail: function fail(err) {
@@ -9028,31 +9029,52 @@ Base = /*#__PURE__*/function () {
             count: count,
             success: function success(res) {
               console.log(res.tempFilePaths);
-              for (var i = 0; i < res.tempFilePaths.length; i++) {
-                that.show_loading('上传中...');
-                uni.uploadFile({
-                  url: url,
-                  filePath: res.tempFilePaths[i],
-                  name: 'qrcode',
-                  header: {
-                    'apikey': that.apikey,
-                    'Authorization': token_type + ' ' + token },
+              that.show_loading('上传中...');
+              Promise.all(res.tempFiles.map(function (item) {
+                return new Promise(function (resolve, reject) {
+                  wx.uploadFile({
+                    url: "".concat(self.globalData.requestUrl, "/work/upload_file"),
+                    filePath: item.path,
+                    name: 'qrcode',
+                    success: function success(res) {
+                      resolve({
+                        path: JSON.parse(res.data).data });
 
-                  success: function success(uploadFileRes) {
-                    var data = JSON.parse(uploadFileRes.data);
-                    // var data = uploadFileRes;
-                    that.hide_loading();
-                    // token实效,更新token
-                    if (data.status_code == 500) {
-                      that.refresh_token(count);return;
-                    }
-                    console.log(data);
-                    data.data = that.base_image_url + data.data;
-                    // 返回请求到的数据
-                    count.sCallBack && count.sCallBack(data);return;
-                  } });
+                    } });
 
-              }
+                });
+              })).then(function (e) {
+                that.hide_loading();
+                count.sCallBack && count.sCallBack(e);return;
+                // that.setData({
+                // 	imgArr: imgArr.concat(e)
+                // })
+              }).catch(function (err) {return console.log(err);});
+              // for (var i = 0; i < res.tempFilePaths.length; i++) {
+              // 	that.show_loading('上传中...');
+              // 	uni.uploadFile({
+              // 		url: url,
+              // 		filePath: res.tempFilePaths[i],
+              // 		name: 'qrcode',
+              // 		header: {
+              // 			'apikey': that.apikey,
+              // 			'Authorization': token_type + ' ' + token
+              // 		},
+              // 		success: function (uploadFileRes) {
+              // 			var data = JSON.parse(uploadFileRes.data);
+              // 			// var data = uploadFileRes;
+              // 			that.hide_loading();
+              // 			// token实效,更新token
+              // 			if (data.status_code == 500) {
+              // 				that.refresh_token(count); return;
+              // 			}
+              // 			console.log(data)
+              // 			data.data = that.base_image_url + data.data
+              // 			// 返回请求到的数据
+              // 			count.sCallBack && count.sCallBack(data); return;
+              // 		}
+              // 	});
+              // }
             } });
 
         });
