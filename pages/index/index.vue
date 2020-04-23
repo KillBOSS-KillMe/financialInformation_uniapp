@@ -60,20 +60,151 @@
 </template>
 
 <script>
+	import Index from "./index-model.js";
+	const index = new Index();
 	export default {
 		data() {
 			return {
+				options: {},
+				title: 'Hello',
+				authorizationButton: null,
+				userInfo: {},
+				userInfoAll: {},
+				// 轮播图相关
 				indicatorDots: true,
 				autoplay: true,
 				interval: 2000,
-				duration: 500
+				duration: 500,
 			}
 		},
-		onLoad() {
-
+		onLoad(options) {
+			const that = this
+			that.options = options
+			that._onLoad()
+		},
+		onShow() {
+			// 获取已授权类别
+			const that = this
+			uni.getSetting({
+				success(res) {
+					if (res.authSetting['scope.userInfo']) {
+						// 隐藏授权按钮
+						that.authorizationButton = false;
+						that.$store.commit('updateAuthorizationButtonData', false);
+					}
+				},
+				fail() {
+					console.log("获取授权信息授权失败")
+				}
+			})
+			// let token = index.get_storage('token_type', callBack);
+			// if(token) {
+			// 	that.getUserInfo(() => {
+			// 		that.getRunData(() => {
+			// 			callBack && callBack();
+			// 		})
+			// 	})
+			// }
 		},
 		methods: {
-
+			_onLoad(callBack) {
+				const that = this
+				that.userInfo = that.$store.state.userInfo;
+				that.wx_login(() => {
+					that.getUserInfo(() => {
+						if (that.userInfo.type == 'member') {
+							
+						} else {
+							// 提示用户非会员
+							that.promptOpenVip()
+						}
+					})
+				})
+			},
+			wx_login(callBack) {
+				const that = this;
+				that.authorizationButton = that.$store.state.authorizationButton;
+				uni.login({
+					provider: 'weixin',
+					success: function(loginRes) {
+						var code = loginRes.code;
+						uni.getUserInfo({
+							provider: 'weixin',
+							success: function(infoRes) {
+								that.userInfoAll = infoRes
+								that.$store.commit('updateUserInfo', that.userInfo);
+								that.$store.commit('updateAuthorizationButtonData', false);
+								index.login({
+									code: code,
+									share_id: that.options.id,
+									headimgurl: infoRes.userInfo.avatarUrl,
+									nickname: infoRes.userInfo.nickName,
+									sex: infoRes.userInfo.gender
+								}, (res) => {
+									if (res.status_code == 'ok') {
+										index.set_storage('token', res.access_token);
+										index.set_storage('token_type', res.token_type);
+									}
+									callBack && callBack();
+								})
+							}
+						})
+					}
+				});
+			},
+			// 用户信息获取
+			getUserInfo(callBack) {
+				const that = this
+				index.getUserInfo({}, (res) => {
+					if (res.status_code == 'ok') {
+						let userInfo = that.$store.state.userInfo;
+						that.userInfo = Object.assign(userInfo, res.data)
+						that.$store.commit('updateUserInfo', that.userInfo);
+						that.$store.commit('updataSettingsInfo', res.settings);
+					}
+					callBack && callBack();
+				})
+			},
+			// 提示开通会员
+			promptOpenVip(callBack) {
+				uni.showModal({
+					title: '系统提示',
+					content: '系统检测到用户未开通会员，是否开通会员',
+					success: res => {
+						if (res.confirm) {
+							index.navigate_to(`/pages/vip/vip`);
+						} else if (res.cancel) {
+							console.log('用户点击取消');
+						}
+					}
+				});
+			}
+		},
+		// 下拉刷新
+		onPullDownRefresh() {
+			var that = this;
+			that.page = 1;
+			that._onLoad(() => {
+				uni.stopPullDownRefresh();
+			});
+		},
+		//上拉加载更多
+		// onReachBottom() {
+		//   var that = this;
+		//   if (that.last_page == that.page) {
+		//     return;
+		//   }
+		//   that.page += 1;
+		//   that.get_product_list();
+		// },
+		// 分享
+		onShareAppMessage() {
+			let shareData = {
+				title: '',
+				path: `pages/index/index?${this.userInfo.id}`,
+				imageUrl: ''
+			}
+			return index.onShareAppMessage(shareData);
 		}
 	}
 </script>
