@@ -44,11 +44,10 @@
 			"style": {
 				"navigationBarTitleText": "用户",
 				"enablePullDownRefresh": true,
-				// #ifdef H5
 				"navigationStyle": "custom",
-				// #endif
 				"app-plus": {
-					"titleNView": false
+					"bounce": "none",
+					"titleView": false
 				}
 			}
 		},  {

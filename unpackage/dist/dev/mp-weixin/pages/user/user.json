@@ -1,5 +1,6 @@
 {
   "navigationBarTitleText": "用户",
   "enablePullDownRefresh": true,
+  "navigationStyle": "custom",
   "usingComponents": {}
 }
