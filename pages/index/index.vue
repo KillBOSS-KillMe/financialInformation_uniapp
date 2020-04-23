@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="search">
-			<icon class="iconfont iconchongzhi"></icon>
+			<icon class="iconfont iconsousuo"></icon>
 			<input type="text" value="" placeholder="请输入您要搜索的客户经理/资讯" />
 		</view>
 		<swiper class="swiper" :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval" :duration="duration">
@@ -39,7 +39,7 @@
 		</view>
 		<view class="articleList">
 			<view class="item">
-				<icon class="iconfont iconchongzhi"></icon>
+				<icon class="iconfont icondian"></icon>
 				<view class="info">
 					<view class="details">
 						<view class="title">一个科技爱好者的EDC和桌面</view>
@@ -48,7 +48,7 @@
 					<view class="features">
 						<view>会飞的鱼</view>
 						<view>
-							<icon class="iconfont iconchongzhi"></icon>
+							<icon class="iconfont iconshijian"></icon>
 							<text>4小时</text>
 						</view>
 					</view>

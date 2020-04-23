@@ -9,7 +9,7 @@
 						<text>客服消息为您推送两条新的信息</text>
 					</view>
 				</view>
-				<icon class="iconfont iconchongzhi"></icon>
+				<icon class="iconfont iconxiangyou"></icon>
 			</view>
 		</scroll-view>
 	</view>

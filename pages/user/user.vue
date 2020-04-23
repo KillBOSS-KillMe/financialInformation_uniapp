@@ -9,41 +9,41 @@
 			<view class="content">
 				<view class="item">
 					<view>
-						<icon class="iconfont iconchongzhi"></icon>
+						<icon class="iconfont iconxingxing"></icon>
 						<text>我的关注</text>
 					</view>
-					<icon class="iconfont iconchongzhi"></icon>
+					<icon class="iconfont iconxiangyou"></icon>
 				</view>
 				<view class="item">
 					<view>
-						<icon class="iconfont iconchongzhi"></icon>
+						<icon class="iconfont iconbangzhu"></icon>
 						<text>帮助与反馈</text>
 					</view>
-					<icon class="iconfont iconchongzhi"></icon>
+					<icon class="iconfont iconxiangyou"></icon>
 				</view>
 			</view>
 			<!-- 我的-客户经理 -->
 			<view class="content">
 				<view class="item">
 					<view>
-						<icon class="iconfont iconchongzhi"></icon>
+						<icon class="iconfont iconhuiyuan"></icon>
 						<text>我的会员</text>
 					</view>
-					<icon class="iconfont iconchongzhi"></icon>
+					<icon class="iconfont iconxiangyou"></icon>
 				</view>
 				<view class="item">
 					<view>
-						<icon class="iconfont iconchongzhi"></icon>
+						<icon class="iconfont iconzizhi"></icon>
 						<text>我的资源</text>
 					</view>
-					<icon class="iconfont iconchongzhi"></icon>
+					<icon class="iconfont iconxiangyou"></icon>
 				</view>
 				<view class="item">
 					<view>
-						<icon class="iconfont iconchongzhi"></icon>
+						<icon class="iconfont iconbangzhu"></icon>
 						<text>帮助与反馈</text>
 					</view>
-					<icon class="iconfont iconchongzhi"></icon>
+					<icon class="iconfont iconxiangyou"></icon>
 				</view>
 			</view>
 		</view>

@@ -8,7 +8,7 @@
 						<text>西安甜水井街支行客户经理</text>
 					</view>
 					<view class="address">
-						<icon class="iconfont iconchongzhi"></icon>
+						<icon class="iconfont icondizhi"></icon>
 						<text>陕西省-西安市</text>
 					</view>
 					<view class="data">
