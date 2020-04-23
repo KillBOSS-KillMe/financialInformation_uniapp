@@ -7,7 +7,7 @@
 		<view class="pageTopBorder">
 			<!-- 我的-用户 -->
 			<view class="content">
-				<view class="item">
+				<view class="item" @tap="goUserAttention">
 					<view>
 						<icon class="iconfont iconxingxing"></icon>
 						<text>我的关注</text>
@@ -24,17 +24,17 @@
 			</view>
 			<!-- 我的-客户经理 -->
 			<view class="content">
-				<view class="item">
+				<view class="item" @tap="goUserVIP">
 					<view>
 						<icon class="iconfont iconhuiyuan"></icon>
 						<text>我的会员</text>
 					</view>
 					<icon class="iconfont iconxiangyou"></icon>
 				</view>
-				<view class="item">
+				<view class="item" @tap="goUserQualification">
 					<view>
 						<icon class="iconfont iconzizhi"></icon>
-						<text>我的资源</text>
+						<text>我的资质</text>
 					</view>
 					<icon class="iconfont iconxiangyou"></icon>
 				</view>
@@ -68,11 +68,20 @@
 			_onLoad(callBack) {
 				const that = this
 				that.userInfo = that.$store.state.userInfo;
-				that.wx_login(() => {
-					that.getUserInfo(() => {
-						callBack && callBack();
-					})
-				})
+				// that.wx_login(() => {
+				// 	that.getUserInfo(() => {
+				// 		callBack && callBack();
+				// 	})
+				// })
+			},
+			goUserAttention() {
+				user.navigate_to(`/pages/userAttention/userAttention`);
+			},
+			goUserVIP() {
+				user.navigate_to(`/pages/userVIP/userVIP`);
+			},
+			goUserQualification() {
+				user.navigate_to(`/pages/userQualification/userQualification`);
 			},
 		},
 		// 下拉刷新
