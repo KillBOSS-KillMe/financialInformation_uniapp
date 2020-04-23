@@ -166,30 +166,28 @@ var _newsModel = _interopRequireDefault(__webpack_require__(/*! ./news-model.js 
 //
 //
 //
-var news = new _newsModel.default();var _default = { data: function data() {return { options: {}, title: 'Hello', authorizationButton: null, userInfo: {}, userInfoAll: {}, // 轮播图相关
-      indicatorDots: true, autoplay: true, interval: 2000, duration: 500 };}, onLoad: function onLoad(options) {var that = this;
-    that.options = options;
-    that._onLoad();
-  },
-  onShow: function onShow() {
-    // 获取已授权类别
-    var that = this;
-
-  },
+var news = new _newsModel.default();var _default = { data: function data() {return { userInfo: {}, newsList: [] };}, onLoad: function onLoad(options) {var that = this;that.options = options;that._onLoad();}, onShow: function onShow() {// 获取已授权类别
+    var that = this;},
   methods: {
     _onLoad: function _onLoad(callBack) {
       var that = this;
       that.userInfo = that.$store.state.userInfo;
-      // that.wx_login(() => {
-      // 	that.getUserInfo(() => {
-      // 		if (that.userInfo.type == 'member') {
+      console.log(that.userInfo);
+      that.getNewsList(function () {
+        callBack && callBack();
+      });
+    },
+    getNewsList: function getNewsList(callBack) {
+      var that = this;
+      news.getChatList({
+        openid: that.userInfo.openid },
+      function (res) {
+        console.log(res);
+        if (res.code == 4000) {
 
-      // 		} else {
-      // 			// 提示用户非会员
-      // 			that.promptOpenVip()
-      // 		}
-      // 	})
-      // })
+        }
+        callBack && callBack();
+      });
     },
     // 进入--消息--详情页
     goNewDetails: function goNewDetails(e) {

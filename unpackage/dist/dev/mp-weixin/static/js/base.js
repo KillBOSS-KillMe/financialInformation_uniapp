@@ -39,41 +39,42 @@ class Base {
 		var that = this;
 		that.show_loading('加载中...');
 		var url = that.base_qequest_url + params.url;
-		var token = '';
-		var token_type = '';
-		that.get_storage('token', (res) => {
-			token = res;
-			that.get_storage('token_type', (res) => {
-				token_type = res;
+		// var token = '';
+		// var token_type = '';
+		// that.get_storage('token', (res) => {
+		// 	token = res;
+			// that.get_storage('token_type', (res) => {
+				// token_type = res;
 				uni.request({
 					url: url,
 					data: params.data || {},
 					header: {
 						'content-type': 'application/json',
-						'apikey': that.apikey,
-						'Authorization': token_type + ' ' + token
+						// 'apikey': that.apikey,
+						// 'Authorization': token_type + ' ' + token
 					},
 					method: params.method || 'GET',
 					success: function (ret) {
+						ret = that.null2str(ret);
 						var code = ret.statusCode.toString().charAt(0);
 						if (code == '2' || code == '4' || code == '5') {
 							that.hide_loading();
 							// token实效,更新token
-							if (ret.data.status_code == 500) {
-								that.refresh_token(params); return;
-							}
+							// if (ret.data.status_code == 500) {
+							// 	that.refresh_token(params); return;
+							// }
 							// 返回请求到的数据
 							params.sCallBack && params.sCallBack(ret); return;
 						}
 					},
 					fail: function (err) {
-						that.remove_storage('token');
-						that.remove_storage('token_type');
+						// that.remove_storage('token');
+						// that.remove_storage('token_type');
 						that.hide_loading();
 					}
 				})
-			})
-		})
+			// })
+		// })
 	}
 	//图片上传
 	upload(count, callBack) {
@@ -262,6 +263,39 @@ class Base {
 			path: data.path || 'pages/index/index',
 			imageUrl: data.img || '../../static/images/stepBg.png'
 		};
+	}
+	// 时间戳转时间
+	transformTime(timestamp = +new Date()) {
+		if (timestamp) {
+			var time = new Date(timestamp);
+			var y = time.getFullYear(); //getFullYear方法以四位数字返回年份
+			var M = time.getMonth() + 1; // getMonth方法从 Date 对象返回月份 (0 ~ 11)，返回结果需要手动加一
+			var d = time.getDate(); // getDate方法从 Date 对象返回一个月中的某一天 (1 ~ 31)
+			var h = time.getHours(); // getHours方法返回 Date 对象的小时 (0 ~ 23)
+			var m = time.getMinutes(); // getMinutes方法返回 Date 对象的分钟 (0 ~ 59)
+			var s = time.getSeconds(); // getSeconds方法返回 Date 对象的秒数 (0 ~ 59)
+			return y + '-' + M + '-' + d + ' ' + h + ':' + m + ':' + s;
+		} else {
+			return '';
+		}
+	}
+	// json对象中的null转换为""
+	null2str(data) {
+		for (let x in data) {
+			if (data[x] === null) { // 如果是null 把直接内容转为 ''
+				data[x] = ''
+			} else {
+				if (Array.isArray(data[x])) { // 是数组遍历数组 递归继续处理
+					data[x] = data[x].map(z => {
+						return this.null2str(z)
+					})
+				}
+				if(typeof(data[x]) === 'object'){ // 是json 递归继续处理
+					data[x] = this.null2str(data[x])
+				}
+			}
+		}
+		return data
 	}
 }
 export default Base

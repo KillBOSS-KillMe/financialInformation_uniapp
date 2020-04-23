@@ -5,20 +5,20 @@
 			<input type="text" value="" placeholder="请输入您要搜索的客户经理/资讯" />
 		</view>
 		<swiper class="swiper" :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval" :duration="duration">
-			<swiper-item v-for="(item,index) in 5" :key="index">
-				<image src="../../static/images/test.png" mode=""></image>
+			<swiper-item v-for="(item,index) in bannerData" :key="index">
+				<image :src="item.img" mode=""></image>
 			</swiper-item>
 		</swiper>
 		<view class="titleModel">
 			<view></view>金牌客户经理
 		</view>
 		<view class="managerList">
-			<view class="item" @tap="goManagerDetails" :data-id="1">
+			<view class="item" @tap="goManagerDetails" :data-id="1" v-for="(item,index) in managerNode.data" :key="index">
 				<image src="../../static/images/test.png" mode=""></image>
 				<view class="info">
 					<view class="details">
-						<view>李莉 / 交通银行</view>
-						<text>西安甜水井街支行客户经理</text>
+						<view>{{item.name}} / {{item.company}}</view>
+						<text>{{item.post}}</text>
 					</view>
 					<button class="active">关注</button>
 					<!-- <button class="noActive">取消关注</button> -->
@@ -58,20 +58,24 @@
 			return {
 				options: {},
 				title: 'Hello',
+				imageUrl: '',
 				authorizationButton: null,
 				userInfo: {},
 				userInfoAll: {},
 				// 轮播图相关
+				bannerData: [],
 				indicatorDots: true,
 				autoplay: true,
 				interval: 2000,
 				duration: 500,
+				// 客户经理数据对象
+				managerNode: {}
 			}
 		},
 		onLoad(options) {
 			const that = this
 			that.options = options
-			// that._onLoad()
+			that._onLoad()
 		},
 		onShow() {
 			// 获取已授权类别
@@ -100,17 +104,26 @@
 		methods: {
 			_onLoad(callBack) {
 				const that = this
+				that.imageUrl = index.base_image_url
 				that.userInfo = that.$store.state.userInfo;
-				that.wx_login(() => {
-					that.getUserInfo(() => {
-						if (that.userInfo.type == 'member') {
-							
-						} else {
-							// 提示用户非会员
-							that.promptOpenVip()
-						}
-					})
+				// 轮播图加载
+				this.getBanner(() => {
+					callBack && callBack();
 				})
+				// 客户经理列表加载
+				this.getManagerList(() => {
+					callBack && callBack();
+				})
+				// that.wx_login(() => {
+				// 	that.getUserInfo(() => {
+				// 		if (that.userInfo.type == 'member') {
+							
+				// 		} else {
+				// 			// 提示用户非会员
+				// 			that.promptOpenVip()
+				// 		}
+				// 	})
+				// })
 			},
 			// 进入--客户经理--详情页
 			goManagerDetails(e) {
@@ -164,6 +177,33 @@
 						that.userInfo = Object.assign(userInfo, res.data)
 						that.$store.commit('updateUserInfo', that.userInfo);
 						that.$store.commit('updataSettingsInfo', res.settings);
+					}
+					callBack && callBack();
+				})
+			},
+			// 加载轮播图
+			getBanner(callBack) {
+				const that = this
+				index.getBanner({}, (res) => {
+					if (res.code == '4000') {
+						let list = res.data
+						// let newList = []
+						for (let i = 0; i < list.length; i++) {
+							list[i].img = that.imageUrl + list[i].img
+						}
+						that.bannerData = list
+						console.log(list)
+					}
+					callBack && callBack();
+				})
+			},
+			// 客户经理列表
+			getManagerList(callBack) {
+				const that = this
+				index.getManagerList({}, (res) => {
+					if (res.code == '4000') {
+						that.managerNode = res
+						// console.log()
 					}
 					callBack && callBack();
 				})

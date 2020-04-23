@@ -3,11 +3,11 @@ class News extends Base {
 	constructor() {
 		super();
 	}
-	// 登录
-	login(data, callBack) {
+	// 加载消息列表
+	getChatList(data, callBack) {
 		var that = this;
 		var params = {
-			url: 'auth/login',
+			url: 'chat/getChatList',
 			method: 'POST',
 			data: data,
 			sCallBack: function(res) {

@@ -162,6 +162,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
 var _certificationModel = _interopRequireDefault(__webpack_require__(/*! ./certification-model.js */ 124));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
@@ -192,8 +194,18 @@ var _certificationModel = _interopRequireDefault(__webpack_require__(/*! ./certi
 //
 //
 //
-var certification = new _certificationModel.default();var _default = { data: function data() {return {};}, onLoad: function onLoad() {var that = this;that._onLoad();}, methods: { _onLoad: function _onLoad(callBack) {var that = this;that.userInfo = that.$store.state.userInfo;that.wx_login(function () {that.getUserInfo(function () {callBack && callBack();});});} }, // 下拉刷新
-  onPullDownRefresh: function onPullDownRefresh() {var that = this;that.page = 1;that._onLoad(function () {uni.stopPullDownRefresh();});}, //上拉加载更多
+//
+//
+var certification = new _certificationModel.default();var _default = { data: function data() {return { formData: { name: '', bank: '', post: '', IDNumber: '', IDCard_1: '', IDCard_2: '' } };}, onLoad: function onLoad() {var that = this;that._onLoad();}, methods: { _onLoad: function _onLoad(callBack) {var that = this;that.userInfo = that.$store.state.userInfo; // that.wx_login(() => {
+      // 	that.getUserInfo(() => {
+      // 		callBack && callBack();
+      // 	})
+      // })
+    }, validation: function validation() {certification.switch_tab("/pages/index/index");} }, // 下拉刷新
+  onPullDownRefresh: function onPullDownRefresh() {var that = this;that.page = 1;that._onLoad(function () {uni.stopPullDownRefresh();
+    });
+  },
+  //上拉加载更多
   // onReachBottom() {
   //   var that = this;
   //   if (that.last_page == that.page) {

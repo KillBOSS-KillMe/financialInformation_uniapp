@@ -5,14 +5,14 @@
 			<text>我们会为您制定转专业化服务</text>
 		</view>
 		<view class="identityList">
-			<view class="item">
+			<button open-type="getUserInfo" lang="zh_CN" class="item" @tap="goHome" data-type="1">
 				<image src="../../static/images/IdentitySel_1.png" mode=""></image>
-				<view>我是客户</view>
-			</view>
-			<view class="item">
+				<view class="active">我是客户</view>
+			</button>
+			<button open-type="getUserInfo" lang="zh_CN" class="item" @tap="goHome" data-type="2">
 				<image src="../../static/images/IdentitySel_2.png" mode=""></image>
 				<view class="active">我是客户经理</view>
-			</view>
+			</button>
 		</view>
 	</view>
 </template>
@@ -28,18 +28,66 @@
 		},
 		onLoad() {
 			const that = this
-			that._onLoad()
+			// that._onLoad()
 		},
 		methods: {
-			_onLoad(callBack) {
-				const that = this
-				that.userInfo = that.$store.state.userInfo;
-				that.wx_login(() => {
-					that.getUserInfo(() => {
-						callBack && callBack();
-					})
-				})
-			},
+			// _onLoad(callBack) {
+			// 	const that = this
+			// 	that.userInfo = that.$store.state.userInfo;
+			// 	that.wx_login(() => {
+			// 		that.getUserInfo(() => {
+			// 			callBack && callBack();
+			// 		})
+			// 	})
+			// },
+			goHome(e) {
+				const that = this;
+				const role = identitySel.get_data_set(e, "type");
+				uni.login({
+					provider: 'weixin',
+					success: function(loginRes) {
+						var code = loginRes.code;
+						uni.getUserInfo({
+							provider: 'weixin',
+							success: function(infoRes) {
+								that.userInfoAll = infoRes
+								that.$store.commit('updateUserInfo', that.userInfo);
+								that.$store.commit('updateAuthorizationButtonData', false);
+								identitySel.login({
+									code: code,
+									role: role, // 角色
+									portrait: infoRes.userInfo.avatarUrl,
+									nickname: infoRes.userInfo.nickName
+								}, (res) => {
+									console.log(res)
+									if (res.code == 4000) {
+										that.$store.commit('updateUserInfo', res.data);
+										if (role == '1') {
+											identitySel.switch_tab(`/pages/index/index`);
+										} else {
+											// validation => 0  未认证
+											// validation => 1  认证
+											if (res.data.validation) {
+												// 客户经理资质已认证
+												identitySel.switch_tab(`/pages/index/index`);
+											} else {
+												// 客户经理资质未认证，进入资质认证页
+												identitySel.navigate_to(`/pages/certification/certification`);
+											}
+										}
+									}
+									
+									// if (res.status_code == 'ok') {
+									// 	index.set_storage('token', res.access_token);
+									// 	index.set_storage('token_type', res.token_type);
+									// }
+									// callBack && callBack();
+								})
+							}
+						})
+					}
+				});
+			}
 		},
 		// 下拉刷新
 		onPullDownRefresh() {

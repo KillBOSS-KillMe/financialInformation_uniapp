@@ -29,6 +29,32 @@ class Index extends Base {
 		};
 		that.request(params);
 	};
+	// 轮播图加载
+	getBanner(data, callBack) {
+		var that = this;
+		var params = {
+			url: 'index/get_polling',
+			method: 'GET',
+			data: data,
+			sCallBack: function(res) {
+				callBack && callBack(res.data);
+			}
+		};
+		that.request(params);
+	};
+	// 客户经理列表
+	getManagerList(data, callBack) {
+		var that = this;
+		var params = {
+			url: 'index/get_merchant',
+			method: 'GET',
+			data: data,
+			sCallBack: function(res) {
+				callBack && callBack(res.data);
+			}
+		};
+		that.request(params);
+	};
 }
 
 export default Index

@@ -8895,6 +8895,32 @@ Index = /*#__PURE__*/function (_Base) {_inherits(Index, _Base);
         } };
 
       that.request(params);
+    } }, { key: "getBanner",
+    // 轮播图加载
+    value: function getBanner(data, callBack) {
+      var that = this;
+      var params = {
+        url: 'index/get_polling',
+        method: 'GET',
+        data: data,
+        sCallBack: function sCallBack(res) {
+          callBack && callBack(res.data);
+        } };
+
+      that.request(params);
+    } }, { key: "getManagerList",
+    // 客户经理列表
+    value: function getManagerList(data, callBack) {
+      var that = this;
+      var params = {
+        url: 'index/get_merchant',
+        method: 'GET',
+        data: data,
+        sCallBack: function sCallBack(res) {
+          callBack && callBack(res.data);
+        } };
+
+      that.request(params);
     } }]);return Index;}(_base.default);var _default =
 
 
@@ -8951,41 +8977,42 @@ Base = /*#__PURE__*/function () {
       var that = this;
       that.show_loading('加载中...');
       var url = that.base_qequest_url + params.url;
-      var token = '';
-      var token_type = '';
-      that.get_storage('token', function (res) {
-        token = res;
-        that.get_storage('token_type', function (res) {
-          token_type = res;
-          uni.request({
-            url: url,
-            data: params.data || {},
-            header: {
-              'content-type': 'application/json',
-              'apikey': that.apikey,
-              'Authorization': token_type + ' ' + token },
+      // var token = '';
+      // var token_type = '';
+      // that.get_storage('token', (res) => {
+      // 	token = res;
+      // that.get_storage('token_type', (res) => {
+      // token_type = res;
+      uni.request({
+        url: url,
+        data: params.data || {},
+        header: {
+          'content-type': 'application/json'
+          // 'apikey': that.apikey,
+          // 'Authorization': token_type + ' ' + token
+        },
+        method: params.method || 'GET',
+        success: function success(ret) {
+          ret = that.null2str(ret);
+          var code = ret.statusCode.toString().charAt(0);
+          if (code == '2' || code == '4' || code == '5') {
+            that.hide_loading();
+            // token实效,更新token
+            // if (ret.data.status_code == 500) {
+            // 	that.refresh_token(params); return;
+            // }
+            // 返回请求到的数据
+            params.sCallBack && params.sCallBack(ret);return;
+          }
+        },
+        fail: function fail(err) {
+          // that.remove_storage('token');
+          // that.remove_storage('token_type');
+          that.hide_loading();
+        } });
 
-            method: params.method || 'GET',
-            success: function success(ret) {
-              var code = ret.statusCode.toString().charAt(0);
-              if (code == '2' || code == '4' || code == '5') {
-                that.hide_loading();
-                // token实效,更新token
-                if (ret.data.status_code == 500) {
-                  that.refresh_token(params);return;
-                }
-                // 返回请求到的数据
-                params.sCallBack && params.sCallBack(ret);return;
-              }
-            },
-            fail: function fail(err) {
-              that.remove_storage('token');
-              that.remove_storage('token_type');
-              that.hide_loading();
-            } });
-
-        });
-      });
+      // })
+      // })
     }
     //图片上传
   }, { key: "upload", value: function upload(count, callBack) {
@@ -9174,6 +9201,39 @@ Base = /*#__PURE__*/function () {
         path: data.path || 'pages/index/index',
         imageUrl: data.img || '../../static/images/stepBg.png' };
 
+    }
+    // 时间戳转时间
+  }, { key: "transformTime", value: function transformTime() {var timestamp = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : +new Date();
+      if (timestamp) {
+        var time = new Date(timestamp);
+        var y = time.getFullYear(); //getFullYear方法以四位数字返回年份
+        var M = time.getMonth() + 1; // getMonth方法从 Date 对象返回月份 (0 ~ 11)，返回结果需要手动加一
+        var d = time.getDate(); // getDate方法从 Date 对象返回一个月中的某一天 (1 ~ 31)
+        var h = time.getHours(); // getHours方法返回 Date 对象的小时 (0 ~ 23)
+        var m = time.getMinutes(); // getMinutes方法返回 Date 对象的分钟 (0 ~ 59)
+        var s = time.getSeconds(); // getSeconds方法返回 Date 对象的秒数 (0 ~ 59)
+        return y + '-' + M + '-' + d + ' ' + h + ':' + m + ':' + s;
+      } else {
+        return '';
+      }
+    }
+    // json对象中的null转换为""
+  }, { key: "null2str", value: function null2str(data) {var _this = this;
+      for (var x in data) {
+        if (data[x] === null) {// 如果是null 把直接内容转为 ''
+          data[x] = '';
+        } else {
+          if (Array.isArray(data[x])) {// 是数组遍历数组 递归继续处理
+            data[x] = data[x].map(function (z) {
+              return _this.null2str(z);
+            });
+          }
+          if (typeof data[x] === 'object') {// 是json 递归继续处理
+            data[x] = this.null2str(data[x]);
+          }
+        }
+      }
+      return data;
     } }]);return Base;}();var _default =
 
 Base;exports.default = _default;
@@ -9194,8 +9254,8 @@ function Config() {_classCallCheck(this, Config);
 };
 
 //接口域名
-Config.requset_url = "http://www.ybb.cc/api/";
-Config.img_url = "http://www.ybb.cc/uploads/";
+Config.requset_url = "http://192.168.1.112/api/";
+Config.img_url = "http://192.168.1.112/static/rotation_chart/";
 //微信授权域名192.168.1.168
 //Config.wx_login_url = "https://diancan.lvacms.cn/wechat/login";
 
@@ -9257,11 +9317,11 @@ News = /*#__PURE__*/function (_Base) {_inherits(News, _Base);
   function News() {_classCallCheck(this, News);return _possibleConstructorReturn(this, _getPrototypeOf(News).call(this));
 
   }
-  // 登录
-  _createClass(News, [{ key: "login", value: function login(data, callBack) {
+  // 加载消息列表
+  _createClass(News, [{ key: "getChatList", value: function getChatList(data, callBack) {
       var that = this;
       var params = {
-        url: 'auth/login',
+        url: 'chat/getChatList',
         method: 'POST',
         data: data,
         sCallBack: function sCallBack(res) {
@@ -10250,20 +10310,7 @@ Index = /*#__PURE__*/function (_Base) {_inherits(Index, _Base);
   _createClass(Index, [{ key: "login", value: function login(data, callBack) {
       var that = this;
       var params = {
-        url: 'auth/login',
-        method: 'POST',
-        data: data,
-        sCallBack: function sCallBack(res) {
-          callBack && callBack(res.data);
-        } };
-
-      that.request(params);
-    } }, { key: "getUserInfo",
-    // 获取用户信息
-    value: function getUserInfo(data, callBack) {
-      var that = this;
-      var params = {
-        url: 'auth/me',
+        url: 'users/login',
         method: 'POST',
         data: data,
         sCallBack: function sCallBack(res) {
@@ -10272,6 +10319,19 @@ Index = /*#__PURE__*/function (_Base) {_inherits(Index, _Base);
 
       that.request(params);
     } }]);return Index;}(_base.default);var _default =
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 Index;exports.default = _default;
@@ -10342,7 +10402,7 @@ ManagerDetails;exports.default = _default;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationBarTitleText": "首页", "enablePullDownRefresh": true }, "pages/news/news": { "navigationBarTitleText": "消息", "enablePullDownRefresh": true }, "pages/user/user": { "navigationBarTitleText": "用户", "enablePullDownRefresh": true }, "pages/identitySel/identitySel": { "navigationBarTitleText": "身份选择", "enablePullDownRefresh": true }, "pages/managerDetails/managerDetails": { "navigationBarTitleText": "个人主页", "enablePullDownRefresh": true }, "pages/informationDetails/informationDetails": { "navigationBarTitleText": "咨询详情", "enablePullDownRefresh": true }, "pages/sysNews/sysNews": { "navigationBarTitleText": "系统消息", "enablePullDownRefresh": true }, "pages/newsChat/newsChat": { "navigationBarTitleText": "消息", "enablePullDownRefresh": true }, "pages/userAttention/userAttention": { "navigationBarTitleText": "我的关注", "enablePullDownRefresh": true }, "pages/userQualification/userQualification": { "navigationBarTitleText": "我的资质", "enablePullDownRefresh": true }, "pages/userVIP/userVIP": { "navigationBarTitleText": "我的会员", "enablePullDownRefresh": true }, "pages/certification/certification": { "navigationBarTitleText": "资质认证", "enablePullDownRefresh": true } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "金融咨询", "navigationBarBackgroundColor": "#FFFFFF", "backgroundColor": "#FFFFFF" } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationBarTitleText": "首页", "enablePullDownRefresh": true, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/news/news": { "navigationBarTitleText": "消息", "enablePullDownRefresh": true, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/user/user": { "navigationBarTitleText": "用户", "enablePullDownRefresh": true, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/identitySel/identitySel": { "navigationBarTitleText": "身份选择", "enablePullDownRefresh": true, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/managerDetails/managerDetails": { "navigationBarTitleText": "个人主页", "enablePullDownRefresh": true, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/informationDetails/informationDetails": { "navigationBarTitleText": "咨询详情", "enablePullDownRefresh": true, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/sysNews/sysNews": { "navigationBarTitleText": "系统消息", "enablePullDownRefresh": true, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/newsChat/newsChat": { "navigationBarTitleText": "消息", "enablePullDownRefresh": true, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/userAttention/userAttention": { "navigationBarTitleText": "我的关注", "enablePullDownRefresh": true, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/userQualification/userQualification": { "navigationBarTitleText": "我的资质", "enablePullDownRefresh": true, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/userVIP/userVIP": { "navigationBarTitleText": "我的会员", "enablePullDownRefresh": true, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/certification/certification": { "navigationBarTitleText": "资质认证", "enablePullDownRefresh": true, "usingComponents": {}, "usingAutoImportComponents": {} } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "金融咨询", "navigationBarBackgroundColor": "#FFFFFF", "backgroundColor": "#FFFFFF" } };exports.default = _default;
 
 /***/ }),
 

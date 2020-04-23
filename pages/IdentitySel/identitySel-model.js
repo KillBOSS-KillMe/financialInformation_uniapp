@@ -7,7 +7,7 @@ class Index extends Base {
 	login(data, callBack) {
 		var that = this;
 		var params = {
-			url: 'auth/login',
+			url: 'users/login',
 			method: 'POST',
 			data: data,
 			sCallBack: function(res) {
@@ -17,18 +17,18 @@ class Index extends Base {
 		that.request(params);
 	};
 	// 获取用户信息
-	getUserInfo(data, callBack) {
-		var that = this;
-		var params = {
-			url: 'auth/me',
-			method: 'POST',
-			data: data,
-			sCallBack: function(res) {
-				callBack && callBack(res.data);
-			}
-		};
-		that.request(params);
-	};
+	// getUserInfo(data, callBack) {
+	// 	var that = this;
+	// 	var params = {
+	// 		url: 'auth/me',
+	// 		method: 'POST',
+	// 		data: data,
+	// 		sCallBack: function(res) {
+	// 			callBack && callBack(res.data);
+	// 		}
+	// 	};
+	// 	that.request(params);
+	// };
 }
 
 export default Index

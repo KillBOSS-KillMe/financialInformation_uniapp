@@ -1,9 +1,9 @@
 {
   "pages": [
+    "pages/identitySel/identitySel",
     "pages/index/index",
     "pages/news/news",
     "pages/user/user",
-    "pages/identitySel/identitySel",
     "pages/managerDetails/managerDetails",
     "pages/informationDetails/informationDetails",
     "pages/sysNews/sysNews",
@@ -45,5 +45,6 @@
       }
     ]
   },
-  "usingComponents": {}
+  "usingComponents": {},
+  "sitemapLocation": "sitemap.json"
 }

@@ -21,16 +21,8 @@
 	export default {
 		data() {
 			return {
-				options: {},
-				title: 'Hello',
-				authorizationButton: null,
 				userInfo: {},
-				userInfoAll: {},
-				// 轮播图相关
-				indicatorDots: true,
-				autoplay: true,
-				interval: 2000,
-				duration: 500,
+				newsList: []
 			}
 		},
 		onLoad(options) {
@@ -47,16 +39,22 @@
 			_onLoad(callBack) {
 				const that = this
 				that.userInfo = that.$store.state.userInfo;
-				// that.wx_login(() => {
-				// 	that.getUserInfo(() => {
-				// 		if (that.userInfo.type == 'member') {
-							
-				// 		} else {
-				// 			// 提示用户非会员
-				// 			that.promptOpenVip()
-				// 		}
-				// 	})
-				// })
+				console.log(that.userInfo)
+				that.getNewsList(() => {
+					callBack && callBack();
+				})
+			},
+			getNewsList(callBack) {
+				const that = this
+				news.getChatList({
+					openid: that.userInfo.openid	
+				}, (res) => {
+					console.log(res)
+					if (res.code == 4000) {
+						
+					}
+					callBack && callBack();
+				})
 			},
 			// 进入--消息--详情页
 			goNewDetails(e) {

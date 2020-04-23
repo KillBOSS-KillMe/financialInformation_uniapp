@@ -170,8 +170,56 @@ var _identitySelModel = _interopRequireDefault(__webpack_require__(/*! ./identit
 //
 //
 //
-var identitySel = new _identitySelModel.default();var _default = { data: function data() {return {};}, onLoad: function onLoad() {var that = this;that._onLoad();}, methods: { _onLoad: function _onLoad(callBack) {var that = this;that.userInfo = that.$store.state.userInfo;that.wx_login(function () {that.getUserInfo(function () {callBack && callBack();});
-      });
+var identitySel = new _identitySelModel.default();var _default = { data: function data() {return {};}, onLoad: function onLoad() {var that = this; // that._onLoad()
+  }, methods: { // _onLoad(callBack) {
+    // 	const that = this
+    // 	that.userInfo = that.$store.state.userInfo;
+    // 	that.wx_login(() => {
+    // 		that.getUserInfo(() => {
+    // 			callBack && callBack();
+    // 		})
+    // 	})
+    // },
+    goHome: function goHome(e) {var that = this;var role = identitySel.get_data_set(e, "type");uni.login({ provider: 'weixin', success: function success(loginRes) {var code = loginRes.code;uni.getUserInfo({
+            provider: 'weixin',
+            success: function success(infoRes) {
+              that.userInfoAll = infoRes;
+              that.$store.commit('updateUserInfo', that.userInfo);
+              that.$store.commit('updateAuthorizationButtonData', false);
+              identitySel.login({
+                code: code,
+                role: role, // 角色
+                portrait: infoRes.userInfo.avatarUrl,
+                nickname: infoRes.userInfo.nickName },
+              function (res) {
+                console.log(res);
+                if (res.code == 4000) {
+                  that.$store.commit('updateUserInfo', res.data);
+                  if (role == '1') {
+                    identitySel.switch_tab("/pages/index/index");
+                  } else {
+                    // validation => 0  未认证
+                    // validation => 1  认证
+                    if (res.data.validation) {
+                      // 客户经理资质已认证
+                      identitySel.switch_tab("/pages/index/index");
+                    } else {
+                      // 客户经理资质未认证，进入资质认证页
+                      identitySel.navigate_to("/pages/certification/certification");
+                    }
+                  }
+                }
+
+                // if (res.status_code == 'ok') {
+                // 	index.set_storage('token', res.access_token);
+                // 	index.set_storage('token_type', res.token_type);
+                // }
+                // callBack && callBack();
+              });
+            } });
+
+        } });
+
     } },
 
   // 下拉刷新
