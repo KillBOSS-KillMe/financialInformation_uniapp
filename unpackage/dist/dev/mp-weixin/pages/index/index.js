@@ -272,12 +272,15 @@ var index = new _indexModel.default();var _default = { data: function data() {re
       // })
     }, // 进入--客户经理--详情页
     goManagerDetails: function goManagerDetails(e) {var that = this;
-      var id = index.get_data_set(e, "id");
-      index.navigate_to("/pages/managerDetails/managerDetails?id=".concat(id));
+      // const id = index.get_data_set(e, "id");
+      var managerindex = index.get_data_set(e, "managerindex");
+      var data = JSON.stringify(that.managerNode.data[managerindex]);
+      index.navigate_to("/pages/managerDetails/managerDetails?data=".concat(data));
     },
     // 进入--资讯--详情页
     goInformationDetails: function goInformationDetails(e) {
       var that = this;
+      console.log(e);
       var id = index.get_data_set(e, "id");
       index.navigate_to("/pages/informationDetails/informationDetails?id=".concat(id));
     },

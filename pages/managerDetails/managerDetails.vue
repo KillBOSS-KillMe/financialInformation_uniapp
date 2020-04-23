@@ -4,8 +4,8 @@
 			<view class="managerDetails">
 				<view class="info">
 					<view class="managerUserInfo">
-						<view>李莉 / 交通银行</view>
-						<text>西安甜水井街支行客户经理</text>
+						<view>{{info.name}} / {{info.post}}</view>
+						<text>{{info.name}}</text>
 					</view>
 					<view class="address">
 						<icon class="iconfont icondizhi"></icon>
@@ -13,18 +13,18 @@
 					</view>
 					<view class="data">
 						<view class="item">
-							<view>2222</view>
+							<view>{{info.post}}</view>
 							<text>关注</text>
 						</view>
 						<view class="item">
-							<view>2222</view>
+							<view>{{info.post}}</view>
 							<text>粉丝</text>
 						</view>
 					</view>
 				</view>
 				<view class="image">
 					<image src="../../static/images/test.png" mode=""></image>
-					<view class="active">关注</view>
+					<view class="active" @tap="attention">关注</view>
 					<!-- <view>已关注</view> -->
 				</view>
 			</view>
@@ -64,23 +64,41 @@
 	export default {
 		data() {
 			return {
-				
+				options: {},
+				info: {}
 			};
 		},
-		onLoad() {
+		onLoad(options) {
 			const that = this
+			that.options = options
 			that._onLoad()
 		},
 		methods: {
 			_onLoad(callBack) {
 				const that = this
 				that.userInfo = that.$store.state.userInfo;
-				that.wx_login(() => {
-					that.getUserInfo(() => {
-						callBack && callBack();
-					})
-				})
+				that.info = JSON.parse(that.options.data);
+				// console.log(that.info)
+				// that.wx_login(() => {
+				// 	that.getUserInfo(() => {
+				// 		callBack && callBack();
+				// 	})
+				// })
 			},
+			// 关注
+			attention(callBack) {
+				const that = this
+				managerDetails.runAttention({
+					openid: that.userInfo.openid,
+					id: that.info.id
+				}, (res) => {
+					console.log(res)
+					if (res.code == 4000) {
+						managerDetails.show_tips(res.explain)
+					}
+					callBack && callBack();
+				})
+			}
 		},
 		// 下拉刷新
 		onPullDownRefresh() {

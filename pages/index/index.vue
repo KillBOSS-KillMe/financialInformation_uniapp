@@ -13,7 +13,7 @@
 			<view></view>金牌客户经理
 		</view>
 		<view class="managerList">
-			<view class="item" @tap="goManagerDetails" :data-id="1" v-for="(item,index) in managerNode.data" :key="index">
+			<view class="item" @tap="goManagerDetails" :data-managerindex="index" :data-id="item.id" v-for="(item,index) in managerNode.data" :key="index">
 				<image src="../../static/images/test.png" mode=""></image>
 				<view class="info">
 					<view class="details">
@@ -128,12 +128,15 @@
 			// 进入--客户经理--详情页
 			goManagerDetails(e) {
 				const that = this;
-				const id = index.get_data_set(e, "id");
-				index.navigate_to(`/pages/managerDetails/managerDetails?id=${id}`);
+				// const id = index.get_data_set(e, "id");
+				const managerindex = index.get_data_set(e, "managerindex");
+				let data = JSON.stringify(that.managerNode.data[managerindex]);
+				index.navigate_to(`/pages/managerDetails/managerDetails?data=${data}`);
 			},
 			// 进入--资讯--详情页
 			goInformationDetails(e) {
 				const that = this;
+				console.log(e)
 				const id = index.get_data_set(e, "id");
 				index.navigate_to(`/pages/informationDetails/informationDetails?id=${id}`);
 			},

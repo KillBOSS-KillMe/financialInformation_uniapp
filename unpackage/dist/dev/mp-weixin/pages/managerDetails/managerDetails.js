@@ -252,7 +252,14 @@ var _managerDetailsModel = _interopRequireDefault(__webpack_require__(/*! ./mana
 //
 //
 //
-var managerDetails = new _managerDetailsModel.default();var _default = { data: function data() {return {};}, onLoad: function onLoad() {var that = this;that._onLoad();}, methods: { _onLoad: function _onLoad(callBack) {var that = this;that.userInfo = that.$store.state.userInfo;that.wx_login(function () {that.getUserInfo(function () {callBack && callBack();});});} }, // 下拉刷新
+var managerDetails = new _managerDetailsModel.default();var _default = { data: function data() {return { options: {}, info: {} };}, onLoad: function onLoad(options) {var that = this;that.options = options;that._onLoad();}, methods: { _onLoad: function _onLoad(callBack) {var that = this;that.userInfo = that.$store.state.userInfo;that.info = JSON.parse(that.options.data); // console.log(that.info)
+      // that.wx_login(() => {
+      // 	that.getUserInfo(() => {
+      // 		callBack && callBack();
+      // 	})
+      // })
+    }, // 关注
+    attention: function attention(callBack) {var that = this;managerDetails.runAttention({ openid: that.userInfo.openid, id: that.info.id }, function (res) {console.log(res);if (res.code == 4000) {managerDetails.show_tips(res.explain);}callBack && callBack();});} }, // 下拉刷新
   onPullDownRefresh: function onPullDownRefresh() {var that = this;that.page = 1;that._onLoad(function () {uni.stopPullDownRefresh();});}, //上拉加载更多
   // onReachBottom() {
   //   var that = this;

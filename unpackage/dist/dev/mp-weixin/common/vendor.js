@@ -10362,24 +10362,11 @@ ManagerDetails = /*#__PURE__*/function (_Base) {_inherits(ManagerDetails, _Base)
   function ManagerDetails() {_classCallCheck(this, ManagerDetails);return _possibleConstructorReturn(this, _getPrototypeOf(ManagerDetails).call(this));
 
   }
-  // 登录
-  _createClass(ManagerDetails, [{ key: "login", value: function login(data, callBack) {
+  // 加载消息列表
+  _createClass(ManagerDetails, [{ key: "getChatList", value: function getChatList(data, callBack) {
       var that = this;
       var params = {
-        url: 'auth/login',
-        method: 'POST',
-        data: data,
-        sCallBack: function sCallBack(res) {
-          callBack && callBack(res.data);
-        } };
-
-      that.request(params);
-    } }, { key: "getUserInfo",
-    // 获取用户信息
-    value: function getUserInfo(data, callBack) {
-      var that = this;
-      var params = {
-        url: 'auth/me',
+        url: 'chat/follow',
         method: 'POST',
         data: data,
         sCallBack: function sCallBack(res) {
