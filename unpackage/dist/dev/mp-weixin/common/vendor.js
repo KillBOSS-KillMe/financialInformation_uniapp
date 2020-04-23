@@ -10362,8 +10362,8 @@ ManagerDetails = /*#__PURE__*/function (_Base) {_inherits(ManagerDetails, _Base)
   function ManagerDetails() {_classCallCheck(this, ManagerDetails);return _possibleConstructorReturn(this, _getPrototypeOf(ManagerDetails).call(this));
 
   }
-  // 加载消息列表
-  _createClass(ManagerDetails, [{ key: "getChatList", value: function getChatList(data, callBack) {
+  // 详情加载
+  _createClass(ManagerDetails, [{ key: "getDetails", value: function getDetails(data, callBack) {
       var that = this;
       var params = {
         url: 'chat/follow',
@@ -10374,7 +10374,34 @@ ManagerDetails = /*#__PURE__*/function (_Base) {_inherits(ManagerDetails, _Base)
         } };
 
       that.request(params);
+    } }, { key: "runAttention",
+    // 关注
+    value: function runAttention(data, callBack) {
+      var that = this;
+      var params = {
+        url: 'chat/follow',
+        method: 'POST',
+        data: data,
+        sCallBack: function sCallBack(res) {
+          callBack && callBack(res.data);
+        } };
+
+      that.request(params);
+    } }, { key: "runNotAttention",
+    // 取消关注
+    value: function runNotAttention(data, callBack) {
+      var that = this;
+      var params = {
+        url: 'chat/cancelFollow',
+        method: 'POST',
+        data: data,
+        sCallBack: function sCallBack(res) {
+          callBack && callBack(res.data);
+        } };
+
+      that.request(params);
     } }]);return ManagerDetails;}(_base.default);var _default =
+
 
 
 ManagerDetails;exports.default = _default;

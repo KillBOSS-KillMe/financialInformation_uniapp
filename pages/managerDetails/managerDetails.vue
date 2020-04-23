@@ -79,16 +79,41 @@
 				that.userInfo = that.$store.state.userInfo;
 				that.info = JSON.parse(that.options.data);
 				// console.log(that.info)
-				// that.wx_login(() => {
-				// 	that.getUserInfo(() => {
-				// 		callBack && callBack();
-				// 	})
-				// })
+				that.getDetails(() => {
+					callBack && callBack();
+				})
+			},
+			// 详情加载
+			getDetails() {
+				const that = this
+				managerDetails.getDetails({
+					id: that.info.id
+				}, (res) => {
+					console.log(res)
+					if (res.code == 4000) {
+						managerDetails.show_tips(res.explain)
+					}
+					callBack && callBack();
+				})
 			},
 			// 关注
 			attention(callBack) {
 				const that = this
 				managerDetails.runAttention({
+					openid: that.userInfo.openid,
+					id: that.info.id
+				}, (res) => {
+					console.log(res)
+					if (res.code == 4000) {
+						managerDetails.show_tips(res.explain)
+					}
+					callBack && callBack();
+				})
+			},
+			// 取消关注
+			notAttention(callBack) {
+				const that = this
+				managerDetails.runNotAttention({
 					openid: that.userInfo.openid,
 					id: that.info.id
 				}, (res) => {

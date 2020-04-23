@@ -253,14 +253,20 @@ var _managerDetailsModel = _interopRequireDefault(__webpack_require__(/*! ./mana
 //
 //
 var managerDetails = new _managerDetailsModel.default();var _default = { data: function data() {return { options: {}, info: {} };}, onLoad: function onLoad(options) {var that = this;that.options = options;that._onLoad();}, methods: { _onLoad: function _onLoad(callBack) {var that = this;that.userInfo = that.$store.state.userInfo;that.info = JSON.parse(that.options.data); // console.log(that.info)
-      // that.wx_login(() => {
-      // 	that.getUserInfo(() => {
-      // 		callBack && callBack();
-      // 	})
-      // })
-    }, // 关注
-    attention: function attention(callBack) {var that = this;managerDetails.runAttention({ openid: that.userInfo.openid, id: that.info.id }, function (res) {console.log(res);if (res.code == 4000) {managerDetails.show_tips(res.explain);}callBack && callBack();});} }, // 下拉刷新
-  onPullDownRefresh: function onPullDownRefresh() {var that = this;that.page = 1;that._onLoad(function () {uni.stopPullDownRefresh();});}, //上拉加载更多
+      that.getDetails(function () {callBack && callBack();});}, // 详情加载
+    getDetails: function getDetails() {var that = this;managerDetails.getDetails({ id: that.info.id }, function (res) {console.log(res);if (res.code == 4000) {managerDetails.show_tips(res.explain);}callBack && callBack();});}, // 关注
+    attention: function attention(callBack) {var that = this;managerDetails.runAttention({ openid: that.userInfo.openid, id: that.info.id }, function (res) {console.log(res);if (res.code == 4000) {managerDetails.show_tips(res.explain);}callBack && callBack();});}, // 取消关注
+    notAttention: function notAttention(callBack) {var that = this;managerDetails.runNotAttention({ openid: that.userInfo.openid, id: that.info.id }, function (res) {console.log(res);if (res.code == 4000) {managerDetails.show_tips(res.explain);}callBack && callBack();});} },
+
+  // 下拉刷新
+  onPullDownRefresh: function onPullDownRefresh() {
+    var that = this;
+    that.page = 1;
+    that._onLoad(function () {
+      uni.stopPullDownRefresh();
+    });
+  },
+  //上拉加载更多
   // onReachBottom() {
   //   var that = this;
   //   if (that.last_page == that.page) {
@@ -270,7 +276,14 @@ var managerDetails = new _managerDetailsModel.default();var _default = { data: f
   //   that.get_product_list();
   // },
   // 分享
-  onShareAppMessage: function onShareAppMessage() {var shareData = { title: '', path: "pages/index/index?".concat(this.userInfo.id), imageUrl: '' };return index.onShareAppMessage(shareData);} };exports.default = _default;
+  onShareAppMessage: function onShareAppMessage() {
+    var shareData = {
+      title: '',
+      path: "pages/index/index?".concat(this.userInfo.id),
+      imageUrl: '' };
+
+    return index.onShareAppMessage(shareData);
+  } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
