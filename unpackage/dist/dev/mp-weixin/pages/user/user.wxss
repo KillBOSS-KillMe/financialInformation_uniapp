@@ -32,6 +32,9 @@
   height: auto;
   padding: 30rpx;
 }
+.content button {
+  height: 90rpx;
+}
 .content .item {
   width: 100%;
   padding: 30rpx 0;

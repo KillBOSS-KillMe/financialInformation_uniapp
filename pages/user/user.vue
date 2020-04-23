@@ -14,13 +14,13 @@
 					</view>
 					<icon class="iconfont iconxiangyou"></icon>
 				</view>
-				<view class="item">
+				<button class="item" open-type='contact' session-from=''>
 					<view>
 						<icon class="iconfont iconbangzhu"></icon>
 						<text>帮助与反馈</text>
 					</view>
 					<icon class="iconfont iconxiangyou"></icon>
-				</view>
+				</button>
 			</view>
 			<!-- 我的-客户经理 -->
 			<view class="content">
@@ -38,13 +38,13 @@
 					</view>
 					<icon class="iconfont iconxiangyou"></icon>
 				</view>
-				<view class="item">
+				<button class="item" open-type='contact' session-from=''>
 					<view>
 						<icon class="iconfont iconbangzhu"></icon>
 						<text>帮助与反馈</text>
 					</view>
 					<icon class="iconfont iconxiangyou"></icon>
-				</view>
+				</button>
 			</view>
 		</view>
 	</view>
@@ -139,8 +139,12 @@
 		width: 690rpx !important;;
 		height: auto;
 		padding: 30rpx;
+		button {
+			height: 90rpx;
+		}
 		.item {
 			width: 100%;
+			// height: 30rpx;
 			padding: 30rpx 0;
 			display: flex;
 			align-items: center;
