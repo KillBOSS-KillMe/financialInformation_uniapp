@@ -10,6 +10,8 @@
 	"libVersion": "2.9.2",
 	"appid": "touristappid",
 	"projectname": "financialInformation_uniapp",
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
 	"condition": {
 		"search": {
 			"current": -1,
@@ -19,28 +21,13 @@
 			"current": -1,
 			"list": []
 		},
-		"plugin": {
-			"current": -1,
-			"list": []
-		},
 		"game": {
-			"current": -1,
-			"list": []
-		},
-		"gamePlugin": {
 			"current": -1,
 			"list": []
 		},
 		"miniprogram": {
 			"current": -1,
-			"list": [
-				{
-					"id": -1,
-					"name": "pages/managerDetails/managerDetails",
-					"pathName": "pages/managerDetails/managerDetails",
-					"scene": null
-				}
-			]
+			"list": []
 		}
 	}
 }

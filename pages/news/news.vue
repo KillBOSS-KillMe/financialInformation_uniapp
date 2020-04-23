@@ -1,7 +1,7 @@
 <template>
 	<view class="pageTopBorder">
 		<scroll-view  scroll-y="true" class="content">
-			<view class="item" v-for="(item,index) in 20" :key="index">
+			<view class="item" @tap="goNewDetails" :data-id="1" :data-type="1" v-for="(item,index) in 20" :key="index">
 				<view class="info">
 					<image src="../../static/images/test.png" mode=""></image>
 					<view class="con">
@@ -16,11 +16,89 @@
 </template>
 
 <script>
+	import News from "./news-model.js";
+	const news = new News();
 	export default {
 		data() {
 			return {
-				
-			};
+				options: {},
+				title: 'Hello',
+				authorizationButton: null,
+				userInfo: {},
+				userInfoAll: {},
+				// 轮播图相关
+				indicatorDots: true,
+				autoplay: true,
+				interval: 2000,
+				duration: 500,
+			}
+		},
+		onLoad(options) {
+			const that = this
+			that.options = options
+			that._onLoad()
+		},
+		onShow() {
+			// 获取已授权类别
+			const that = this
+			
+		},
+		methods: {
+			_onLoad(callBack) {
+				const that = this
+				that.userInfo = that.$store.state.userInfo;
+				// that.wx_login(() => {
+				// 	that.getUserInfo(() => {
+				// 		if (that.userInfo.type == 'member') {
+							
+				// 		} else {
+				// 			// 提示用户非会员
+				// 			that.promptOpenVip()
+				// 		}
+				// 	})
+				// })
+			},
+			// 进入--消息--详情页
+			goNewDetails(e) {
+				const that = this;
+				const id = news.get_data_set(e, "id");
+				const type = news.get_data_set(e, "type");
+				let url = ''
+				if (type == 0) {
+					// 进入用户消息
+					url = `/pages/newsChat/newsChat?id=${id}`
+				} else {
+					// 进入系统消息
+					url = `/pages/sysNews/sysNews?id=${id}`
+				}
+				news.navigate_to(url);
+			}
+		},
+		// 下拉刷新
+		onPullDownRefresh() {
+			var that = this;
+			that.page = 1;
+			that._onLoad(() => {
+				uni.stopPullDownRefresh();
+			});
+		},
+		//上拉加载更多
+		// onReachBottom() {
+		//   var that = this;
+		//   if (that.last_page == that.page) {
+		//     return;
+		//   }
+		//   that.page += 1;
+		//   that.get_product_list();
+		// },
+		// 分享
+		onShareAppMessage() {
+			let shareData = {
+				title: '',
+				path: `pages/index/index?${this.userInfo.id}`,
+				imageUrl: ''
+			}
+			return index.onShareAppMessage(shareData);
 		}
 	}
 </script>
@@ -28,7 +106,7 @@
 <style lang="less">
 	@import url("../../static/css/variable.less");
 	.content {
-		width: 690rpx;
+		width: 690rpx !important;;
 		height: auto;
 		padding: 30rpx;
 	}

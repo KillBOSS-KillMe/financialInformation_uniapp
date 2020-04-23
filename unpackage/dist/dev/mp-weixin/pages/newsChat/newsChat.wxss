@@ -2,7 +2,7 @@ scroll-view {
   height: 100vh;
 }
 .content {
-  width: 690rpx;
+  width: 690rpx !important;
   height: auto;
   padding: 30rpx;
   padding-bottom: 110rpx;

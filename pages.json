@@ -40,7 +40,7 @@
 				}
 			}
 		}, {
-			"path": "pages/IdentitySel/IdentitySel",
+			"path": "pages/identitySel/identitySel",
 			"style": {
 				"navigationBarTitleText": "身份选择",
 				"enablePullDownRefresh": true,

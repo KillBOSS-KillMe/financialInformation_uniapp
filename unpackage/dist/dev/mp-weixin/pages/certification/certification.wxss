@@ -3,7 +3,7 @@ page {
   height: 100vh;
 }
 .content {
-  width: 690rpx;
+  width: 690rpx !important;
   padding: 30rpx;
 }
 .content .item {

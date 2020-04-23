@@ -1,5 +1,5 @@
 .content {
-  width: 690rpx;
+  width: 690rpx !important;
   height: auto;
   padding: 30rpx;
 }

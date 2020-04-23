@@ -17,11 +17,54 @@
 </template>
 
 <script>
+	import UserAttention from "./userAttention-model.js";
+	const userAttention = new UserAttention();
 	export default {
 		data() {
 			return {
 				
 			};
+		},
+		onLoad() {
+			const that = this
+			that._onLoad()
+		},
+		methods: {
+			_onLoad(callBack) {
+				const that = this
+				that.userInfo = that.$store.state.userInfo;
+				that.wx_login(() => {
+					that.getUserInfo(() => {
+						callBack && callBack();
+					})
+				})
+			},
+		},
+		// 下拉刷新
+		onPullDownRefresh() {
+			var that = this;
+			that.page = 1;
+			that._onLoad(() => {
+				uni.stopPullDownRefresh();
+			});
+		},
+		//上拉加载更多
+		// onReachBottom() {
+		//   var that = this;
+		//   if (that.last_page == that.page) {
+		//     return;
+		//   }
+		//   that.page += 1;
+		//   that.get_product_list();
+		// },
+		// 分享
+		onShareAppMessage() {
+			let shareData = {
+				title: '',
+				path: `pages/index/index?${this.userInfo.id}`,
+				imageUrl: ''
+			}
+			return index.onShareAppMessage(shareData);
 		}
 	}
 </script>
@@ -29,7 +72,7 @@
 <style lang="less">
 	@import url("../../static/css/variable.less");
 	.content {
-		width: 690rpx;
+		width: 690rpx !important;;
 		height: auto;
 		padding: 30rpx;
 	}

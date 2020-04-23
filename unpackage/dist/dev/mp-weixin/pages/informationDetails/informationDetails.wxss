@@ -1,5 +1,5 @@
 .content {
-  width: 690rpx;
+  width: 690rpx !important;
   padding: 30rpx;
 }
 .articleTitle,

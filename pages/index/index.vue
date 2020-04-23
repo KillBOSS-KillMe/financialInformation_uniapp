@@ -13,7 +13,7 @@
 			<view></view>金牌客户经理
 		</view>
 		<view class="managerList">
-			<view class="item">
+			<view class="item" @tap="goManagerDetails" :data-id="1">
 				<image src="../../static/images/test.png" mode=""></image>
 				<view class="info">
 					<view class="details">
@@ -21,16 +21,7 @@
 						<text>西安甜水井街支行客户经理</text>
 					</view>
 					<button class="active">关注</button>
-				</view>
-			</view>
-			<view class="item">
-				<image src="../../static/images/test.png" mode=""></image>
-				<view class="info">
-					<view class="details">
-						<view>李莉 / 交通银行</view>
-						<text>西安甜水井街支行客户经理</text>
-					</view>
-					<button class="noActive">取消关注</button>
+					<!-- <button class="noActive">取消关注</button> -->
 				</view>
 			</view>
 		</view>
@@ -38,7 +29,7 @@
 			<view></view>最新资讯
 		</view>
 		<view class="articleList">
-			<view class="item">
+			<view class="item" @tap="goInformationDetails" :data-id="1">
 				<icon class="iconfont icondian"></icon>
 				<view class="info">
 					<view class="details">
@@ -80,7 +71,7 @@
 		onLoad(options) {
 			const that = this
 			that.options = options
-			that._onLoad()
+			// that._onLoad()
 		},
 		onShow() {
 			// 获取已授权类别
@@ -120,6 +111,18 @@
 						}
 					})
 				})
+			},
+			// 进入--客户经理--详情页
+			goManagerDetails(e) {
+				const that = this;
+				const id = index.get_data_set(e, "id");
+				index.navigate_to(`/pages/managerDetails/managerDetails?id=${id}`);
+			},
+			// 进入--资讯--详情页
+			goInformationDetails(e) {
+				const that = this;
+				const id = index.get_data_set(e, "id");
+				index.navigate_to(`/pages/informationDetails/informationDetails?id=${id}`);
 			},
 			wx_login(callBack) {
 				const that = this;
