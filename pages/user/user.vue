@@ -6,6 +6,7 @@
 		</view>
 		<view class="pageTopBorder">
 			<!-- 我的-用户 -->
+			<!-- <view class="content" v-if="userInfo.role == 1"> -->
 			<view class="content">
 				<view class="item" @tap="goUserAttention">
 					<view>
@@ -23,6 +24,7 @@
 				</button>
 			</view>
 			<!-- 我的-客户经理 -->
+			<!-- <view class="content" v-if="userInfo.role == 2"> -->
 			<view class="content">
 				<view class="item" @tap="goUserVIP">
 					<view>
@@ -57,7 +59,7 @@
 	export default {
 		data() {
 			return {
-				
+				userInfo: {}
 			};
 		},
 		onLoad() {

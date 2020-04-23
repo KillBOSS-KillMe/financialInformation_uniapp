@@ -1,0 +1,28 @@
+.notList {
+  width: 100%;
+  height: auto;
+  padding: 100rpx 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+}
+.notList .iconfont {
+  font-size: 200rpx;
+  color: #cdcdcd;
+  margin-bottom: 50rpx;
+}
+.notList text {
+  font-size: 30rpx;
+  color: #cdcdcd;
+}
+

@@ -1,7 +1,8 @@
 <template>
 	<view class="pageTopBorder">
 		<scroll-view  scroll-y="true" class="content">
-			<view class="item" @tap="goNewDetails" :data-id="1" :data-type="1" v-for="(item,index) in 20" :key="index">
+			<notList v-if="newsList.length <= 0" />
+			<view class="item" @tap="goNewDetails" :data-id="1" :data-type="0" v-for="(item,index) in 20" :key="index" v-if="newsList.length > 0">
 				<view class="info">
 					<image src="../../static/images/test.png" mode=""></image>
 					<view class="con">
@@ -16,13 +17,17 @@
 </template>
 
 <script>
+	import notList from "@/components/notList.vue";
 	import News from "./news-model.js";
 	const news = new News();
 	export default {
+		components: {
+		  notList
+		},
 		data() {
 			return {
 				userInfo: {},
-				newsList: []
+				newsList: [1,2,4]
 			}
 		},
 		onLoad(options) {

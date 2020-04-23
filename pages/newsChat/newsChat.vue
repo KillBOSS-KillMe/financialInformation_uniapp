@@ -12,8 +12,8 @@
 		</scroll-view>
 		<view class="sendMessage">
 			<view class="con">
-				<input type="text" value="" placeholder="请填写您的评论信息" />
-				<button type="default">发送</button>
+				<input type="text" :value="message" @input="getMessage" placeholder="请填写您的评论信息" />
+				<button type="default" @tap="sendMessage">发送</button>
 			</view>
 		</view>
 	</view>
@@ -25,23 +25,58 @@
 	export default {
 		data() {
 			return {
-				
+				options: {},
+				userInfo: {},
+				message: ''
 			};
 		},
-		onLoad() {
+		onLoad(options) {
 			const that = this
+			that.options = options
 			that._onLoad()
 		},
 		methods: {
 			_onLoad(callBack) {
 				const that = this
 				that.userInfo = that.$store.state.userInfo;
-				that.wx_login(() => {
-					that.getUserInfo(() => {
-						callBack && callBack();
-					})
+				that.getNewsList(() => {
+					callBack && callBack();
 				})
 			},
+			getNewsList(callBack) {
+				const that = this
+				newsChat.getNewsList({
+					openid: that.userInfo.openid,
+					id: that.options.id
+				}, (res) => {
+					console.log(res)
+					if (res.code == 4000) {
+						
+					}
+					callBack && callBack();
+				})
+			},
+			// 发送消息
+			sendMessage(callBack) {
+				const that = this
+				newsChat.sendMessage({
+					openid: that.userInfo.openid,
+					id: that.options.id,
+					content: this.message
+				}, (res) => {
+					console.log(res)
+					if (res.code == 4000) {
+						
+					} else {
+						newsChat.show_tips(res.explain)
+					}
+					// callBack && callBack();
+				})
+			},
+			getMessage(e) {
+				const that = this
+				this.message = newsChat.get_input_val(e)
+			}
 		},
 		// 下拉刷新
 		onPullDownRefresh() {

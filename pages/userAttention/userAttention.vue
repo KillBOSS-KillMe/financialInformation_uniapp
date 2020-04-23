@@ -1,7 +1,8 @@
 <template>
 	<view class="pageTopBorder">
 		<view class="content">
-			<view class="item" v-for="(item,index) in 20" :key="index">
+			<notList v-if="attentionNode.data.length <= 0" />
+			<view class="item" v-for="(item,index) in 20" :key="index" v-if="attentionNode.data.length > 0">
 				<image src="../../static/images/test.png" mode=""></image>
 				<view class="info">
 					<view class="con">
@@ -17,12 +18,18 @@
 </template>
 
 <script>
+	import notList from "@/components/notList.vue";
 	import UserAttention from "./userAttention-model.js";
 	const userAttention = new UserAttention();
 	export default {
+		components: {
+		  notList
+		},
 		data() {
 			return {
-				
+				attentionNode: {
+					data: []
+				}
 			};
 		},
 		onLoad() {
@@ -33,12 +40,22 @@
 			_onLoad(callBack) {
 				const that = this
 				that.userInfo = that.$store.state.userInfo;
-				that.wx_login(() => {
-					that.getUserInfo(() => {
-						callBack && callBack();
-					})
+				that.getList(() => {
+					callBack && callBack();
 				})
 			},
+			getList(callBack) {
+				const that = this
+				userAttention.getList({
+					openid: that.userInfo.openid	
+				}, (res) => {
+					console.log(res)
+					if (res.code == 4000) {
+						this.attentionNode = res
+					}
+					callBack && callBack();
+				})
+			}
 		},
 		// 下拉刷新
 		onPullDownRefresh() {

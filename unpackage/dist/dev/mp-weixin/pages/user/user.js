@@ -185,6 +185,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
 var _userModel = _interopRequireDefault(__webpack_require__(/*! ./user-model.js */ 43));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
@@ -238,7 +240,9 @@ var _userModel = _interopRequireDefault(__webpack_require__(/*! ./user-model.js 
 //
 //
 //
-var user = new _userModel.default();var _default = { data: function data() {return {};}, onLoad: function onLoad() {var that = this;that._onLoad();}, methods: { _onLoad: function _onLoad(callBack) {var that = this;that.userInfo = that.$store.state.userInfo; // that.wx_login(() => {
+//
+//
+var user = new _userModel.default();var _default = { data: function data() {return { userInfo: {} };}, onLoad: function onLoad() {var that = this;that._onLoad();}, methods: { _onLoad: function _onLoad(callBack) {var that = this;that.userInfo = that.$store.state.userInfo; // that.wx_login(() => {
       // 	that.getUserInfo(() => {
       // 		callBack && callBack();
       // 	})

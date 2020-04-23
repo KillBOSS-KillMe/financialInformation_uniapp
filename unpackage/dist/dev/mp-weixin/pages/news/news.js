@@ -149,25 +149,30 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _newsModel = _interopRequireDefault(__webpack_require__(/*! ./news-model.js */ 34));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var news = new _newsModel.default();var _default = { data: function data() {return { userInfo: {}, newsList: [] };}, onLoad: function onLoad(options) {var that = this;that.options = options;that._onLoad();}, onShow: function onShow() {// 获取已授权类别
-    var that = this;},
+
+
+var _newsModel = _interopRequireDefault(__webpack_require__(/*! ./news-model.js */ 34));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var notList = function notList() {__webpack_require__.e(/*! require.ensure | components/notList */ "components/notList").then((function () {return resolve(__webpack_require__(/*! @/components/notList.vue */ 140));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
+var news = new _newsModel.default();var _default =
+{
+  components: {
+    notList: notList },
+
+  data: function data() {
+    return {
+      userInfo: {},
+      newsList: [1, 2, 4] };
+
+  },
+  onLoad: function onLoad(options) {
+    var that = this;
+    that.options = options;
+    that._onLoad();
+  },
+  onShow: function onShow() {
+    // 获取已授权类别
+    var that = this;
+
+  },
   methods: {
     _onLoad: function _onLoad(callBack) {
       var that = this;

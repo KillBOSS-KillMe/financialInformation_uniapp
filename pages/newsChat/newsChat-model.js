@@ -4,10 +4,10 @@ class NewsChat extends Base {
 		super();
 	}
 	// 登录
-	login(data, callBack) {
+	getNewsList(data, callBack) {
 		var that = this;
 		var params = {
-			url: 'auth/login',
+			url: 'chat/getChatContent',
 			method: 'POST',
 			data: data,
 			sCallBack: function(res) {
@@ -17,10 +17,10 @@ class NewsChat extends Base {
 		that.request(params);
 	};
 	// 获取用户信息
-	getUserInfo(data, callBack) {
+	sendMessage(data, callBack) {
 		var that = this;
 		var params = {
-			url: 'auth/me',
+			url: 'chat/sendMessage',
 			method: 'POST',
 			data: data,
 			sCallBack: function(res) {

@@ -10522,10 +10522,10 @@ NewsChat = /*#__PURE__*/function (_Base) {_inherits(NewsChat, _Base);
 
   }
   // 登录
-  _createClass(NewsChat, [{ key: "login", value: function login(data, callBack) {
+  _createClass(NewsChat, [{ key: "getNewsList", value: function getNewsList(data, callBack) {
       var that = this;
       var params = {
-        url: 'auth/login',
+        url: 'chat/getChatContent',
         method: 'POST',
         data: data,
         sCallBack: function sCallBack(res) {
@@ -10533,12 +10533,12 @@ NewsChat = /*#__PURE__*/function (_Base) {_inherits(NewsChat, _Base);
         } };
 
       that.request(params);
-    } }, { key: "getUserInfo",
+    } }, { key: "sendMessage",
     // 获取用户信息
-    value: function getUserInfo(data, callBack) {
+    value: function sendMessage(data, callBack) {
       var that = this;
       var params = {
-        url: 'auth/me',
+        url: 'chat/sendMessage',
         method: 'POST',
         data: data,
         sCallBack: function sCallBack(res) {
@@ -10566,24 +10566,11 @@ UserAttention = /*#__PURE__*/function (_Base) {_inherits(UserAttention, _Base);
   function UserAttention() {_classCallCheck(this, UserAttention);return _possibleConstructorReturn(this, _getPrototypeOf(UserAttention).call(this));
 
   }
-  // 登录
-  _createClass(UserAttention, [{ key: "login", value: function login(data, callBack) {
+  // 加载消息列表
+  _createClass(UserAttention, [{ key: "getList", value: function getList(data, callBack) {
       var that = this;
       var params = {
-        url: 'auth/login',
-        method: 'POST',
-        data: data,
-        sCallBack: function sCallBack(res) {
-          callBack && callBack(res.data);
-        } };
-
-      that.request(params);
-    } }, { key: "getUserInfo",
-    // 获取用户信息
-    value: function getUserInfo(data, callBack) {
-      var that = this;
-      var params = {
-        url: 'auth/me',
+        url: 'users/getFollowList',
         method: 'POST',
         data: data,
         sCallBack: function sCallBack(res) {

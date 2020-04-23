@@ -174,7 +174,42 @@ var _newsChatModel = _interopRequireDefault(__webpack_require__(/*! ./newsChat-m
 //
 //
 //
-var newsChat = new _newsChatModel.default();var _default = { data: function data() {return {};}, onLoad: function onLoad() {var that = this;that._onLoad();}, methods: { _onLoad: function _onLoad(callBack) {var that = this;that.userInfo = that.$store.state.userInfo;that.wx_login(function () {that.getUserInfo(function () {callBack && callBack();});});} },
+var newsChat = new _newsChatModel.default();var _default = { data: function data() {return { options: {}, userInfo: {}, message: '' };}, onLoad: function onLoad(options) {var that = this;that.options = options;that._onLoad();}, methods: { _onLoad: function _onLoad(callBack) {var that = this;that.userInfo = that.$store.state.userInfo;that.getNewsList(function () {callBack && callBack();});
+    },
+    getNewsList: function getNewsList(callBack) {
+      var that = this;
+      newsChat.getNewsList({
+        openid: that.userInfo.openid,
+        id: that.options.id },
+      function (res) {
+        console.log(res);
+        if (res.code == 4000) {
+
+        }
+        callBack && callBack();
+      });
+    },
+    // 发送消息
+    sendMessage: function sendMessage(callBack) {
+      var that = this;
+      newsChat.sendMessage({
+        openid: that.userInfo.openid,
+        id: that.options.id,
+        content: this.message },
+      function (res) {
+        console.log(res);
+        if (res.code == 4000) {
+
+        } else {
+          newsChat.show_tips(res.explain);
+        }
+        // callBack && callBack();
+      });
+    },
+    getMessage: function getMessage(e) {
+      var that = this;
+      this.message = newsChat.get_input_val(e);
+    } },
 
   // 下拉刷新
   onPullDownRefresh: function onPullDownRefresh() {

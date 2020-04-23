@@ -150,26 +150,43 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _userAttentionModel = _interopRequireDefault(__webpack_require__(/*! ./userAttention-model.js */ 97));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var userAttention = new _userAttentionModel.default();var _default = { data: function data() {return {};}, onLoad: function onLoad() {var that = this;that._onLoad();}, methods: { _onLoad: function _onLoad(callBack) {var that = this;that.userInfo = that.$store.state.userInfo;that.wx_login(function () {that.getUserInfo(function () {callBack && callBack();
-        });
+
+
+var _userAttentionModel = _interopRequireDefault(__webpack_require__(/*! ./userAttention-model.js */ 97));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var notList = function notList() {__webpack_require__.e(/*! require.ensure | components/notList */ "components/notList").then((function () {return resolve(__webpack_require__(/*! @/components/notList.vue */ 140));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
+var userAttention = new _userAttentionModel.default();var _default =
+{
+  components: {
+    notList: notList },
+
+  data: function data() {
+    return {
+      attentionNode: {
+        data: [] } };
+
+
+  },
+  onLoad: function onLoad() {
+    var that = this;
+    that._onLoad();
+  },
+  methods: {
+    _onLoad: function _onLoad(callBack) {
+      var that = this;
+      that.userInfo = that.$store.state.userInfo;
+      that.getList(function () {
+        callBack && callBack();
+      });
+    },
+    getList: function getList(callBack) {var _this = this;
+      var that = this;
+      userAttention.getList({
+        openid: that.userInfo.openid },
+      function (res) {
+        console.log(res);
+        if (res.code == 4000) {
+          _this.attentionNode = res;
+        }
+        callBack && callBack();
       });
     } },
 
