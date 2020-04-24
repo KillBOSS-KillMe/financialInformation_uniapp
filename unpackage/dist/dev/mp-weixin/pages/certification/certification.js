@@ -201,8 +201,11 @@ var certification = new _certificationModel.default();var _default = { data: fun
       // 		callBack && callBack();
       // 	})
       // })
-    }, validation: function validation() {certification.switch_tab("/pages/index/index");} }, // 下拉刷新
-  onPullDownRefresh: function onPullDownRefresh() {var that = this;that.page = 1;that._onLoad(function () {uni.stopPullDownRefresh();
+    }, validation: function validation() {certification.switch_tab("/pages/index/index");}, upImage: function upImage() {} }, // 下拉刷新
+  onPullDownRefresh: function onPullDownRefresh() {var that = this;
+    that.page = 1;
+    that._onLoad(function () {
+      uni.stopPullDownRefresh();
     });
   },
   //上拉加载更多

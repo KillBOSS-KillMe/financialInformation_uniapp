@@ -11,7 +11,8 @@
     "pages/userAttention/userAttention",
     "pages/userQualification/userQualification",
     "pages/userVIP/userVIP",
-    "pages/certification/certification"
+    "pages/certification/certification",
+    "pages/sysNewsList/sysNewsList"
   ],
   "subPackages": [],
   "window": {
@@ -45,6 +46,5 @@
       }
     ]
   },
-  "usingComponents": {},
-  "sitemapLocation": "sitemap68.json"
+  "usingComponents": {}
 }

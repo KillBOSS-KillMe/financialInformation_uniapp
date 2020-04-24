@@ -28,7 +28,7 @@
 		data() {
 			return {
 				userInfo: {},
-				newsList: [1,2,4]
+				newsList: []
 			}
 		},
 		onLoad(options) {

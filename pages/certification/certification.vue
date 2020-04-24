@@ -19,10 +19,10 @@
 			</view>
 		</view>
 		<view class="upIDCard">
-			<image src="../../static/images/IDcard_1.png" mode="" v-if="formData.IDCard_1 == ''"></image>
-			<image :src="formData.IDCard_1" mode="" v-if="formData.IDCard_1 != ''"></image>
-			<image src="../../static/images/IDcard_2.png" mode="" v-if="formData.IDCard_2 == ''"></image>
-			<image :src="formData.IDCard_2" mode="" v-if="formData.IDCard_2 != ''"></image>
+			<image src="../../static/images/IDcard_1.png" mode="" v-if="formData.IDCard_1 == ''" @tap="upImage" data-type="1"></image>
+			<image :src="formData.IDCard_1" mode="" v-if="formData.IDCard_1 != ''" @tap="upImage" data-type="1"></image>
+			<image src="../../static/images/IDcard_2.png" mode="" v-if="formData.IDCard_2 == ''" @tap="upImage" data-type="2"></image>
+			<image :src="formData.IDCard_2" mode="" v-if="formData.IDCard_2 != ''" @tap="upImage" data-type="2"></image>
 		</view>
 		<view class="sub">
 			<view @tap="validation">提交</view>
@@ -62,6 +62,9 @@
 			},
 			validation() {
 				certification.switch_tab(`/pages/index/index`);
+			},
+			upImage() {
+				
 			}
 		},
 		// 下拉刷新

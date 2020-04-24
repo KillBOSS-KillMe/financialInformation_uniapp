@@ -161,7 +161,7 @@ var news = new _newsModel.default();var _default =
   data: function data() {
     return {
       userInfo: {},
-      newsList: [1, 2, 4] };
+      newsList: [] };
 
   },
   onLoad: function onLoad(options) {
