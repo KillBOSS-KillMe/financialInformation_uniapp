@@ -15,7 +15,7 @@
 			</view>
 			<view class="item">
 				<view>身份证号</view>
-				<input type="text" value="" @input="getformData" data-name="name" placeholder="请输入您的身份证号码" />
+				<input type="idcard" value="" @input="getformData" data-name="IDNumber" placeholder="请输入您的身份证号码" />
 			</view>
 		</view>
 		<view class="upIDCard">
@@ -54,17 +54,63 @@
 			_onLoad(callBack) {
 				const that = this
 				that.userInfo = that.$store.state.userInfo;
-				// that.wx_login(() => {
-				// 	that.getUserInfo(() => {
-				// 		callBack && callBack();
-				// 	})
-				// })
 			},
+			getformData(e) {
+				const that = this
+				let val = certification.get_input_val(e);
+				let key = certification.get_data_set(e, 'name');
+				that.formData[key] = val
+			},
+			// 提交数据
 			validation() {
-				certification.switch_tab(`/pages/index/index`);
+				const that = this
+				const formData = that.formData
+				// 数据非空校验
+				for (let key in formData) {
+					if (formData[key] == ''){
+						certification.show_tips('请完善认证信息')
+						return false
+					}
+				}
+				certification.validation({
+					openid: that.userInfo.openid,
+					name: formData.name,
+					company: formData.bank,
+					post: formData.post,
+					identity: formData.IDNumber,
+					identity_just: formData.IDCard_1,
+					identity_back: formData.IDCard_2
+				}, (res) => {
+					if (res.code == 4000) {
+						certification.show_tips('提交成功，已提交审核')
+						setTimeout(() => {
+							certification.navigate_back()
+						}, 2000)
+					} else {
+						certification.show_tips(res.explain)
+					}
+					callBack && callBack();
+				})
 			},
-			upImage() {
-				
+			// 图片上传
+			upImage(e) {
+				const that = this
+				let type = certification.get_data_set(e, 'type')
+				certification.getCard({
+					count: 1,
+					data: {
+						openid: that.userInfo.openid,
+						photo_type: type
+					}
+				}, (res) => {
+					res = res[0]
+					if (res.data.photo_type == '1') {
+						that.formData.IDCard_1 = res.data.url
+					} else {
+						that.formData.IDCard_2 = res.data.url
+					}
+					certification.show_tips(res.data.explain)
+				})
 			}
 		},
 		// 下拉刷新
@@ -116,8 +162,8 @@
 			}
 			input {
 				width: 630rpx;
-				height: auto;
-				padding: 15rpx 30rpx;
+				height: 80rpx;
+				padding: 0 30rpx;
 				margin-top: 20rpx;
 				border: 1rpx solid @borderColor_1;
 				display: flex;

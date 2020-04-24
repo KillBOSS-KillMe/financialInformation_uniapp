@@ -1658,11 +1658,11 @@ IdentitySel = /*#__PURE__*/function (_Base) {_inherits(IdentitySel, _Base);
   function IdentitySel() {_classCallCheck(this, IdentitySel);return _possibleConstructorReturn(this, _getPrototypeOf(IdentitySel).call(this));
 
   }
-  // 登录
-  _createClass(IdentitySel, [{ key: "login", value: function login(data, callBack) {
+  // 认证提交
+  _createClass(IdentitySel, [{ key: "validation", value: function validation(data, callBack) {
       var that = this;
       var params = {
-        url: 'auth/login',
+        url: 'Certificates/qualification',
         method: 'POST',
         data: data,
         sCallBack: function sCallBack(res) {
@@ -1670,19 +1670,19 @@ IdentitySel = /*#__PURE__*/function (_Base) {_inherits(IdentitySel, _Base);
         } };
 
       that.request(params);
-    } }, { key: "getUserInfo",
-    // 获取用户信息
-    value: function getUserInfo(data, callBack) {
+    } }, { key: "getCard",
+    // 上传图片
+    value: function getCard(data, callBack) {
       var that = this;
       var params = {
-        url: 'auth/me',
+        url: 'Certificates/photo',
         method: 'POST',
         data: data,
         sCallBack: function sCallBack(res) {
-          callBack && callBack(res.data);
+          callBack && callBack(res);
         } };
 
-      that.request(params);
+      that.upload(params);
     } }]);return IdentitySel;}(_base.default);var _default =
 
 
@@ -8965,6 +8965,7 @@ Base = /*#__PURE__*/function () {
   function Base() {_classCallCheck(this, Base);
     this.base_qequest_url = _config.default.requset_url;
     this.base_image_url = _config.default.img_url;
+    this.base_up_image_url = _config.default.up_img_url;
     this.base_wx_login_url = _config.default.wx_login_url;
     this.base_wx_order_pay_url = _config.default.wx_order_pay_url;
     this.apikey = _config.default.apikey;
@@ -9040,69 +9041,44 @@ Base = /*#__PURE__*/function () {
       // })
     }
     //图片上传
-  }, { key: "upload", value: function upload(count, callBack) {
+  }, { key: "upload", value: function upload(data, callBack) {
       var that = this;
-      var url = that.base_qequest_url + 'cash_withdrawal/qrcodeUpload';
-      var token = '';
-      var token_type = '';
-      that.get_storage('token', function (res) {
-        token = res;
-        that.get_storage('token_type', function (res) {
-          token_type = res;
-          uni.chooseImage({
-            count: count,
-            success: function success(res) {
-              console.log(res.tempFilePaths);
-              that.show_loading('上传中...');
-              Promise.all(res.tempFiles.map(function (item) {
-                return new Promise(function (resolve, reject) {
-                  wx.uploadFile({
-                    url: "".concat(self.globalData.requestUrl, "/work/upload_file"),
-                    filePath: item.path,
-                    name: 'qrcode',
-                    success: function success(res) {
-                      resolve({
-                        path: JSON.parse(res.data).data });
+      var url = that.base_qequest_url + 'Certificates/photo';
+      // var token = '';
+      // var token_type = '';
+      // that.get_storage('token', (res) => {
+      // token = res;
+      // that.get_storage('token_type', (res) => {
+      // token_type = res;
+      uni.chooseImage({
+        count: data.count,
+        success: function success(res) {
+          that.show_loading('上传中...');
+          Promise.all(res.tempFiles.map(function (item) {
+            return new Promise(function (resolve, reject) {
+              uni.uploadFile({
+                url: url,
+                filePath: item.path,
+                name: 'photo',
+                formData: data.data.data,
+                success: function success(res) {
+                  res = JSON.parse(res.data);
+                  res.url = that.base_up_image_url + res.url;
+                  resolve({
+                    // path: JSON.parse(res.data)
+                    data: res });
 
-                    } });
+                } });
 
-                });
-              })).then(function (e) {
-                that.hide_loading();
-                count.sCallBack && count.sCallBack(e);return;
-                // that.setData({
-                // 	imgArr: imgArr.concat(e)
-                // })
-              }).catch(function (err) {return console.log(err);});
-              // for (var i = 0; i < res.tempFilePaths.length; i++) {
-              // 	that.show_loading('上传中...');
-              // 	uni.uploadFile({
-              // 		url: url,
-              // 		filePath: res.tempFilePaths[i],
-              // 		name: 'qrcode',
-              // 		header: {
-              // 			'apikey': that.apikey,
-              // 			'Authorization': token_type + ' ' + token
-              // 		},
-              // 		success: function (uploadFileRes) {
-              // 			var data = JSON.parse(uploadFileRes.data);
-              // 			// var data = uploadFileRes;
-              // 			that.hide_loading();
-              // 			// token实效,更新token
-              // 			if (data.status_code == 500) {
-              // 				that.refresh_token(count); return;
-              // 			}
-              // 			console.log(data)
-              // 			data.data = that.base_image_url + data.data
-              // 			// 返回请求到的数据
-              // 			count.sCallBack && count.sCallBack(data); return;
-              // 		}
-              // 	});
-              // }
-            } });
+            });
+          })).then(function (e) {
+            that.hide_loading();
+            data.sCallBack && data.sCallBack(e);return;
+          }).catch(function (err) {return console.log(err);});
+        } });
 
-        });
-      });
+      // })
+      // })
     }
     //刷新token
   }, { key: "refresh_token", value: function refresh_token(params) {
@@ -9156,12 +9132,9 @@ Base = /*#__PURE__*/function () {
       uni.getStorage({
         key: key,
         success: function success(res) {
-          console.log('|+|+|+|+|+|||||||||||||||||||||||||||||||||||||');
-          console.log(res);
           callBack(res.data);
         },
         fail: function fail(e) {
-          console.log('|||||||||||||||||||||||||||||||||||||+|+|+|+|+|');
           callBack('');
         } });
 
@@ -9302,6 +9275,7 @@ function Config() {_classCallCheck(this, Config);
 //接口域名
 Config.requset_url = "http://192.168.1.112/api/";
 Config.img_url = "http://192.168.1.112/static/rotation_chart/";
+Config.up_img_url = "http://192.168.1.112/uploads/";
 //微信授权域名192.168.1.168
 //Config.wx_login_url = "https://diancan.lvacms.cn/wechat/login";
 

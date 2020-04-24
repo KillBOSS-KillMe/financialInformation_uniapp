@@ -40,6 +40,13 @@
 					"id": -1,
 					"name": "pages/sysNewsList/sysNewsList",
 					"pathName": "pages/sysNewsList/sysNewsList",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/certification/certification",
+					"pathName": "pages/certification/certification",
 					"scene": null
 				}
 			]

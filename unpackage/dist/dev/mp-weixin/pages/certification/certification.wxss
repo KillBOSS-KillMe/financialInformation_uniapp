@@ -18,8 +18,8 @@ page {
 }
 .content .item input {
   width: 630rpx;
-  height: auto;
-  padding: 15rpx 30rpx;
+  height: 80rpx;
+  padding: 0 30rpx;
   margin-top: 20rpx;
   border: 1rpx solid #EEEEEE;
   display: -webkit-box;

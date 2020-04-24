@@ -3,11 +3,11 @@ class IdentitySel extends Base {
 	constructor() {
 		super();
 	}
-	// 登录
-	login(data, callBack) {
+	// 认证提交
+	validation(data, callBack) {
 		var that = this;
 		var params = {
-			url: 'auth/login',
+			url: 'Certificates/qualification',
 			method: 'POST',
 			data: data,
 			sCallBack: function(res) {
@@ -16,18 +16,18 @@ class IdentitySel extends Base {
 		};
 		that.request(params);
 	};
-	// 获取用户信息
-	getUserInfo(data, callBack) {
+	// 上传图片
+	getCard(data, callBack) {
 		var that = this;
 		var params = {
-			url: 'auth/me',
+			url: 'Certificates/photo',
 			method: 'POST',
 			data: data,
 			sCallBack: function(res) {
-				callBack && callBack(res.data);
+				callBack && callBack(res);
 			}
 		};
-		that.request(params);
+		that.upload(params);
 	};
 }
 
