@@ -94,11 +94,17 @@ text-overflow: ellipsis; -->
 						},
 						method: 'POST',
 						success: (res) => {
+							let index = 1
 							if (res.data.number > 0) {
 								// 添加底部导航右上角文字
+								that.$store.commit('getNewNewsNum', res.data.number);
 								uni.setTabBarBadge({
-									index: 1,
+									index: index,
 									text: res.data.number+''
+								})
+							} else {
+								uni.removeTabBarBadge({
+									index: index
 								})
 							}
 						}

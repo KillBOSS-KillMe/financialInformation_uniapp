@@ -206,8 +206,8 @@ var _default = { data: { return: { updataNews: null, userInfo: {}, requset_url: 
     // }, 6000)
   }, onHide: function onHide() {console.log('App Hide'); // 停止新消息的刷新
     clearTimeout(this.updataNews);}, methods: { alwaysUpdataNews: function alwaysUpdataNews() {var that = this;that.userInfo = that.$store.state.userInfo; // 判断用户信息是否已经获取
-      if (that.userInfo.openid) {uni.request({ url: "".concat(that.requset_url, "chat/unreadNumber"), data: { openid: that.userInfo.openid }, method: 'POST', success: function success(res) {if (res.data.number > 0) {// 添加底部导航右上角文字
-              uni.setTabBarBadge({ index: 1, text: res.data.number + '' });}} });}} } };exports.default = _default;
+      if (that.userInfo.openid) {uni.request({ url: "".concat(that.requset_url, "chat/unreadNumber"), data: { openid: that.userInfo.openid }, method: 'POST', success: function success(res) {var index = 1;if (res.data.number > 0) {// 添加底部导航右上角文字
+              that.$store.commit('getNewNewsNum', res.data.number);uni.setTabBarBadge({ index: index, text: res.data.number + '' });} else {uni.removeTabBarBadge({ index: index });}} });}} } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

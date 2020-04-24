@@ -5,9 +5,14 @@ const store = new Vuex.Store({
 	state: {
 		authorizationButton: true,
 		userInfo: {},
-		settings: {}
+		settings: {},
+		newNewsNum: 0
 	},
 	mutations: {
+		// 更新新消息条数数量
+		setNewNewsNum(state, data = 0) {
+			state.newNewsNum = data
+		},
 		// 更新授权按钮显示状态
 		updataSettingsInfo(state, data = {}) {
 			state.settings = data

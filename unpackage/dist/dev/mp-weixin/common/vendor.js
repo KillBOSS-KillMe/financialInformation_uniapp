@@ -1834,9 +1834,14 @@ var store = new _vuex.default.Store({
   state: {
     authorizationButton: true,
     userInfo: {},
-    settings: {} },
+    settings: {},
+    newNewsNum: 0 },
 
   mutations: {
+    // 更新新消息条数数量
+    setNewNewsNum: function setNewNewsNum(state) {var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+      state.newNewsNum = data;
+    },
     // 更新授权按钮显示状态
     updataSettingsInfo: function updataSettingsInfo(state) {var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
       state.settings = data;
