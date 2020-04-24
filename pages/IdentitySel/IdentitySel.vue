@@ -59,7 +59,7 @@
 									portrait: infoRes.userInfo.avatarUrl,
 									nickname: infoRes.userInfo.nickName
 								}, (res) => {
-									console.log(res)
+									// console.log(res)
 									if (res.code == 4000) {
 										that.$store.commit('updateUserInfo', res.data);
 										if (role == '1') {
@@ -67,12 +67,17 @@
 										} else {
 											// validation => 0  未认证
 											// validation => 1  认证
-											if (res.data.validation) {
-												// 客户经理资质已认证
+											// validation => 2  审核中
+											if (res.data.validation == 0) {
+												// 客户经理资质 已认证
 												identitySel.switch_tab(`/pages/index/index`);
-											} else {
-												// 客户经理资质未认证，进入资质认证页
+											} else if (res.data.validation == 1) {
+												// 客户经理资质 未认证
 												identitySel.navigate_to(`/pages/certification/certification`);
+											} else if (res.data.validation == 2) {
+												// 客户经理资质 审核中
+												identitySel.show_tips('资质审核中')
+												return false
 											}
 										}
 									}
