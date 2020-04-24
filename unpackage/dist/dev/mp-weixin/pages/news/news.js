@@ -151,6 +151,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 var _newsModel = _interopRequireDefault(__webpack_require__(/*! ./news-model.js */ 43));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var notList = function notList() {__webpack_require__.e(/*! require.ensure | components/notList */ "components/notList").then((function () {return resolve(__webpack_require__(/*! @/components/notList.vue */ 127));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
 var news = new _newsModel.default();var _default =
 {
@@ -166,30 +167,69 @@ var news = new _newsModel.default();var _default =
   onLoad: function onLoad(options) {
     var that = this;
     that.options = options;
-    that._onLoad();
   },
   onShow: function onShow() {
     // 获取已授权类别
     var that = this;
-
+    that._onLoad();
   },
   methods: {
     _onLoad: function _onLoad(callBack) {
       var that = this;
       that.userInfo = that.$store.state.userInfo;
-      console.log(that.userInfo);
-      that.getNewsList(function () {
+      var newNewsNum = that.$store.state.newNewsNum;
+      if (newNewsNum > 0) {
+        // 加载新的消息列表和原有消息列表,然后二者合并
+        that.getNewNewsList(function () {
+          that.getNewsList(function () {
+            callBack && callBack();
+          });
+        });
+      } else {
+        // 只加载原有消息列表
+        that.getNewsList(function () {
+          callBack && callBack();
+        });
+      }
+    },
+    // 加载新消息列表
+    getNewNewsList: function getNewNewsList(callBack) {
+      var that = this;
+      news.getNewNewsList({
+        openid: that.userInfo.openid },
+      function (res) {
+        // console.log(res)
+        if (res.code == 4000) {
+          that.newNewsLsit = res.data;
+        }
         callBack && callBack();
       });
     },
+    // 加载原有消息列表
     getNewsList: function getNewsList(callBack) {
       var that = this;
-      news.getChatList({
+      news.getNewsList({
         openid: that.userInfo.openid },
       function (res) {
-        console.log(res);
+        // console.log(res)
         if (res.code == 4000) {
-
+          var newsLsit = res.data;
+          if (that.newNewsLsit.length > 0) {
+            var newNewsLsit = that.newNewsLsit;
+            for (var i = 0; i < newsLsit.length; i++) {
+              for (var y = 0; y < newNewsLsit.length; y++) {
+                if (newNewsLsit[y].id == newsLsit[i].id) {
+                  // newsLsit[i] = newNewsLsit[y]
+                  // 删除原有消息中与新消息重复的项
+                  newsLsit.splice(i, 1);
+                }
+              }
+            }
+            // 合并新消息与旧消息
+            that.newsLsit = newNewsLsit.concat(newsLsit);
+          } else {
+            that.newsLsit = newsLsit;
+          }
         }
         callBack && callBack();
       });

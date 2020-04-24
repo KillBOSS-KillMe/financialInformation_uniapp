@@ -3,8 +3,21 @@ class News extends Base {
 	constructor() {
 		super();
 	}
-	// 加载消息列表
-	getChatList(data, callBack) {
+	// 加载新消息列表
+	getNewNewsList(data, callBack) {
+		var that = this;
+		var params = {
+			url: 'chat/unreadContent',
+			method: 'POST',
+			data: data,
+			sCallBack: function(res) {
+				callBack && callBack(res.data);
+			}
+		};
+		that.request(params);
+	};
+	// 加载原有消息列表
+	getNewsList(data, callBack) {
 		var that = this;
 		var params = {
 			url: 'chat/getChatList',

@@ -11,6 +11,7 @@
 					</view>
 				</view>
 				<icon class="iconfont iconxiangyou"></icon>
+				<text class="newNews">11</text>
 			</view>
 		</scroll-view>
 	</view>
@@ -33,30 +34,69 @@
 		onLoad(options) {
 			const that = this
 			that.options = options
-			that._onLoad()
 		},
 		onShow() {
 			// 获取已授权类别
 			const that = this
-			
+			that._onLoad()
 		},
 		methods: {
 			_onLoad(callBack) {
 				const that = this
 				that.userInfo = that.$store.state.userInfo;
-				console.log(that.userInfo)
-				that.getNewsList(() => {
+				let newNewsNum = that.$store.state.newNewsNum;
+				if (newNewsNum > 0) {
+					// 加载新的消息列表和原有消息列表,然后二者合并
+					that.getNewNewsList(() => {
+						that.getNewsList(() => {
+							callBack && callBack();
+						})
+					})
+				} else {
+					// 只加载原有消息列表
+					that.getNewsList(() => {
+						callBack && callBack();
+					})
+				}
+			},
+			// 加载新消息列表
+			getNewNewsList(callBack) {
+				const that = this
+				news.getNewNewsList({
+					openid: that.userInfo.openid	
+				}, (res) => {
+					// console.log(res)
+					if (res.code == 4000) {
+						that.newNewsLsit = res.data
+					}
 					callBack && callBack();
 				})
 			},
+			// 加载原有消息列表
 			getNewsList(callBack) {
 				const that = this
-				news.getChatList({
+				news.getNewsList({
 					openid: that.userInfo.openid	
 				}, (res) => {
-					console.log(res)
+					// console.log(res)
 					if (res.code == 4000) {
-						
+						let newsLsit = res.data
+						if (that.newNewsLsit.length > 0) {
+							let newNewsLsit = that.newNewsLsit
+							for (let i = 0; i < newsLsit.length; i++) {
+								for (let y = 0; y < newNewsLsit.length; y++) {
+									if (newNewsLsit[y].id == newsLsit[i].id) {
+										// newsLsit[i] = newNewsLsit[y]
+										// 删除原有消息中与新消息重复的项
+										newsLsit.splice(i, 1)
+									}
+								}
+							}
+							// 合并新消息与旧消息
+							that.newsLsit = newNewsLsit.concat(newsLsit)
+						} else {
+							that.newsLsit = newsLsit
+						}
 					}
 					callBack && callBack();
 				})
@@ -153,6 +193,10 @@
 			height: 30rpx;
 			font-size: @fontSize_1;
 			color: @fontColor_2;
+		}
+		.newNews {
+			font-size: @fontSize_1;
+			color: #FF5953;
 		}
 	}
 </style>

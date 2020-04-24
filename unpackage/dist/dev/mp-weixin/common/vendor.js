@@ -9401,8 +9401,21 @@ News = /*#__PURE__*/function (_Base) {_inherits(News, _Base);
   function News() {_classCallCheck(this, News);return _possibleConstructorReturn(this, _getPrototypeOf(News).call(this));
 
   }
-  // 加载消息列表
-  _createClass(News, [{ key: "getChatList", value: function getChatList(data, callBack) {
+  // 加载新消息列表
+  _createClass(News, [{ key: "getNewNewsList", value: function getNewNewsList(data, callBack) {
+      var that = this;
+      var params = {
+        url: 'chat/unreadContent',
+        method: 'POST',
+        data: data,
+        sCallBack: function sCallBack(res) {
+          callBack && callBack(res.data);
+        } };
+
+      that.request(params);
+    } }, { key: "getNewsList",
+    // 加载原有消息列表
+    value: function getNewsList(data, callBack) {
       var that = this;
       var params = {
         url: 'chat/getChatList',
