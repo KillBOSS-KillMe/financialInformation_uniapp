@@ -281,9 +281,9 @@ class Base {
 	onShareAppMessage(data) {
 		console.log(data)
 		return {
-			title: data.title || '益步步',
-			path: data.path || 'pages/index/index',
-			imageUrl: data.img || '../../static/images/stepBg.png'
+			title: data.title || '金融资讯',
+			path: data.path || 'pages/identitySel/identitySel',
+			imageUrl: data.img || '../../static/images/test.png'
 		};
 	}
 	// 时间戳转时间

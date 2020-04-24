@@ -237,9 +237,9 @@ var identitySel = new _identitySelModel.default();var _default = { data: functio
   onPullDownRefresh: function onPullDownRefresh() {
     var that = this;
     that.page = 1;
-    that._onLoad(function () {
-      uni.stopPullDownRefresh();
-    });
+    // that._onLoad(() => {
+    // 	uni.stopPullDownRefresh();
+    // });
   },
   //上拉加载更多
   // onReachBottom() {
@@ -252,12 +252,12 @@ var identitySel = new _identitySelModel.default();var _default = { data: functio
   // },
   // 分享
   onShareAppMessage: function onShareAppMessage() {
-    var shareData = {
-      title: '',
-      path: "pages/index/index?".concat(this.userInfo.id),
-      imageUrl: '' };
-
-    return index.onShareAppMessage(shareData);
+    // let shareData = {
+    // 	title: '',
+    // 	path: `pages/index/index`,
+    // 	imageUrl: ''
+    // }
+    return identitySel.onShareAppMessage({});
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

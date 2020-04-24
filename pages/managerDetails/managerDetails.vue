@@ -144,12 +144,12 @@
 		// },
 		// 分享
 		onShareAppMessage() {
-			let shareData = {
-				title: '',
-				path: `pages/index/index?${this.userInfo.id}`,
-				imageUrl: ''
-			}
-			return index.onShareAppMessage(shareData);
+			// let shareData = {
+			// 	title: '',
+			// 	path: `pages/index/index?${this.userInfo.id}`,
+			// 	imageUrl: ''
+			// }
+			// return managerDetails.onShareAppMessage(shareData);
 		}
 	}
 </script>

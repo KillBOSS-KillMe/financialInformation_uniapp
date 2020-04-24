@@ -230,12 +230,12 @@ var newsChat = new _newsChatModel.default();var _default = { data: function data
   // },
   // 分享
   onShareAppMessage: function onShareAppMessage() {
-    var shareData = {
-      title: '',
-      path: "pages/index/index?".concat(this.userInfo.id),
-      imageUrl: '' };
-
-    return index.onShareAppMessage(shareData);
+    // let shareData = {
+    // 	title: '',
+    // 	path: `pages/index/index`,
+    // 	imageUrl: ''
+    // }
+    return newsChat.onShareAppMessage({});
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

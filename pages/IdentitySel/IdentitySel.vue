@@ -93,9 +93,9 @@
 		onPullDownRefresh() {
 			var that = this;
 			that.page = 1;
-			that._onLoad(() => {
-				uni.stopPullDownRefresh();
-			});
+			// that._onLoad(() => {
+			// 	uni.stopPullDownRefresh();
+			// });
 		},
 		//上拉加载更多
 		// onReachBottom() {
@@ -108,18 +108,26 @@
 		// },
 		// 分享
 		onShareAppMessage() {
-			let shareData = {
-				title: '',
-				path: `pages/index/index?${this.userInfo.id}`,
-				imageUrl: ''
-			}
-			return index.onShareAppMessage(shareData);
+			// let shareData = {
+			// 	title: '',
+			// 	path: `pages/index/index`,
+			// 	imageUrl: ''
+			// }
+			return identitySel.onShareAppMessage({});
 		}
 	}
 </script>
 
 <style lang="less">
 	@import url("../../static/css/variable.less");
+	page {
+		width: 100vw;
+		height: 100vh;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		flex-direction: column;
+	}
 	.title {
 		margin-top: 200rpx;
 		display: flex;

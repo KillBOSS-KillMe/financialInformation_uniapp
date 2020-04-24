@@ -4,10 +4,8 @@
 			"path": "pages/identitySel/identitySel",
 			"style": {
 				"navigationBarTitleText": "身份选择",
-				"enablePullDownRefresh": true,
-				// #ifdef H5
+				// "enablePullDownRefresh": true,
 				"navigationStyle": "custom",
-				// #endif
 				"app-plus": {
 					"bounce": "none",
 					"titleView": false
