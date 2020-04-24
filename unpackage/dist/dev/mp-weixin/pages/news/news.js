@@ -178,7 +178,7 @@ var news = new _newsModel.default();var _default =
       var that = this;
       that.userInfo = that.$store.state.userInfo;
       var newNewsNum = that.$store.state.newNewsNum;
-      if (newNewsNum > 0) {
+      if (newNewsNum == 0) {
         // 加载新的消息列表和原有消息列表,然后二者合并
         that.getNewNewsList(function () {
           that.getNewsList(function () {
@@ -200,7 +200,7 @@ var news = new _newsModel.default();var _default =
       function (res) {
         // console.log(res)
         if (res.code == 4000) {
-          that.newNewsLsit = res.data;
+          that.newNewsList = res.data;
         }
         callBack && callBack();
       });
@@ -213,22 +213,22 @@ var news = new _newsModel.default();var _default =
       function (res) {
         // console.log(res)
         if (res.code == 4000) {
-          var newsLsit = res.data;
-          if (that.newNewsLsit.length > 0) {
-            var newNewsLsit = that.newNewsLsit;
-            for (var i = 0; i < newsLsit.length; i++) {
-              for (var y = 0; y < newNewsLsit.length; y++) {
-                if (newNewsLsit[y].id == newsLsit[i].id) {
-                  // newsLsit[i] = newNewsLsit[y]
+          var newsList = res.data;
+          if (that.newNewsList.length > 0) {
+            var newNewsList = that.newNewsList;
+            for (var i = 0; i < newsList.length; i++) {
+              for (var y = 0; y < newNewsList.length; y++) {
+                if (newNewsList[y].id == newsList[i].id) {
+                  // newsList[i] = newNewsList[y]
                   // 删除原有消息中与新消息重复的项
-                  newsLsit.splice(i, 1);
+                  newsList.splice(i, 1);
                 }
               }
             }
             // 合并新消息与旧消息
-            that.newsLsit = newNewsLsit.concat(newsLsit);
+            that.newsList = newNewsList.concat(newsList);
           } else {
-            that.newsLsit = newsLsit;
+            that.newsList = newsList;
           }
         }
         callBack && callBack();

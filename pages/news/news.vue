@@ -2,16 +2,16 @@
 	<view class="pageTopBorder">
 		<scroll-view  scroll-y="true" class="content">
 			<notList v-if="newsList.length <= 0" />
-			<view class="item" @tap="goNewDetails" :data-id="1" :data-type="0" v-for="(item,index) in 20" :key="index" v-if="newsList.length > 0">
+			<view class="item" @tap="goNewDetails" :data-id="1" :data-type="0" v-for="(item,index) in newsList" :key="index" v-if="newsList.length > 0">
 				<view class="info">
-					<image src="../../static/images/test.png" mode=""></image>
+					<image :src="newsList.portrait" mode=""></image>
 					<view class="con">
-						<view>系统通知</view>
-						<text>客服消息为您推送两条新的信息</text>
+						<view>{{newsList.nickname}}</view>
+						<text>{{newsList.new_msg}}</text>
 					</view>
 				</view>
-				<icon class="iconfont iconxiangyou"></icon>
-				<text class="newNews">11</text>
+				<icon class="iconfont iconxiangyou" v-if="newsList.new_number == 0"></icon>
+				<text class="newNews" v-else>{{newsList.new_number}}</text>
 			</view>
 		</scroll-view>
 	</view>
@@ -45,7 +45,7 @@
 				const that = this
 				that.userInfo = that.$store.state.userInfo;
 				let newNewsNum = that.$store.state.newNewsNum;
-				if (newNewsNum > 0) {
+				if (newNewsNum == 0) {
 					// 加载新的消息列表和原有消息列表,然后二者合并
 					that.getNewNewsList(() => {
 						that.getNewsList(() => {
@@ -67,7 +67,7 @@
 				}, (res) => {
 					// console.log(res)
 					if (res.code == 4000) {
-						that.newNewsLsit = res.data
+						that.newNewsList = res.data
 					}
 					callBack && callBack();
 				})
@@ -80,22 +80,22 @@
 				}, (res) => {
 					// console.log(res)
 					if (res.code == 4000) {
-						let newsLsit = res.data
-						if (that.newNewsLsit.length > 0) {
-							let newNewsLsit = that.newNewsLsit
-							for (let i = 0; i < newsLsit.length; i++) {
-								for (let y = 0; y < newNewsLsit.length; y++) {
-									if (newNewsLsit[y].id == newsLsit[i].id) {
-										// newsLsit[i] = newNewsLsit[y]
+						let newsList = res.data
+						if (that.newNewsList.length > 0) {
+							let newNewsList = that.newNewsList
+							for (let i = 0; i < newsList.length; i++) {
+								for (let y = 0; y < newNewsList.length; y++) {
+									if (newNewsList[y].id == newsList[i].id) {
+										// newsList[i] = newNewsList[y]
 										// 删除原有消息中与新消息重复的项
-										newsLsit.splice(i, 1)
+										newsList.splice(i, 1)
 									}
 								}
 							}
 							// 合并新消息与旧消息
-							that.newsLsit = newNewsLsit.concat(newsLsit)
+							that.newsList = newNewsList.concat(newsList)
 						} else {
-							that.newsLsit = newsLsit
+							that.newsList = newsList
 						}
 					}
 					callBack && callBack();
