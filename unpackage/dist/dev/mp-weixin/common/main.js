@@ -94,7 +94,60 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _config = _interopRequireDefault(__webpack_require__(/*! static/js/config.js */ 25));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
 //
@@ -146,17 +199,16 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 //
 //
 //
-var _default =
-{
-  onLaunch: function onLaunch() {
-    console.log('App Launch');
-  },
-  onShow: function onShow() {
-    console.log('App Show');
-  },
-  onHide: function onHide() {
-    console.log('App Hide');
-  } };exports.default = _default;
+var _default = { data: { return: { updataNews: null, userInfo: {}, requset_url: '' } }, onLaunch: function onLaunch() {this.requset_url = _config.default.requset_url;console.log('App Launch');}, onShow: function onShow() {var _this = this;console.log('App Show'); // 首次刷新新消息条数
+    this.alwaysUpdataNews(); // 定时刷新新消息条数
+    this.updataNews = setInterval(function () {_this.alwaysUpdataNews();}, 3000); // setTimeout(() => {
+    // 	clearTimeout(this.updataNews);
+    // }, 6000)
+  }, onHide: function onHide() {console.log('App Hide'); // 停止新消息的刷新
+    clearTimeout(this.updataNews);}, methods: { alwaysUpdataNews: function alwaysUpdataNews() {var that = this;that.userInfo = that.$store.state.userInfo; // 判断用户信息是否已经获取
+      if (that.userInfo.openid) {uni.request({ url: "".concat(that.requset_url, "chat/unreadNumber"), data: { openid: that.userInfo.openid }, method: 'POST', success: function success(res) {if (res.data.number > 0) {// 添加底部导航右上角文字
+              uni.setTabBarBadge({ index: 1, text: res.data.number + '' });}} });}} } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 /* 12 */

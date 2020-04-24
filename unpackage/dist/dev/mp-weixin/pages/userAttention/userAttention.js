@@ -152,7 +152,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _userAttentionModel = _interopRequireDefault(__webpack_require__(/*! ./userAttention-model.js */ 97));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var notList = function notList() {__webpack_require__.e(/*! require.ensure | components/notList */ "components/notList").then((function () {return resolve(__webpack_require__(/*! @/components/notList.vue */ 140));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
+var _userAttentionModel = _interopRequireDefault(__webpack_require__(/*! ./userAttention-model.js */ 97));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var notList = function notList() {__webpack_require__.e(/*! require.ensure | components/notList */ "components/notList").then((function () {return resolve(__webpack_require__(/*! @/components/notList.vue */ 127));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
 var userAttention = new _userAttentionModel.default();var _default =
 {
   components: {

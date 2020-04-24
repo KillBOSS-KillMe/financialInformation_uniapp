@@ -8858,9 +8858,9 @@ internalMixin(Vue);
 /***/ }),
 
 /***/ 23:
-/*!**************************************************************************!*\
-  !*** D:/workspan/financialInformation_uniapp/pages/index/index-model.js ***!
-  \**************************************************************************/
+/*!**************************************************************************************!*\
+  !*** D:/workspan/financialInformation_uniapp/pages/identitySel/identitySel-model.js ***!
+  \**************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8874,47 +8874,8 @@ Index = /*#__PURE__*/function (_Base) {_inherits(Index, _Base);
   _createClass(Index, [{ key: "login", value: function login(data, callBack) {
       var that = this;
       var params = {
-        url: 'auth/login',
+        url: 'users/login',
         method: 'POST',
-        data: data,
-        sCallBack: function sCallBack(res) {
-          callBack && callBack(res.data);
-        } };
-
-      that.request(params);
-    } }, { key: "getUserInfo",
-    // 获取用户信息
-    value: function getUserInfo(data, callBack) {
-      var that = this;
-      var params = {
-        url: 'auth/me',
-        method: 'POST',
-        data: data,
-        sCallBack: function sCallBack(res) {
-          callBack && callBack(res.data);
-        } };
-
-      that.request(params);
-    } }, { key: "getBanner",
-    // 轮播图加载
-    value: function getBanner(data, callBack) {
-      var that = this;
-      var params = {
-        url: 'index/get_polling',
-        method: 'GET',
-        data: data,
-        sCallBack: function sCallBack(res) {
-          callBack && callBack(res.data);
-        } };
-
-      that.request(params);
-    } }, { key: "getManagerList",
-    // 客户经理列表
-    value: function getManagerList(data, callBack) {
-      var that = this;
-      var params = {
-        url: 'index/get_merchant',
-        method: 'GET',
         data: data,
         sCallBack: function sCallBack(res) {
           callBack && callBack(res.data);
@@ -8922,6 +8883,19 @@ Index = /*#__PURE__*/function (_Base) {_inherits(Index, _Base);
 
       that.request(params);
     } }]);return Index;}(_base.default);var _default =
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 Index;exports.default = _default;
@@ -9327,6 +9301,89 @@ module.exports = g;
 /***/ }),
 
 /***/ 34:
+/*!**************************************************************************!*\
+  !*** D:/workspan/financialInformation_uniapp/pages/index/index-model.js ***!
+  \**************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _base = _interopRequireDefault(__webpack_require__(/*! ../../static/js/base */ 24));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}function _createClass(Constructor, protoProps, staticProps) {if (protoProps) _defineProperties(Constructor.prototype, protoProps);if (staticProps) _defineProperties(Constructor, staticProps);return Constructor;}function _possibleConstructorReturn(self, call) {if (call && (typeof call === "object" || typeof call === "function")) {return call;}return _assertThisInitialized(self);}function _assertThisInitialized(self) {if (self === void 0) {throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return self;}function _getPrototypeOf(o) {_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {return o.__proto__ || Object.getPrototypeOf(o);};return _getPrototypeOf(o);}function _inherits(subClass, superClass) {if (typeof superClass !== "function" && superClass !== null) {throw new TypeError("Super expression must either be null or a function");}subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } });if (superClass) _setPrototypeOf(subClass, superClass);}function _setPrototypeOf(o, p) {_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {o.__proto__ = p;return o;};return _setPrototypeOf(o, p);}var
+Index = /*#__PURE__*/function (_Base) {_inherits(Index, _Base);
+  function Index() {_classCallCheck(this, Index);return _possibleConstructorReturn(this, _getPrototypeOf(Index).call(this));
+
+  }
+  // 登录
+  _createClass(Index, [{ key: "login", value: function login(data, callBack) {
+      var that = this;
+      var params = {
+        url: 'auth/login',
+        method: 'POST',
+        data: data,
+        sCallBack: function sCallBack(res) {
+          callBack && callBack(res.data);
+        } };
+
+      that.request(params);
+    } }, { key: "getUserInfo",
+    // 获取用户信息
+    value: function getUserInfo(data, callBack) {
+      var that = this;
+      var params = {
+        url: 'auth/me',
+        method: 'POST',
+        data: data,
+        sCallBack: function sCallBack(res) {
+          callBack && callBack(res.data);
+        } };
+
+      that.request(params);
+    } }, { key: "getBanner",
+    // 轮播图加载
+    value: function getBanner(data, callBack) {
+      var that = this;
+      var params = {
+        url: 'index/get_polling',
+        method: 'GET',
+        data: data,
+        sCallBack: function sCallBack(res) {
+          callBack && callBack(res.data);
+        } };
+
+      that.request(params);
+    } }, { key: "getManagerList",
+    // 客户经理列表
+    value: function getManagerList(data, callBack) {
+      var that = this;
+      var params = {
+        url: 'index/get_merchant',
+        method: 'GET',
+        data: data,
+        sCallBack: function sCallBack(res) {
+          callBack && callBack(res.data);
+        } };
+
+      that.request(params);
+    } }]);return Index;}(_base.default);var _default =
+
+
+Index;exports.default = _default;
+
+/***/ }),
+
+/***/ 4:
+/*!**********************************************************!*\
+  !*** D:/workspan/financialInformation_uniapp/pages.json ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/***/ }),
+
+/***/ 43:
 /*!************************************************************************!*\
   !*** D:/workspan/financialInformation_uniapp/pages/news/news-model.js ***!
   \************************************************************************/
@@ -9368,63 +9425,6 @@ News = /*#__PURE__*/function (_Base) {_inherits(News, _Base);
 
 
 News;exports.default = _default;
-
-/***/ }),
-
-/***/ 4:
-/*!**********************************************************!*\
-  !*** D:/workspan/financialInformation_uniapp/pages.json ***!
-  \**********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/***/ }),
-
-/***/ 43:
-/*!************************************************************************!*\
-  !*** D:/workspan/financialInformation_uniapp/pages/user/user-model.js ***!
-  \************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _base = _interopRequireDefault(__webpack_require__(/*! ../../static/js/base */ 24));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}function _createClass(Constructor, protoProps, staticProps) {if (protoProps) _defineProperties(Constructor.prototype, protoProps);if (staticProps) _defineProperties(Constructor, staticProps);return Constructor;}function _possibleConstructorReturn(self, call) {if (call && (typeof call === "object" || typeof call === "function")) {return call;}return _assertThisInitialized(self);}function _assertThisInitialized(self) {if (self === void 0) {throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return self;}function _getPrototypeOf(o) {_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {return o.__proto__ || Object.getPrototypeOf(o);};return _getPrototypeOf(o);}function _inherits(subClass, superClass) {if (typeof superClass !== "function" && superClass !== null) {throw new TypeError("Super expression must either be null or a function");}subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } });if (superClass) _setPrototypeOf(subClass, superClass);}function _setPrototypeOf(o, p) {_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {o.__proto__ = p;return o;};return _setPrototypeOf(o, p);}var
-User = /*#__PURE__*/function (_Base) {_inherits(User, _Base);
-  function User() {_classCallCheck(this, User);return _possibleConstructorReturn(this, _getPrototypeOf(User).call(this));
-
-  }
-  // 登录
-  _createClass(User, [{ key: "login", value: function login(data, callBack) {
-      var that = this;
-      var params = {
-        url: 'auth/login',
-        method: 'POST',
-        data: data,
-        sCallBack: function sCallBack(res) {
-          callBack && callBack(res.data);
-        } };
-
-      that.request(params);
-    } }, { key: "getUserInfo",
-    // 获取用户信息
-    value: function getUserInfo(data, callBack) {
-      var that = this;
-      var params = {
-        url: 'auth/me',
-        method: 'POST',
-        data: data,
-        sCallBack: function sCallBack(res) {
-          callBack && callBack(res.data);
-        } };
-
-      that.request(params);
-    } }]);return User;}(_base.default);var _default =
-
-
-User;exports.default = _default;
 
 /***/ }),
 
@@ -10316,23 +10316,23 @@ main();
 /***/ }),
 
 /***/ 52:
-/*!**************************************************************************************!*\
-  !*** D:/workspan/financialInformation_uniapp/pages/identitySel/identitySel-model.js ***!
-  \**************************************************************************************/
+/*!************************************************************************!*\
+  !*** D:/workspan/financialInformation_uniapp/pages/user/user-model.js ***!
+  \************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _base = _interopRequireDefault(__webpack_require__(/*! ../../static/js/base */ 24));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}function _createClass(Constructor, protoProps, staticProps) {if (protoProps) _defineProperties(Constructor.prototype, protoProps);if (staticProps) _defineProperties(Constructor, staticProps);return Constructor;}function _possibleConstructorReturn(self, call) {if (call && (typeof call === "object" || typeof call === "function")) {return call;}return _assertThisInitialized(self);}function _assertThisInitialized(self) {if (self === void 0) {throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return self;}function _getPrototypeOf(o) {_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {return o.__proto__ || Object.getPrototypeOf(o);};return _getPrototypeOf(o);}function _inherits(subClass, superClass) {if (typeof superClass !== "function" && superClass !== null) {throw new TypeError("Super expression must either be null or a function");}subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } });if (superClass) _setPrototypeOf(subClass, superClass);}function _setPrototypeOf(o, p) {_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {o.__proto__ = p;return o;};return _setPrototypeOf(o, p);}var
-Index = /*#__PURE__*/function (_Base) {_inherits(Index, _Base);
-  function Index() {_classCallCheck(this, Index);return _possibleConstructorReturn(this, _getPrototypeOf(Index).call(this));
+User = /*#__PURE__*/function (_Base) {_inherits(User, _Base);
+  function User() {_classCallCheck(this, User);return _possibleConstructorReturn(this, _getPrototypeOf(User).call(this));
 
   }
   // 登录
-  _createClass(Index, [{ key: "login", value: function login(data, callBack) {
+  _createClass(User, [{ key: "login", value: function login(data, callBack) {
       var that = this;
       var params = {
-        url: 'users/login',
+        url: 'auth/login',
         method: 'POST',
         data: data,
         sCallBack: function sCallBack(res) {
@@ -10340,23 +10340,23 @@ Index = /*#__PURE__*/function (_Base) {_inherits(Index, _Base);
         } };
 
       that.request(params);
-    } }]);return Index;}(_base.default);var _default =
+    } }, { key: "getUserInfo",
+    // 获取用户信息
+    value: function getUserInfo(data, callBack) {
+      var that = this;
+      var params = {
+        url: 'auth/me',
+        method: 'POST',
+        data: data,
+        sCallBack: function sCallBack(res) {
+          callBack && callBack(res.data);
+        } };
+
+      that.request(params);
+    } }]);return User;}(_base.default);var _default =
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-Index;exports.default = _default;
+User;exports.default = _default;
 
 /***/ }),
 
@@ -10438,7 +10438,7 @@ ManagerDetails;exports.default = _default;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationBarTitleText": "首页", "enablePullDownRefresh": true, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/news/news": { "navigationBarTitleText": "消息", "enablePullDownRefresh": true, "usingComponents": { "not-list": "/components/notList" }, "usingAutoImportComponents": {} }, "pages/user/user": { "navigationBarTitleText": "用户", "enablePullDownRefresh": true, "navigationStyle": "custom", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/identitySel/identitySel": { "navigationBarTitleText": "身份选择", "enablePullDownRefresh": true, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/managerDetails/managerDetails": { "navigationBarTitleText": "个人主页", "enablePullDownRefresh": true, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/informationDetails/informationDetails": { "navigationBarTitleText": "咨询详情", "enablePullDownRefresh": true, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/sysNews/sysNews": { "navigationBarTitleText": "系统消息", "enablePullDownRefresh": true, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/newsChat/newsChat": { "navigationBarTitleText": "消息", "enablePullDownRefresh": true, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/userAttention/userAttention": { "navigationBarTitleText": "我的关注", "enablePullDownRefresh": true, "usingComponents": { "not-list": "/components/notList" }, "usingAutoImportComponents": {} }, "pages/userQualification/userQualification": { "navigationBarTitleText": "我的资质", "enablePullDownRefresh": true, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/userVIP/userVIP": { "navigationBarTitleText": "我的会员", "enablePullDownRefresh": true, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/certification/certification": { "navigationBarTitleText": "资质认证", "enablePullDownRefresh": true, "usingComponents": {}, "usingAutoImportComponents": {} } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "金融咨询", "navigationBarBackgroundColor": "#FFFFFF", "backgroundColor": "#FFFFFF" } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/identitySel/identitySel": { "navigationBarTitleText": "身份选择", "enablePullDownRefresh": true }, "pages/index/index": { "navigationBarTitleText": "首页", "enablePullDownRefresh": true }, "pages/news/news": { "navigationBarTitleText": "消息", "enablePullDownRefresh": true }, "pages/user/user": { "navigationBarTitleText": "用户", "enablePullDownRefresh": true, "navigationStyle": "custom" }, "pages/managerDetails/managerDetails": { "navigationBarTitleText": "个人主页", "enablePullDownRefresh": true }, "pages/informationDetails/informationDetails": { "navigationBarTitleText": "咨询详情", "enablePullDownRefresh": true }, "pages/sysNews/sysNews": { "navigationBarTitleText": "系统消息", "enablePullDownRefresh": true }, "pages/newsChat/newsChat": { "navigationBarTitleText": "消息", "enablePullDownRefresh": true }, "pages/userAttention/userAttention": { "navigationBarTitleText": "我的关注", "enablePullDownRefresh": true }, "pages/userQualification/userQualification": { "navigationBarTitleText": "我的资质", "enablePullDownRefresh": true }, "pages/userVIP/userVIP": { "navigationBarTitleText": "我的会员", "enablePullDownRefresh": true }, "pages/certification/certification": { "navigationBarTitleText": "资质认证", "enablePullDownRefresh": true } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "金融咨询", "navigationBarBackgroundColor": "#FFFFFF", "backgroundColor": "#FFFFFF" } };exports.default = _default;
 
 /***/ }),
 

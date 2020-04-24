@@ -51,29 +51,77 @@ overflow: hidden;
 text-overflow: ellipsis; -->
 
 <script>
+	import Config from 'static/js/config.js'
 	export default {
+		data: {
+			return: {
+				updataNews: null,
+				userInfo: {},
+				requset_url: ''
+			}
+		},
 		onLaunch: function() {
+			this.requset_url = Config.requset_url
 			console.log('App Launch')
 		},
 		onShow: function() {
 			console.log('App Show')
+			// 首次刷新新消息条数
+			this.alwaysUpdataNews()
+			// 定时刷新新消息条数
+			this.updataNews = setInterval(() => {
+				this.alwaysUpdataNews()
+			}, 3000);
+			// setTimeout(() => {
+			// 	clearTimeout(this.updataNews);
+			// }, 6000)
 		},
 		onHide: function() {
 			console.log('App Hide')
+			// 停止新消息的刷新
+			clearTimeout(this.updataNews);
+		},
+		methods: {
+			alwaysUpdataNews() {
+				const that = this
+				that.userInfo = that.$store.state.userInfo;
+				// 判断用户信息是否已经获取
+				if (that.userInfo.openid) {
+					uni.request({
+						url: `${that.requset_url}chat/unreadNumber`,
+						data: {
+							openid: that.userInfo.openid
+						},
+						method: 'POST',
+						success: (res) => {
+							if (res.data.number > 0) {
+								// 添加底部导航右上角文字
+								uni.setTabBarBadge({
+									index: 1,
+									text: res.data.number+''
+								})
+							}
+						}
+					});
+				}
+			}
 		}
+
 	}
 </script>
 
 <style lang="less">
 	@import url("/static/css/reset.css");
 	@import url("/static/css/icon.css");
+
 	// @import url("/static/css/variable.less");
 	page {
-	  background-color: #ffffff;
-	  width: 100vw;
-	  min-height: 100vh;
-	  height: auto;
+		background-color: #ffffff;
+		width: 100vw;
+		min-height: 100vh;
+		height: auto;
 	}
+
 	#getUserInfo {
 		position: fixed;
 		top: 0;
@@ -85,18 +133,19 @@ text-overflow: ellipsis; -->
 		height: 100vh;
 		z-index: 999;
 	}
+
 	/* #ifdef H5 */
 	uni-checkbox .uni-checkbox-input {
-	  border-radius: 50% !important;
-	  color: #ffffff !important;
+		border-radius: 50% !important;
+		color: #ffffff !important;
 	}
-	
+
 	uni-checkbox .uni-checkbox-input.uni-checkbox-input-checked {
-	  border: none !important;
-	  background: #9FD8F5;
+		border: none !important;
+		background: #9FD8F5;
 		border-color: #9FD8F5;
 	}
-	
+
 	uni-checkbox .uni-checkbox-input.uni-checkbox-input-checked::before {
 		width: 20rpx;
 		height: 20rpx;
@@ -108,49 +157,53 @@ text-overflow: ellipsis; -->
 		transform: translate(-70%, -50%) scale(1);
 		-webkit-transform: translate(-70%, -50%) scale(1);
 	}
-	
+
 	/* #endif */
 	/* 微信样式 */
 	/* #ifdef APP-PLUS ||MP-WEIXIN */
 	checkbox .wx-checkbox-input {
-	  border-radius: 50% !important;
-	  color: #ffffff !important;
+		border-radius: 50% !important;
+		color: #ffffff !important;
 	}
-	
+
 	checkbox .wx-checkbox-input.wx-checkbox-input-checked {
-	  color: #fff;
-	  background: #9FD8F5;
+		color: #fff;
+		background: #9FD8F5;
 	}
-	
+
 	.wx-checkbox-input.wx-checkbox-input-checked {
-	  border: none !important;
+		border: none !important;
 	}
+
 	/* #endif */
-	
-	
+
+
 	button {
-	  position: relative;
-	  display: block;
-	  padding: 0;
-	  margin: 0;
-		border:none;
-	  line-height: auto;
-	  box-sizing: border-box;
-	  text-align: center;
-	  text-decoration: none;
-	  -webkit-tap-highlight-color: transparent;
-	  overflow: hidden;
-	  color: #000000;
-	  background: none;
+		position: relative;
+		display: block;
+		padding: 0;
+		margin: 0;
+		border: none;
+		line-height: auto;
+		box-sizing: border-box;
+		text-align: center;
+		text-decoration: none;
+		-webkit-tap-highlight-color: transparent;
+		overflow: hidden;
+		color: #000000;
+		background: none;
 	}
+
 	button::after {
-	  border: none;
+		border: none;
 	}
+
 	.iconfont {
-	  display: flex;
-	  align-items: center;
-	  justify-content: center;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
+
 	.titleModel {
 		width: 690rpx;
 		height: 36rpx;
@@ -161,6 +214,7 @@ text-overflow: ellipsis; -->
 		display: flex;
 		align-items: center;
 		justify-content: flex-start;
+
 		view {
 			width: 10rpx;
 			height: 36rpx;
@@ -169,11 +223,13 @@ text-overflow: ellipsis; -->
 			margin-right: 10rpx;
 		}
 	}
+
 	.pageTopBorder {
 		width: 750rpx;
 		height: auto;
 		background-color: #265ED7;
 		padding-top: 10rpx;
+
 		.content {
 			width: 100%;
 			border-radius: 20rpx 20rpx 0 0;
