@@ -1,5 +1,6 @@
 <template>
 	<view class="list">
+		<notList v-if="true" />
 		<view class="item" v-for="(item,index) in 6" :key="index">
 			<view class="newsTitle">
 				<view>
@@ -18,11 +19,78 @@
 </template>
 
 <script>
+	import notList from "@/components/notList.vue";
+	import SysNewsList from "./sysNewsList-model.js";
+	const sysNewsList = new SysNewsList();
 	export default {
+		components: {
+		  notList
+		},
 		data() {
 			return {
-				
-			};
+				userInfo: {},
+				sysNewsList: []
+			}
+		},
+		onLoad(options) {
+			const that = this
+			that.options = options
+		},
+		onShow() {
+			// 获取已授权类别
+			const that = this
+			that._onLoad()
+		},
+		methods: {
+			_onLoad(callBack) {
+				const that = this
+				that.userInfo = that.$store.state.userInfo;
+			},
+			// 加载新消息列表
+			getNewNewsList(callBack) {
+				const that = this
+				sysNewsList.getNewNewsList({
+					openid: that.userInfo.openid	
+				}, (res) => {
+					// console.log(res)
+					if (res.code == 4000) {
+						that.newNewsList = res.data
+					}
+					callBack && callBack();
+				})
+			},
+			// 进入--消息--详情页
+			goNewDetails(e) {
+				const that = this;
+				const id = sysNewsList.get_data_set(e, "id");
+				sysNewsList.navigate_to(`/pages/sysNews/sysNews?id=${id}`);
+			}
+		},
+		// 下拉刷新
+		onPullDownRefresh() {
+			var that = this;
+			that.page = 1;
+			that._onLoad(() => {
+				uni.stopPullDownRefresh();
+			});
+		},
+		//上拉加载更多
+		// onReachBottom() {
+		//   var that = this;
+		//   if (that.last_page == that.page) {
+		//     return;
+		//   }
+		//   that.page += 1;
+		//   that.get_product_list();
+		// },
+		// 分享
+		onShareAppMessage() {
+			// let shareData = {
+			// 	title: '',
+			// 	path: `pages/index/index`,
+			// 	imageUrl: ''
+			// }
+			return sysNewsList.onShareAppMessage({});
 		}
 	}
 </script>

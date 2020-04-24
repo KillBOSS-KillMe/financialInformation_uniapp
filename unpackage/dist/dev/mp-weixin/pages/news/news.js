@@ -245,7 +245,7 @@ var news = new _newsModel.default();var _default =
         url = "/pages/newsChat/newsChat?id=".concat(id);
       } else {
         // 进入系统消息
-        url = "/pages/sysNews/sysNews?id=".concat(id);
+        url = "/pages/sysNewsList/sysNewsList?id=".concat(id);
       }
       news.navigate_to(url);
     } },

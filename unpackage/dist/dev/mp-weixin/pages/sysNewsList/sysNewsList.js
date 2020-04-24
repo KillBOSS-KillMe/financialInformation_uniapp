@@ -131,32 +131,101 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _sysNewsListModel = _interopRequireDefault(__webpack_require__(/*! ./sysNewsList-model.js */ 157));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var notList = function notList() {__webpack_require__.e(/*! require.ensure | components/notList */ "components/notList").then((function () {return resolve(__webpack_require__(/*! @/components/notList.vue */ 127));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
+var sysNewsList = new _sysNewsListModel.default();var _default =
 {
+  components: {
+    notList: notList },
+
   data: function data() {
-    return {};
+    return {
+      userInfo: {},
+      sysNewsList: [] };
 
+  },
+  onLoad: function onLoad(options) {
+    var that = this;
+    that.options = options;
+  },
+  onShow: function onShow() {
+    // 获取已授权类别
+    var that = this;
+    that._onLoad();
+  },
+  methods: {
+    _onLoad: function _onLoad(callBack) {
+      var that = this;
+      that.userInfo = that.$store.state.userInfo;
+    },
+    // 加载新消息列表
+    getNewNewsList: function getNewNewsList(callBack) {
+      var that = this;
+      sysNewsList.getNewNewsList({
+        openid: that.userInfo.openid },
+      function (res) {
+        // console.log(res)
+        if (res.code == 4000) {
+          that.newNewsList = res.data;
+        }
+        callBack && callBack();
+      });
+    },
+    // 进入--消息--详情页
+    goNewDetails: function goNewDetails(e) {
+      var that = this;
+      var id = sysNewsList.get_data_set(e, "id");
+      sysNewsList.navigate_to("/pages/sysNews/sysNews?id=".concat(id));
+    } },
 
+  // 下拉刷新
+  onPullDownRefresh: function onPullDownRefresh() {
+    var that = this;
+    that.page = 1;
+    that._onLoad(function () {
+      uni.stopPullDownRefresh();
+    });
+  },
+  //上拉加载更多
+  // onReachBottom() {
+  //   var that = this;
+  //   if (that.last_page == that.page) {
+  //     return;
+  //   }
+  //   that.page += 1;
+  //   that.get_product_list();
+  // },
+  // 分享
+  onShareAppMessage: function onShareAppMessage() {
+    // let shareData = {
+    // 	title: '',
+    // 	path: `pages/index/index`,
+    // 	imageUrl: ''
+    // }
+    return sysNewsList.onShareAppMessage({});
   } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

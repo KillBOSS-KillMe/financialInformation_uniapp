@@ -1,5 +1,7 @@
 {
   "navigationBarTitleText": "系统消息",
   "enablePullDownRefresh": true,
-  "usingComponents": {}
+  "usingComponents": {
+    "not-list": "/components/notList"
+  }
 }

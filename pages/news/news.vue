@@ -112,7 +112,7 @@
 					url = `/pages/newsChat/newsChat?id=${id}`
 				} else {
 					// 进入系统消息
-					url = `/pages/sysNews/sysNews?id=${id}`
+					url = `/pages/sysNewsList/sysNewsList?id=${id}`
 				}
 				news.navigate_to(url);
 			}
