@@ -13,27 +13,30 @@
 			<view class="info">
 				<view class="item">
 					<view>姓名</view>
-					<text>狗腿子</text>
+					<text>{{info.name}}</text>
 				</view>
 				<view class="item">
 					<view>岗位名称</view>
-					<text>金融客户经理</text>
+					<text>{{info.post}}</text>
 				</view>
 				<view class="item">
 					<view>工作经验</view>
-					<text>5年</text>
+					<text>{{info.experience}}</text>
 				</view>
 				<view class="item">
 					<view>身份证号码</view>
-					<text>123123123123123123123</text>
+					<text v-if="info.validation == 1">已认证</text>
+					<text v-else>未认证</text>
 				</view>
 				<view class="item">
 					<view>身份证正面照</view>
-					<text>已上传</text>
+					<text v-if="info.validation == 1">已认证</text>
+					<text v-else>未认证</text>
 				</view>
 				<view class="item">
 					<view>身份证反面照</view>
-					<text>已上传</text>
+					<text v-if="info.validation == 1">已认证</text>
+					<text v-else>未认证</text>
 				</view>
 			</view>
 		</view>
@@ -46,7 +49,8 @@
 	export default {
 		data() {
 			return {
-				
+				userInfo: {},
+				info: {}
 			};
 		},
 		onLoad() {
@@ -57,10 +61,24 @@
 			_onLoad(callBack) {
 				const that = this
 				that.userInfo = that.$store.state.userInfo;
-				that.wx_login(() => {
-					that.getUserInfo(() => {
-						callBack && callBack();
-					})
+				console.log(that.userInfo)
+				that.getDetails(() => {
+					callBack && callBack();
+				})
+			},
+			// 详情加载
+			getDetails(callBack) {
+				const that = this
+				userQualification.getDetails({
+					openid: that.userInfo.openid,
+					id: that.userInfo.id
+				}, (res) => {
+					console.log(res)
+					if (res.code == 4000) {
+						that.info = res.data
+						userQualification.show_tips(res.explain)
+					}
+					callBack && callBack();
 				})
 			},
 		},

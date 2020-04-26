@@ -1568,24 +1568,11 @@ UserQualification = /*#__PURE__*/function (_Base) {_inherits(UserQualification, 
   function UserQualification() {_classCallCheck(this, UserQualification);return _possibleConstructorReturn(this, _getPrototypeOf(UserQualification).call(this));
 
   }
-  // 登录
-  _createClass(UserQualification, [{ key: "login", value: function login(data, callBack) {
+  // 详情加载
+  _createClass(UserQualification, [{ key: "getDetails", value: function getDetails(data, callBack) {
       var that = this;
       var params = {
-        url: 'auth/login',
-        method: 'POST',
-        data: data,
-        sCallBack: function sCallBack(res) {
-          callBack && callBack(res.data);
-        } };
-
-      that.request(params);
-    } }, { key: "getUserInfo",
-    // 获取用户信息
-    value: function getUserInfo(data, callBack) {
-      var that = this;
-      var params = {
-        url: 'auth/me',
+        url: 'users/getManagerInfo',
         method: 'POST',
         data: data,
         sCallBack: function sCallBack(res) {

@@ -174,6 +174,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
 var _userQualificationModel = _interopRequireDefault(__webpack_require__(/*! ./userQualification-model.js */ 106));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
@@ -216,7 +219,11 @@ var _userQualificationModel = _interopRequireDefault(__webpack_require__(/*! ./u
 //
 //
 //
-var userQualification = new _userQualificationModel.default();var _default = { data: function data() {return {};}, onLoad: function onLoad() {var that = this;that._onLoad();}, methods: { _onLoad: function _onLoad(callBack) {var that = this;that.userInfo = that.$store.state.userInfo;that.wx_login(function () {that.getUserInfo(function () {callBack && callBack();});});} }, // 下拉刷新
+//
+//
+//
+var userQualification = new _userQualificationModel.default();var _default = { data: function data() {return { userInfo: {}, info: {} };}, onLoad: function onLoad() {var that = this;that._onLoad();}, methods: { _onLoad: function _onLoad(callBack) {var that = this;that.userInfo = that.$store.state.userInfo;console.log(that.userInfo);that.getDetails(function () {callBack && callBack();});}, // 详情加载
+    getDetails: function getDetails(callBack) {var that = this;userQualification.getDetails({ openid: that.userInfo.openid, id: that.userInfo.id }, function (res) {console.log(res);if (res.code == 4000) {that.info = res.data;userQualification.show_tips(res.explain);}callBack && callBack();});} }, // 下拉刷新
   onPullDownRefresh: function onPullDownRefresh() {var that = this;that.page = 1;that._onLoad(function () {uni.stopPullDownRefresh();});}, //上拉加载更多
   // onReachBottom() {
   //   var that = this;
@@ -232,7 +239,8 @@ var userQualification = new _userQualificationModel.default();var _default = { d
     // 	path: `pages/index/index`,
     // 	imageUrl: ''
     // }
-    return userQualification.onShareAppMessage({});} };exports.default = _default;
+    return userQualification.onShareAppMessage({});
+  } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
