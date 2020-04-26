@@ -61,7 +61,6 @@
 			_onLoad(callBack) {
 				const that = this
 				that.userInfo = that.$store.state.userInfo;
-				console.log(that.userInfo)
 				that.getDetails(() => {
 					callBack && callBack();
 				})
@@ -73,7 +72,6 @@
 					openid: that.userInfo.openid,
 					id: that.userInfo.id
 				}, (res) => {
-					console.log(res)
 					if (res.code == 4000) {
 						that.info = res.data
 						userQualification.show_tips(res.explain)
@@ -84,11 +82,8 @@
 		},
 		// 下拉刷新
 		onPullDownRefresh() {
-			var that = this;
-			that.page = 1;
-			that._onLoad(() => {
-				uni.stopPullDownRefresh();
-			});
+			const that = this
+			that._onLoad()
 		},
 		//上拉加载更多
 		// onReachBottom() {

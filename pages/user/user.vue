@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="userInfo">
-			<image src="../../static/images/test.png" mode=""></image>
+			<image :src="userInfo.portrait" mode=""></image>
 			<text>会飞的鱼</text>
 		</view>
 		<view class="pageTopBorder">
