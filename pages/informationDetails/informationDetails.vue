@@ -5,10 +5,12 @@
 			<view class="articleInfo">
 				<text>{{informationNode.newsinfo.seenumber}}阅读</text>
 				<text>{{informationNode.newsinfo.createtime}}</text>
+				
 			</view>
-			<view class="articleContent">
+			<!-- <view class="articleContent">
 				{{informationNode.newsinfo.content}}
-			</view>
+			</view> -->
+			<rich-text :nodes="informationNode.newsinfo.content" class="articleContent"></rich-text>
 			<view class="articleCommentList">
 				<view class="item" v-for="(item,index) in informationNode.CommentList" :key="index">
 					<image :src="item.portrait" mode=""></image>
