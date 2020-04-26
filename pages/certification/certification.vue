@@ -14,6 +14,10 @@
 				<input type="text" value="" @input="getformData" data-name="post" placeholder="请输入您的岗位名称" />
 			</view>
 			<view class="item">
+				<view>工作经验</view>
+				<input type="digit" value="" @input="getformData" data-name="experience" placeholder="请输入您的工作经验(年)" />
+			</view>
+			<view class="item">
 				<view>身份证号</view>
 				<input type="idcard" value="" @input="getformData" data-name="IDNumber" placeholder="请输入您的身份证号码" />
 			</view>
@@ -40,6 +44,7 @@
 					name: '',
 					bank: '',
 					post: '',
+					experience: '',
 					IDNumber: '',
 					IDCard_1: '',
 					IDCard_2: ''
@@ -77,6 +82,7 @@
 					name: formData.name,
 					company: formData.bank,
 					post: formData.post,
+					experience: formData.experience,
 					identity: formData.IDNumber,
 					identity_just: formData.IDCard_1,
 					identity_back: formData.IDCard_2
