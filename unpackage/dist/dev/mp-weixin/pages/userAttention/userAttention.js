@@ -160,6 +160,7 @@ var userAttention = new _userAttentionModel.default();var _default =
 
   data: function data() {
     return {
+      userInfo: {},
       attentionNode: {
         data: [] } };
 
@@ -192,25 +193,26 @@ var userAttention = new _userAttentionModel.default();var _default =
     },
     // 取消关注
     notAttention: function notAttention(e) {
+      var that = this;
       uni.showModal({
         title: '系统提示',
         content: '确定取消关注？',
         success: function success(res) {
           if (res.confirm) {
             // console.log('用户点击确定');
-            var that = this;
             var id = userAttention.get_data_set(e, "id");
             var index = userAttention.get_data_set(e, "index");
             userAttention.runNotAttention({
               openid: that.userInfo.openid,
-              id: that.info.id },
+              id: id },
             function (res) {
-              console.log(res);
               if (res.code == 4000) {
                 userAttention.show_tips(res.explain);
                 that.attentionNode.data = userAttention.delete_arr_index(that.attentionNode.data, index);
+              } else {
+                userAttention.show_tips(res.explain);
               }
-              callBack && callBack();
+              // callBack && callBack();
             });
           } else if (res.cancel) {
             // console.log('用户点击取消');

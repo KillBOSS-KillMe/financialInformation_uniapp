@@ -27,6 +27,7 @@
 		},
 		data() {
 			return {
+				userInfo: {},
 				attentionNode: {
 					data: []
 				}
@@ -59,25 +60,26 @@
 			},
 			// 取消关注
 			notAttention(e) {
+				const that = this
 				uni.showModal({
 					title: '系统提示',
 					content: '确定取消关注？',
 					success: function(res) {
 						if (res.confirm) {
 							// console.log('用户点击确定');
-							const that = this
 							let id = userAttention.get_data_set(e, "id")
 							let index = userAttention.get_data_set(e, "index")
 							userAttention.runNotAttention({
 								openid: that.userInfo.openid,
-								id: that.info.id
+								id: id
 							}, (res) => {
-								console.log(res)
 								if (res.code == 4000) {
 									userAttention.show_tips(res.explain)
 									that.attentionNode.data = userAttention.delete_arr_index(that.attentionNode.data, index)
+								} else {
+									userAttention.show_tips(res.explain)
 								}
-								callBack && callBack();
+								// callBack && callBack();
 							})
 						} else if (res.cancel) {
 							// console.log('用户点击取消');
