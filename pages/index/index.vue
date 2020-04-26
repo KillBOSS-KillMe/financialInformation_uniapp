@@ -14,7 +14,7 @@
 		</view>
 		<view class="managerList">
 			<view class="item" @tap="goManagerDetails" :data-managerindex="index" :data-id="item.id" v-for="(item,index) in managerNode.data" :key="index" v-if="managerNode.data.length > 0">
-				<image src="../../static/images/test.png" mode=""></image>
+				<image :src="item.portrait" mode=""></image>
 				<view class="info">
 					<view class="details">
 						<view>{{item.name}} / {{item.company}}</view>

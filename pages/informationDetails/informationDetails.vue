@@ -5,7 +5,6 @@
 			<view class="articleInfo">
 				<text>{{informationNode.newsinfo.seenumber}}阅读</text>
 				<text>{{informationNode.newsinfo.createtime}}</text>
-				
 			</view>
 			<!-- <view class="articleContent">
 				{{informationNode.newsinfo.content}}
