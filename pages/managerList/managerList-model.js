@@ -3,12 +3,12 @@ class ManagerList extends Base {
 	constructor() {
 		super();
 	}
-	// 登录
-	login(data, callBack) {
+	// 客户经理列表
+	getManagerList(data, callBack) {
 		var that = this;
 		var params = {
-			url: 'users/login',
-			method: 'POST',
+			url: 'index/get_merchant',
+			method: 'GET',
 			data: data,
 			sCallBack: function(res) {
 				callBack && callBack(res.data);
@@ -16,19 +16,6 @@ class ManagerList extends Base {
 		};
 		that.request(params);
 	};
-	// 获取用户信息
-	// getUserInfo(data, callBack) {
-	// 	var that = this;
-	// 	var params = {
-	// 		url: 'auth/me',
-	// 		method: 'POST',
-	// 		data: data,
-	// 		sCallBack: function(res) {
-	// 			callBack && callBack(res.data);
-	// 		}
-	// 	};
-	// 	that.request(params);
-	// };
 }
 
 export default ManagerList

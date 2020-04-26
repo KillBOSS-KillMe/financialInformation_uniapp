@@ -24,9 +24,8 @@
 				</view>
 				<view class="image">
 					<image :src="info.portrait" mode=""></image>
-					<view class="active" @tap="attention" v-if="fans_state == 0">关注</view>
-					<view @tap="notAttention" v-if="fans_state == 1">取消关注</view>
-					<!-- <view>已关注</view> -->
+					<view class="active" @tap="attention" v-if="info.fans_state == 0">关注</view>
+					<view @tap="notAttention" v-if="info.fans_state == 1">取消关注</view>
 				</view>
 			</view>
 			<view class="titleModel">
@@ -122,7 +121,7 @@
 					} else {
 						managerDetails.show_tips(res.explain)
 					}
-					callBack && callBack();
+					// callBack && callBack();
 				})
 			},
 			// 取消关注
@@ -139,7 +138,7 @@
 					} else {
 						managerDetails.show_tips(res.explain)
 					}
-					callBack && callBack();
+					// callBack && callBack();
 				})
 			},
 			// 咨询

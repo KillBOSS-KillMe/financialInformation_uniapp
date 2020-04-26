@@ -32,6 +32,7 @@
 			return {
 				userInfo: {},
 				articleList: {
+					page: 1,
 					data: []
 				}
 			}
@@ -53,14 +54,14 @@
 			getArticleList(callBack) {
 				const that = this
 				articleList.getArticleList({
-					// openid: that.userInfo.openid
+					page: that.articleList.page || 1
 				}, (res) => {
 					if (res.code == 4000) {
 						let list = res.data
 						for (let i = 0; i < list.length; i++) {
 							list[i].createtime = articleList.transformTime(list[i].createtime * 1000)
 						}
-						res.data = list
+						res.data = that.articleList.data.concat(list); 
 						that.articleList = res
 					}
 					callBack && callBack();
@@ -82,14 +83,17 @@
 			});
 		},
 		//上拉加载更多
-		// onReachBottom() {
-		//   var that = this;
-		//   if (that.last_page == that.page) {
-		//     return;
-		//   }
-		//   that.page += 1;
-		//   that.get_product_list();
-		// },
+		onReachBottom() {
+		  var that = this;
+		  if (that.articleList.page == that.articleList.page_number) {
+		    return;
+		  }
+		  that.articleList.page += 1;
+		  // 客户经理列表加载
+		  this.getArticleList(() => {
+		  	callBack && callBack();
+		  })
+		},
 		// 分享
 		onShareAppMessage() {
 			// let shareData = {

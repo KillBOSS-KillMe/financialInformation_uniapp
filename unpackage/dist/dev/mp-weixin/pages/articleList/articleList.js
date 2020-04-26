@@ -165,6 +165,7 @@ var articleList = new _articleListModel.default();var _default =
     return {
       userInfo: {},
       articleList: {
+        page: 1,
         data: [] } };
 
 
@@ -186,14 +187,14 @@ var articleList = new _articleListModel.default();var _default =
     getArticleList: function getArticleList(callBack) {
       var that = this;
       articleList.getArticleList({
-        // openid: that.userInfo.openid
-      }, function (res) {
+        page: that.articleList.page || 1 },
+      function (res) {
         if (res.code == 4000) {
           var list = res.data;
           for (var i = 0; i < list.length; i++) {
             list[i].createtime = articleList.transformTime(list[i].createtime * 1000);
           }
-          res.data = list;
+          res.data = that.articleList.data.concat(list);
           that.articleList = res;
         }
         callBack && callBack();
@@ -215,14 +216,17 @@ var articleList = new _articleListModel.default();var _default =
     });
   },
   //上拉加载更多
-  // onReachBottom() {
-  //   var that = this;
-  //   if (that.last_page == that.page) {
-  //     return;
-  //   }
-  //   that.page += 1;
-  //   that.get_product_list();
-  // },
+  onReachBottom: function onReachBottom() {
+    var that = this;
+    if (that.articleList.page == that.articleList.page_number) {
+      return;
+    }
+    that.articleList.page += 1;
+    // 客户经理列表加载
+    this.getArticleList(function () {
+      callBack && callBack();
+    });
+  },
   // 分享
   onShareAppMessage: function onShareAppMessage() {
     // let shareData = {

@@ -160,7 +160,10 @@ var managerList = new _managerListModel.default();var _default =
   data: function data() {
     return {
       userInfo: {},
-      sysNewsList: [] };
+      managerNode: {
+        page: 1,
+        data: [] } };
+
 
   },
   onLoad: function onLoad(options) {
@@ -172,25 +175,30 @@ var managerList = new _managerListModel.default();var _default =
     _onLoad: function _onLoad(callBack) {
       var that = this;
       that.userInfo = that.$store.state.userInfo;
+      // 客户经理列表加载
+      this.getManagerList(function () {
+        callBack && callBack();
+      });
     },
-    // 加载新消息列表
-    getNewNewsList: function getNewNewsList(callBack) {
+    // 客户经理列表
+    getManagerList: function getManagerList(callBack) {
       var that = this;
-      sysNewsList.getNewNewsList({
-        openid: that.userInfo.openid },
+      managerList.getManagerList({
+        page: that.managerNode.page || 1 },
       function (res) {
-        // console.log(res)
-        if (res.code == 4000) {
-          that.newNewsList = res.data;
+        if (res.code == '4000') {
+          res.data = that.managerNode.data.concat(res.data);
+          that.managerNode = res;
         }
         callBack && callBack();
       });
     },
-    // 进入--消息--详情页
-    goNewDetails: function goNewDetails(e) {
+    // 进入--客户经理--详情页
+    goManagerDetails: function goManagerDetails(e) {
       var that = this;
-      var id = sysNewsList.get_data_set(e, "id");
-      sysNewsList.navigate_to("/pages/sysNews/sysNews?id=".concat(id));
+      var managerindex = managerList.get_data_set(e, "managerindex");
+      var data = JSON.stringify(that.managerNode.data[managerindex]);
+      managerList.navigate_to("/pages/managerDetails/managerDetails?data=".concat(data));
     } },
 
   // 下拉刷新
@@ -202,14 +210,17 @@ var managerList = new _managerListModel.default();var _default =
     });
   },
   //上拉加载更多
-  // onReachBottom() {
-  //   var that = this;
-  //   if (that.last_page == that.page) {
-  //     return;
-  //   }
-  //   that.page += 1;
-  //   that.get_product_list();
-  // },
+  onReachBottom: function onReachBottom() {
+    var that = this;
+    if (that.managerNode.page == that.managerNode.page_number) {
+      return;
+    }
+    that.managerNode.page += 1;
+    // 客户经理列表加载
+    this.getManagerList(function () {
+      callBack && callBack();
+    });
+  },
   // 分享
   onShareAppMessage: function onShareAppMessage() {
     // let shareData = {

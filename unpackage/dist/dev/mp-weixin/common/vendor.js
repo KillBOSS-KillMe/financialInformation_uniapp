@@ -2923,12 +2923,12 @@ ManagerList = /*#__PURE__*/function (_Base) {_inherits(ManagerList, _Base);
   function ManagerList() {_classCallCheck(this, ManagerList);return _possibleConstructorReturn(this, _getPrototypeOf(ManagerList).call(this));
 
   }
-  // 登录
-  _createClass(ManagerList, [{ key: "login", value: function login(data, callBack) {
+  // 客户经理列表
+  _createClass(ManagerList, [{ key: "getManagerList", value: function getManagerList(data, callBack) {
       var that = this;
       var params = {
-        url: 'users/login',
-        method: 'POST',
+        url: 'index/get_merchant',
+        method: 'GET',
         data: data,
         sCallBack: function sCallBack(res) {
           callBack && callBack(res.data);
@@ -2936,19 +2936,6 @@ ManagerList = /*#__PURE__*/function (_Base) {_inherits(ManagerList, _Base);
 
       that.request(params);
     } }]);return ManagerList;}(_base.default);var _default =
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 ManagerList;exports.default = _default;
