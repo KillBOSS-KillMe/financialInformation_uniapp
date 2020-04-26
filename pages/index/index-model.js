@@ -68,6 +68,19 @@ class Index extends Base {
 		};
 		that.request(params);
 	};
+	// 搜索
+	getSearchList(data, callBack) {
+		var that = this;
+		var params = {
+			url: 'index/search',
+			method: 'POST',
+			data: data,
+			sCallBack: function(res) {
+				callBack && callBack(res.data);
+			}
+		};
+		that.request(params);
+	};
 }
 
 export default Index

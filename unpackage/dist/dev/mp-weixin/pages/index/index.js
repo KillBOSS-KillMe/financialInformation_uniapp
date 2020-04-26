@@ -260,7 +260,7 @@ var _indexModel = _interopRequireDefault(__webpack_require__(/*! ./index-model.j
 //
 //
 //
-var index = new _indexModel.default();var _default = { data: function data() {return { options: {}, title: 'Hello', // imageUrl: '',
+var index = new _indexModel.default();var _default = { data: function data() {return { options: {}, searchKey: '', // imageUrl: '',
       authorizationButton: true, userInfo: {}, userInfoAll: {}, // 轮播图相关
       bannerData: [], indicatorDots: true, autoplay: true, interval: 2000, duration: 500, // 客户经理数据对象
       managerNode: { data: [] }, // 最新资讯
@@ -276,10 +276,10 @@ var index = new _indexModel.default();var _default = { data: function data() {re
   }, methods: { _onLoad: function _onLoad(callBack) {var that = this; // that.imageUrl = index.base_image_url
       that.userInfo = that.$store.state.userInfo; // 轮播图加载
       this.getBanner(function () {callBack && callBack();}); // 客户经理列表加载
-      this.getManagerList(function () {callBack && callBack();}); // 客户经理列表加载
       this.getInformationList(function () {callBack && callBack();}); // 获取已授权类别
       uni.getSetting({ success: function success(res) {if (res.authSetting['scope.userInfo']) {// 隐藏授权按钮
-            that.authorizationButton = false;that.$store.commit('updateAuthorizationButtonData', false);that.wx_login(function () {callBack && callBack();});} else {// 隐藏底部导航
+            that.authorizationButton = false;that.$store.commit('updateAuthorizationButtonData', false);that.wx_login(function () {// 客户经理列表加载
+              that.getManagerList(function () {callBack && callBack();});});} else {// 隐藏底部导航
             uni.hideTabBar({ boolean: true });}}, fail: function fail() {console.log("获取授权信息授权失败");} });}, // 进入客户经理列表
     goManagerList: function goManagerList() {
       index.navigate_to("/pages/managerList/managerList");
@@ -302,7 +302,7 @@ var index = new _indexModel.default();var _default = { data: function data() {re
       var id = index.get_data_set(e, "id");
       index.navigate_to("/pages/informationDetails/informationDetails?id=".concat(id));
     },
-    wx_login: function wx_login(e) {
+    wx_login: function wx_login(callBack) {
       var that = this;
       // 显示底部导航
 
@@ -339,11 +339,41 @@ var index = new _indexModel.default();var _default = { data: function data() {re
                     }, 2000);
                   }
                 }
+                callBack && callBack();
               });
             } });
 
         } });
 
+    },
+    getSearchCon: function getSearchCon(e) {
+      var that = this;
+      that.searchKey = index.get_input_val(e);
+      if (that.searchKey != '') {
+        console.log('======');
+        // // 执行搜索
+        // this.getSearchList()
+      } else {
+        console.log('|||||||');
+        // // 客户经理列表加载
+        // this.getManagerList()
+        // // 客户经理列表加载
+        // this.getInformationList()
+      }
+    },
+    // 执行搜索
+    getSearchList: function getSearchList(callBack) {
+      var that = this;
+      index.getSearchList({
+        openid: that.userInfo.openid,
+        content: that.searchKey },
+      function (res) {
+        if (res.code == '4000') {
+          that.managerNode.data = res.ManagerList;
+          that.informationNode.data = res.NewsList;
+        }
+        callBack && callBack();
+      });
     },
     // 加载轮播图
     getBanner: function getBanner(callBack) {
@@ -358,7 +388,9 @@ var index = new _indexModel.default();var _default = { data: function data() {re
     // 客户经理列表
     getManagerList: function getManagerList(callBack) {
       var that = this;
-      index.getManagerList({}, function (res) {
+      index.getManagerList({
+        openid: that.userInfo.openid },
+      function (res) {
         if (res.code == '4000') {
           that.managerNode = res;
         }

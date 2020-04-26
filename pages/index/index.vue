@@ -2,7 +2,7 @@
 	<view>
 		<view class="search">
 			<icon class="iconfont iconsousuo"></icon>
-			<input type="text" value="" placeholder="请输入您要搜索的客户经理/资讯" />
+			<input type="text" :value="searchKey" placeholder="请输入您要搜索的客户经理/资讯" @input="getSearchCon" />
 		</view>
 		<swiper class="swiper" :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval" :duration="duration">
 			<swiper-item v-for="(item,index) in bannerData" :key="index">
@@ -69,7 +69,7 @@
 		data() {
 			return {
 				options: {},
-				title: 'Hello',
+				searchKey: '',
 				// imageUrl: '',
 				authorizationButton: true,
 				userInfo: {},
@@ -117,10 +117,7 @@
 				this.getBanner(() => {
 					callBack && callBack();
 				})
-				// 客户经理列表加载
-				this.getManagerList(() => {
-					callBack && callBack();
-				})
+				
 				// 客户经理列表加载
 				this.getInformationList(() => {
 					callBack && callBack();
@@ -133,7 +130,10 @@
 							that.authorizationButton = false;
 							that.$store.commit('updateAuthorizationButtonData', false);
 							that.wx_login(() => {
-								callBack && callBack();
+								// 客户经理列表加载
+								that.getManagerList(() => {
+									callBack && callBack();
+								})
 							})
 						} else {
 							// 隐藏底部导航
@@ -169,7 +169,7 @@
 				const id = index.get_data_set(e, "id");
 				index.navigate_to(`/pages/informationDetails/informationDetails?id=${id}`);
 			},
-			wx_login(e) {
+			wx_login(callBack) {
 				const that = this;
 				// 显示底部导航
 				
@@ -206,11 +206,41 @@
 											}, 2000)
 										}
 									}
+									callBack && callBack();
 								})
 							}
 						})
 					}
 				});
+			},
+			getSearchCon(e) {
+				const that = this
+				that.searchKey = index.get_input_val(e)
+				if (that.searchKey != '') {
+					console.log('======')
+					// // 执行搜索
+					// this.getSearchList()
+				} else {
+					console.log('|||||||')
+					// // 客户经理列表加载
+					// this.getManagerList()
+					// // 客户经理列表加载
+					// this.getInformationList()
+				}
+			},
+			// 执行搜索
+			getSearchList(callBack) {
+				const that = this
+				index.getSearchList({
+					openid: that.userInfo.openid,
+					content: that.searchKey
+				}, (res) => {
+					if (res.code == '4000') {
+						that.managerNode.data = res.ManagerList
+						that.informationNode.data = res.NewsList
+					}
+					callBack && callBack();
+				})
 			},
 			// 加载轮播图
 			getBanner(callBack) {
@@ -225,7 +255,9 @@
 			// 客户经理列表
 			getManagerList(callBack) {
 				const that = this
-				index.getManagerList({}, (res) => {
+				index.getManagerList({
+					openid: that.userInfo.openid
+				}, (res) => {
 					if (res.code == '4000') {
 						that.managerNode = res
 					}

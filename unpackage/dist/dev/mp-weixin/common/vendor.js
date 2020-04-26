@@ -9452,6 +9452,19 @@ Index = /*#__PURE__*/function (_Base) {_inherits(Index, _Base);
         } };
 
       that.request(params);
+    } }, { key: "getSearchList",
+    // 搜索
+    value: function getSearchList(data, callBack) {
+      var that = this;
+      var params = {
+        url: 'index/search',
+        method: 'POST',
+        data: data,
+        sCallBack: function sCallBack(res) {
+          callBack && callBack(res.data);
+        } };
+
+      that.request(params);
     } }]);return Index;}(_base.default);var _default =
 
 
