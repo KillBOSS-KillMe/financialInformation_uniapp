@@ -184,7 +184,31 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 var _indexModel = _interopRequireDefault(__webpack_require__(/*! ./index-model.js */ 34));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -254,31 +278,19 @@ var index = new _indexModel.default();var _default = { data: function data() {re
       that.userInfo = that.$store.state.userInfo; // 轮播图加载
       this.getBanner(function () {callBack && callBack();}); // 客户经理列表加载
       this.getManagerList(function () {callBack && callBack();}); // 客户经理列表加载
-      this.getInformationList(function () {
-        callBack && callBack();
-      });
-      // that.wx_login(() => {
+      this.getInformationList(function () {callBack && callBack();}); // that.wx_login(() => {
       // 	that.getUserInfo(() => {
       // 		if (that.userInfo.type == 'member') {
-
       // 		} else {
       // 			// 提示用户非会员
       // 			that.promptOpenVip()
       // 		}
       // 	})
       // })
-    },
-    // 进入--客户经理--详情页
-    goManagerDetails: function goManagerDetails(e) {
-      var that = this;
-      // const id = index.get_data_set(e, "id");
-      var managerindex = index.get_data_set(e, "managerindex");
-      var data = JSON.stringify(that.managerNode.data[managerindex]);
-      index.navigate_to("/pages/managerDetails/managerDetails?data=".concat(data));
-    },
-    // 进入--资讯--详情页
-    goInformationDetails: function goInformationDetails(e) {
-      var that = this;
+    }, // 进入--客户经理--详情页
+    goManagerDetails: function goManagerDetails(e) {var that = this; // const id = index.get_data_set(e, "id");
+      var managerindex = index.get_data_set(e, "managerindex");var data = JSON.stringify(that.managerNode.data[managerindex]);index.navigate_to("/pages/managerDetails/managerDetails?data=".concat(data));}, // 进入--资讯--详情页
+    goInformationDetails: function goInformationDetails(e) {var that = this;
       var id = index.get_data_set(e, "id");
       index.navigate_to("/pages/informationDetails/informationDetails?id=".concat(id));
     },

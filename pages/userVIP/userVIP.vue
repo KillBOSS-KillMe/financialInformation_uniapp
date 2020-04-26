@@ -33,8 +33,14 @@
 					</view>
 				</view>
 			</scroll-view>
-			<view class="titleModel">
-				<view></view>会员权益
+			<view class="titleModel" v-if="informationNode.data.length > 0">
+				<view class="titleCon">
+					<view></view>会员权益
+				</view>
+				<!-- <view class="more">
+					更多
+					<icon class="iconfont iconxiangyou"></icon>
+				</view> -->
 			</view>
 			<view class="info">
 				<text>1.会员权益会员权益会员权益会员权益</text>

@@ -214,19 +214,35 @@ text-overflow: ellipsis; -->
 		width: 690rpx;
 		height: 36rpx;
 		margin: 30rpx;
-		font-size: 32rpx;
-		font-weight: 700;
-		color: #343434;
+		
 		display: flex;
 		align-items: center;
-		justify-content: flex-start;
-
-		view {
-			width: 10rpx;
-			height: 36rpx;
-			border-radius: 5rpx;
-			background-color: #265ED7;
-			margin-right: 10rpx;
+		justify-content: space-between;
+		.titleCon {
+			font-size: 32rpx;
+			font-weight: 700;
+			color: #343434;
+			display: flex;
+			align-items: center;
+			justify-content: flex-start;
+			view {
+				width: 10rpx;
+				height: 36rpx;
+				border-radius: 5rpx;
+				background-color: #265ED7;
+				margin-right: 10rpx;
+			}
+		}
+		.more {
+			display: flex;
+			align-items: center;
+			justify-content: flex-end;
+			font-size: 25rpx;
+			color: #666666;
+			.iconfont {
+				font-size: 25rpx;
+				color: #666666;
+			}
 		}
 	}
 

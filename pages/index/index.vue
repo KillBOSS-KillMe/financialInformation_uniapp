@@ -10,7 +10,13 @@
 			</swiper-item>
 		</swiper>
 		<view class="titleModel" v-if="managerNode.data.length > 0">
-			<view></view>金牌客户经理
+			<view class="titleCon">
+				<view></view>金牌客户经理
+			</view>
+			<view class="more">
+				更多
+				<icon class="iconfont iconxiangyou"></icon>
+			</view>
 		</view>
 		<view class="managerList">
 			<view class="item" @tap="goManagerDetails" :data-managerindex="index" :data-id="item.id" v-for="(item,index) in managerNode.data" :key="index" v-if="managerNode.data.length > 0">
@@ -26,7 +32,13 @@
 			</view>
 		</view>
 		<view class="titleModel" v-if="informationNode.data.length > 0">
-			<view></view>最新资讯
+			<view class="titleCon">
+				<view></view>最新资讯
+			</view>
+			<view class="more">
+				更多
+				<icon class="iconfont iconxiangyou"></icon>
+			</view>
 		</view>
 		<view class="articleList">
 			<view class="item" @tap="goInformationDetails" :data-id="item.id" v-for="(item,index) in informationNode.data" :key="index" v-if="informationNode.data.length > 0">

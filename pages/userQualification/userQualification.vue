@@ -1,8 +1,14 @@
 <template>
 	<view class="pageTopBorder">
 		<view class="content">
-			<view class="titleModel">
-				<view></view>我的资质
+			<view class="titleModel" v-if="informationNode.data.length > 0">
+				<view class="titleCon">
+					<view></view>我的资质
+				</view>
+				<!-- <view class="more">
+					更多
+					<icon class="iconfont iconxiangyou"></icon>
+				</view> -->
 			</view>
 			<view class="info">
 				<view class="item">

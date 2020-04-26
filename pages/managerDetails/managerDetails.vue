@@ -29,7 +29,13 @@
 				</view>
 			</view>
 			<view class="titleModel">
-				<view></view>他的信息
+				<view class="titleCon">
+					<view></view>他的信息
+				</view>
+			<!-- 	<view class="more">
+					更多
+					<icon class="iconfont iconxiangyou"></icon>
+				</view> -->
 			</view>
 			<view class="managerInfo">
 				<view class="item">
