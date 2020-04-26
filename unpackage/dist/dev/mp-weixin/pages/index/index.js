@@ -236,7 +236,8 @@ var _indexModel = _interopRequireDefault(__webpack_require__(/*! ./index-model.j
 //
 //
 //
-var index = new _indexModel.default();var _default = { data: function data() {return { options: {}, title: 'Hello', imageUrl: '', authorizationButton: null, userInfo: {}, userInfoAll: {}, // 轮播图相关
+var index = new _indexModel.default();var _default = { data: function data() {return { options: {}, title: 'Hello', // imageUrl: '',
+      authorizationButton: null, userInfo: {}, userInfoAll: {}, // 轮播图相关
       bannerData: [], indicatorDots: true, autoplay: true, interval: 2000, duration: 500, // 客户经理数据对象
       managerNode: { data: [] }, // 最新资讯
       informationNode: { data: [] } };}, onLoad: function onLoad(options) {var that = this;that.options = options;that._onLoad();}, onShow: function onShow() {// 获取已授权类别
@@ -249,11 +250,10 @@ var index = new _indexModel.default();var _default = { data: function data() {re
     // 		})
     // 	})
     // }
-  }, methods: { _onLoad: function _onLoad(callBack) {var that = this;that.imageUrl = index.base_image_url;that.userInfo = that.$store.state.userInfo; // 轮播图加载
+  }, methods: { _onLoad: function _onLoad(callBack) {var that = this; // that.imageUrl = index.base_image_url
+      that.userInfo = that.$store.state.userInfo; // 轮播图加载
       this.getBanner(function () {callBack && callBack();}); // 客户经理列表加载
-      this.getManagerList(function () {callBack && callBack();
-      });
-      // 客户经理列表加载
+      this.getManagerList(function () {callBack && callBack();}); // 客户经理列表加载
       this.getInformationList(function () {
         callBack && callBack();
       });
@@ -331,13 +331,7 @@ var index = new _indexModel.default();var _default = { data: function data() {re
       var that = this;
       index.getBanner({}, function (res) {
         if (res.code == '4000') {
-          var list = res.data;
-          // let newList = []
-          for (var i = 0; i < list.length; i++) {
-            list[i].img = that.imageUrl + list[i].img;
-          }
-          that.bannerData = list;
-          console.log(list);
+          that.bannerData = res.data;
         }
         callBack && callBack();
       });

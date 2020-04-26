@@ -58,7 +58,7 @@
 				options: {},
 				userInfo: {},
 				informationNode: {},
-				imageUrl: '',
+				// imageUrl: '',
 				commentCon: ''
 			};
 		},
@@ -70,7 +70,7 @@
 		methods: {
 			_onLoad(callBack) {
 				const that = this
-				that.imageUrl = informationDetails.base_image_url
+				// that.imageUrl = informationDetails.base_image_url
 				that.userInfo = that.$store.state.userInfo;
 				that.getNewsContent(() => {
 					callBack && callBack();

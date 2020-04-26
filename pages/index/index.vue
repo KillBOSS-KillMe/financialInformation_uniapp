@@ -58,7 +58,7 @@
 			return {
 				options: {},
 				title: 'Hello',
-				imageUrl: '',
+				// imageUrl: '',
 				authorizationButton: null,
 				userInfo: {},
 				userInfoAll: {},
@@ -110,7 +110,7 @@
 		methods: {
 			_onLoad(callBack) {
 				const that = this
-				that.imageUrl = index.base_image_url
+				// that.imageUrl = index.base_image_url
 				that.userInfo = that.$store.state.userInfo;
 				// 轮播图加载
 				this.getBanner(() => {
@@ -198,13 +198,7 @@
 				const that = this
 				index.getBanner({}, (res) => {
 					if (res.code == '4000') {
-						let list = res.data
-						// let newList = []
-						for (let i = 0; i < list.length; i++) {
-							list[i].img = that.imageUrl + list[i].img
-						}
-						that.bannerData = list
-						console.log(list)
+						that.bannerData = res.data
 					}
 					callBack && callBack();
 				})
