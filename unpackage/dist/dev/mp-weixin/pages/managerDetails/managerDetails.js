@@ -254,7 +254,7 @@ var _managerDetailsModel = _interopRequireDefault(__webpack_require__(/*! ./mana
 //
 var managerDetails = new _managerDetailsModel.default();var _default = { data: function data() {return { options: {}, info: {} };}, onLoad: function onLoad(options) {var that = this;that.options = options;that._onLoad();}, methods: { _onLoad: function _onLoad(callBack) {var that = this;that.userInfo = that.$store.state.userInfo;that.info = JSON.parse(that.options.data); // console.log(that.info)
       that.getDetails(function () {callBack && callBack();});}, // 详情加载
-    getDetails: function getDetails() {var that = this;managerDetails.getDetails({ id: that.info.id }, function (res) {console.log(res);if (res.code == 4000) {managerDetails.show_tips(res.explain);}callBack && callBack();});}, // 关注
+    getDetails: function getDetails(callBack) {var that = this;managerDetails.getDetails({ id: that.info.id }, function (res) {console.log(res);if (res.code == 4000) {managerDetails.show_tips(res.explain);}callBack && callBack();});}, // 关注
     attention: function attention(callBack) {var that = this;managerDetails.runAttention({ openid: that.userInfo.openid, id: that.info.id }, function (res) {console.log(res);if (res.code == 4000) {managerDetails.show_tips(res.explain);}callBack && callBack();});}, // 取消关注
     notAttention: function notAttention(callBack) {var that = this;managerDetails.runNotAttention({ openid: that.userInfo.openid, id: that.info.id }, function (res) {console.log(res);if (res.code == 4000) {managerDetails.show_tips(res.explain);}callBack && callBack();});} },
 

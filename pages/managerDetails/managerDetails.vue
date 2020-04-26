@@ -23,7 +23,7 @@
 					</view>
 				</view>
 				<view class="image">
-					<image src="../../static/images/test.png" mode=""></image>
+					<image :src="info.portrait" mode=""></image>
 					<view class="active" @tap="attention">关注</view>
 					<!-- <view>已关注</view> -->
 				</view>
@@ -84,7 +84,7 @@
 				})
 			},
 			// 详情加载
-			getDetails() {
+			getDetails(callBack) {
 				const that = this
 				managerDetails.getDetails({
 					id: that.info.id
