@@ -29,6 +29,19 @@ class InformationDetails extends Base {
 		};
 		that.request(params);
 	};
+	// 点赞
+	like(data, callBack) {
+		var that = this;
+		var params = {
+			url: 'vote/vote',
+			method: 'POST',
+			data: data,
+			sCallBack: function(res) {
+				callBack && callBack(res.data);
+			}
+		};
+		that.request(params);
+	};
 }
 
 export default InformationDetails

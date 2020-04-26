@@ -169,35 +169,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 var _informationDetailsModel = _interopRequireDefault(__webpack_require__(/*! ./informationDetails-model.js */ 70));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -236,10 +208,25 @@ var _informationDetailsModel = _interopRequireDefault(__webpack_require__(/*! ./
 //
 var informationDetails = new _informationDetailsModel.default();var _default = { data: function data() {return { options: {}, userInfo: {}, informationNode: {}, // imageUrl: '',
       commentCon: '' };}, onLoad: function onLoad(options) {var that = this;that.options = options;that._onLoad();}, methods: { _onLoad: function _onLoad(callBack) {var that = this; // that.imageUrl = informationDetails.base_image_url
-      that.userInfo = that.$store.state.userInfo;that.getNewsContent(function () {callBack && callBack();});}, getNewsContent: function getNewsContent(callBack) {var that = this;informationDetails.getNewsContent({ openid: that.userInfo.openid, id: that.options.id }, function (res) {if (res.code == '4000') {var newsinfo = res.newsinfo;var CommentList = res.CommentList;newsinfo.createtime = informationDetails.transformTime(newsinfo.createtime * 1000);for (var i = 0; i < CommentList.length; i++) {// CommentList[i].portrait = that.imageUrl + CommentList[i].portrait
-            CommentList[i].createtime = informationDetails.transformTime(CommentList[i].createtime * 1000);}res.newsinfo = newsinfo;res.CommentList = CommentList;that.informationNode = res;}callBack && callBack();});}, // 获取评论内容
-    getCommentCon: function getCommentCon(e) {var that = this;that.commentCon = informationDetails.get_input_val(e);}, // 提交评论
-    sendComment: function sendComment(callBack) {var that = this;if (that.commentCon == '') {informationDetails.show_tips('请输入与评论内容');
+      that.userInfo = that.$store.state.userInfo;that.getNewsContent(function () {callBack && callBack();});}, // 获取详情
+    getNewsContent: function getNewsContent(callBack) {var that = this;informationDetails.getNewsContent({ openid: that.userInfo.openid, id: that.options.id }, function (res) {if (res.code == '4000') {var newsinfo = res.newsinfo;var CommentList = res.CommentList;newsinfo.createtime = informationDetails.transformTime(newsinfo.createtime * 1000);for (var i = 0; i < CommentList.length; i++) {// CommentList[i].portrait = that.imageUrl + CommentList[i].portrait
+            CommentList[i].createtime = informationDetails.transformTime(CommentList[i].createtime * 1000);}res.newsinfo = newsinfo;
+          res.CommentList = CommentList;
+          that.informationNode = res;
+        }
+        callBack && callBack();
+      });
+    },
+    // 获取评论内容
+    getCommentCon: function getCommentCon(e) {
+      var that = this;
+      that.commentCon = informationDetails.get_input_val(e);
+    },
+    // 提交评论
+    sendComment: function sendComment(callBack) {
+      var that = this;
+      if (that.commentCon == '') {
+        informationDetails.show_tips('请输入与评论内容');
         return false;
       }
       informationDetails.sendComment({
@@ -250,6 +237,24 @@ var informationDetails = new _informationDetailsModel.default();var _default = {
         if (res.code == '4000') {
           informationDetails.show_tips(res.explain);
           that.commentCon = "";
+        }
+      });
+    },
+    // 点赞
+    like: function like(e) {
+      var that = this;
+      var id = informationDetails.get_data_set(e, "id");
+      var index = informationDetails.get_data_set(e, "index");
+      informationDetails.like({
+        openid: that.userInfo.openid,
+        id: id,
+        vote_type: 1 },
+      function (res) {
+        if (res.code == '4000') {
+          informationDetails.show_tips(res.explain);
+          that.informationNode.CommentList[index].support += 1;
+        } else {
+          informationDetails.show_tips(res.explain);
         }
       });
     } },

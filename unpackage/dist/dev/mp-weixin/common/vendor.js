@@ -10530,6 +10530,19 @@ InformationDetails = /*#__PURE__*/function (_Base) {_inherits(InformationDetails
         } };
 
       that.request(params);
+    } }, { key: "like",
+    // 点赞
+    value: function like(data, callBack) {
+      var that = this;
+      var params = {
+        url: 'vote/vote',
+        method: 'POST',
+        data: data,
+        sCallBack: function sCallBack(res) {
+          callBack && callBack(res.data);
+        } };
+
+      that.request(params);
     } }]);return InformationDetails;}(_base.default);var _default =
 
 

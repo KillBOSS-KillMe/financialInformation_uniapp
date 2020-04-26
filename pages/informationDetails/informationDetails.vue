@@ -17,27 +17,13 @@
 						<view class="commentCon">{{item.ccontent}}</view>
 						<view class="features">
 							<text>{{item.createtime}}</text>
-							<view>
+							<view @tap="like" :data-id="item.id" :data-index="index">
 								<icon class="iconfont icondianzan"></icon>
 								{{item.support}}
 							</view>
 						</view>
 					</view>
 				</view>
-			<!-- 	<view class="item">
-					<image src="../../static/images/test.png" mode=""></image>
-					<view class="comment">
-						<view class="name">会飞的鱼</view>
-						<view class="commentCon">只要有行驶证就可以按揭，全款，抵押，报税只要有行驶证就可以按揭，全款，抵押，报税走流程。</view>
-						<view class="features">
-							<text>2020-03-13</text>
-							<view>
-								<icon class="iconfont iconchongzhi active"></icon>
-								33
-							</view>
-						</view>
-					</view>
-				</view> -->
 			</view>
 			<view class="articleComment">
 				<view class="con">
@@ -76,6 +62,7 @@
 					callBack && callBack();
 				})
 			},
+			// 获取详情
 			getNewsContent(callBack) {
 				const that = this
 				informationDetails.getNewsContent({
@@ -117,6 +104,24 @@
 					if (res.code == '4000') {
 						informationDetails.show_tips(res.explain)
 						that.commentCon = ""
+					}
+				})
+			},
+			// 点赞
+			like(e) {
+				const that = this
+				let id = informationDetails.get_data_set(e, "id")
+				let index = informationDetails.get_data_set(e, "index")
+				informationDetails.like({
+					openid: that.userInfo.openid,
+					id: id,
+					vote_type: 1
+				}, (res) => {
+					if (res.code == '4000') {
+						informationDetails.show_tips(res.explain)
+						that.informationNode.CommentList[index].support += 1
+					} else {
+						informationDetails.show_tips(res.explain)
 					}
 				})
 			}
