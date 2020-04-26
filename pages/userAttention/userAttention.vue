@@ -75,7 +75,7 @@
 								console.log(res)
 								if (res.code == 4000) {
 									userAttention.show_tips(res.explain)
-									that.attentionNode.data = delete_arr_index(that.attentionNode.data, index)
+									that.attentionNode.data = userAttention.delete_arr_index(that.attentionNode.data, index)
 								}
 								callBack && callBack();
 							})
