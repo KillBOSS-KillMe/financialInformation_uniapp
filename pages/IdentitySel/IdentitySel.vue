@@ -68,10 +68,10 @@
 											// validation => 0  未认证
 											// validation => 1  认证
 											// validation => 2  审核中
-											if (res.data.validation == 0) {
+											if (res.data.validation == 1) {
 												// 客户经理资质 已认证
 												identitySel.switch_tab(`/pages/index/index`);
-											} else if (res.data.validation == 1) {
+											} else if (res.data.validation == 0) {
 												// 客户经理资质 未认证
 												identitySel.navigate_to(`/pages/certification/certification`);
 											} else if (res.data.validation == 2) {

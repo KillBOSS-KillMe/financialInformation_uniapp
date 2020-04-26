@@ -40,6 +40,8 @@
 				</view>
 			</view>
 		</view>
+		<view class="goValidation" @tap="goValidation" v-if="userInfo.validation == 0">去认证</view>
+		<view class="goValidation" @tap="goValidation" v-else-if="userInfo.validation == 2">待审核</view>
 	</view>
 </template>
 
@@ -79,6 +81,21 @@
 					callBack && callBack();
 				})
 			},
+			goValidation() {
+				const that = this
+				let userInfo = that.userInfo
+				// validation => 0  未认证
+				// validation => 1  认证
+				// validation => 2  审核中
+				if (userInfo.validation == 0) {
+					// 客户经理资质 未认证
+					userQualification.switch_tab(`/pages/certification/certification`);
+				} else if (userInfo.validation == 2) {
+					// 客户经理资质 审核中
+					userQualification.show_tips('资质审核中')
+					return false
+				}
+			}
 		},
 		// 下拉刷新
 		onPullDownRefresh() {
@@ -136,5 +153,20 @@
 				color: @fontColor_3;
 			}
 		}
+	}
+	.goValidation {
+		position: absolute;
+		bottom: 30rpx;
+		left: 30rpx;
+		width: 690rpx;
+		height: 80rpx;
+		font-size: @fontSize_1;
+		font-weight: @mainFontWeight;
+		color: #fff;
+		background-color: @themeColor_1;
+		border-radius: 10rpx;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 </style>

@@ -9392,7 +9392,7 @@ Index = /*#__PURE__*/function (_Base) {_inherits(Index, _Base);
   _createClass(Index, [{ key: "login", value: function login(data, callBack) {
       var that = this;
       var params = {
-        url: 'auth/login',
+        url: 'users/login',
         method: 'POST',
         data: data,
         sCallBack: function sCallBack(res) {

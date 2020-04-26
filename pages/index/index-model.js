@@ -7,7 +7,7 @@ class Index extends Base {
 	login(data, callBack) {
 		var that = this;
 		var params = {
-			url: 'auth/login',
+			url: 'users/login',
 			method: 'POST',
 			data: data,
 			sCallBack: function(res) {

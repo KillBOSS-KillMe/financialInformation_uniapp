@@ -36,7 +36,7 @@
 				<view class="item" @tap="goUserQualification">
 					<view>
 						<icon class="iconfont iconzizhi"></icon>
-						<text>我的资质</text>
+						<text>我的资质（认证）</text>
 					</view>
 					<icon class="iconfont iconxiangyou"></icon>
 				</view>
