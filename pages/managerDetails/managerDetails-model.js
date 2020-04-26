@@ -7,7 +7,7 @@ class ManagerDetails extends Base {
 	getDetails(data, callBack) {
 		var that = this;
 		var params = {
-			url: 'chat/follow',
+			url: 'users/getManagerInfo',
 			method: 'POST',
 			data: data,
 			sCallBack: function(res) {

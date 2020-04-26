@@ -10515,7 +10515,7 @@ ManagerDetails = /*#__PURE__*/function (_Base) {_inherits(ManagerDetails, _Base)
   _createClass(ManagerDetails, [{ key: "getDetails", value: function getDetails(data, callBack) {
       var that = this;
       var params = {
-        url: 'chat/follow',
+        url: 'users/getManagerInfo',
         method: 'POST',
         data: data,
         sCallBack: function sCallBack(res) {

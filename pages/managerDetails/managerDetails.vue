@@ -5,7 +5,7 @@
 				<view class="info">
 					<view class="managerUserInfo">
 						<view>{{info.name}} / {{info.post}}</view>
-						<text>{{info.name}}</text>
+						<text>{{info.company}}</text>
 					</view>
 					<view class="address">
 						<icon class="iconfont icondizhi"></icon>
@@ -13,18 +13,19 @@
 					</view>
 					<view class="data">
 						<view class="item">
-							<view>{{info.post}}</view>
+							<view>{{info.follow_number}}</view>
 							<text>关注</text>
 						</view>
 						<view class="item">
-							<view>{{info.post}}</view>
+							<view>{{info.fans_number}}</view>
 							<text>粉丝</text>
 						</view>
 					</view>
 				</view>
 				<view class="image">
 					<image :src="info.portrait" mode=""></image>
-					<view class="active" @tap="attention">关注</view>
+					<view class="active" @tap="attention" v-if="fans_state == 0">关注</view>
+					<view @tap="notAttention" v-if="fans_state == 1">取消关注</view>
 					<!-- <view>已关注</view> -->
 				</view>
 			</view>
@@ -40,23 +41,25 @@
 			<view class="managerInfo">
 				<view class="item">
 					<view>工作单位</view>
-					<text>交通银行唐延路支行</text>
+					<text>{{info.company}}</text>
 				</view>
 				<view class="item">
 					<view>岗位名称</view>
-					<text>金融客户经理</text>
+					<text>{{info.post}}</text>
 				</view>
 				<view class="item">
 					<view>实名认证</view>
-					<text>已认证</text>
+					<text v-if="info.validation == 0">未认证</text>
+					<text v-else-if="info.validation == 1">已认证</text>
+					<text v-else-if="info.validation == 2">待审核</text>
 				</view>
-				<view class="item">
+		<!-- 		<view class="item">
 					<view>CCBP认证</view>
-					<text>已认证</text>
-				</view>
+					<text>{{info.company}}</text>
+				</view> -->
 				<view class="item">
 					<view>工作经验</view>
-					<text>5年</text>
+					<text>{{info.experience}}</text>
 				</view>
 			</view>
 		</view>
@@ -93,10 +96,13 @@
 			getDetails(callBack) {
 				const that = this
 				managerDetails.getDetails({
+					openid: that.userInfo.openid,
 					id: that.info.id
 				}, (res) => {
 					console.log(res)
 					if (res.code == 4000) {
+						// info
+						that.info = Object.assign(that.info, res.data);
 						managerDetails.show_tips(res.explain)
 					}
 					callBack && callBack();
@@ -112,6 +118,9 @@
 					console.log(res)
 					if (res.code == 4000) {
 						managerDetails.show_tips(res.explain)
+						that.info.fans_state = 1
+					} else {
+						managerDetails.show_tips(res.explain)
 					}
 					callBack && callBack();
 				})
@@ -125,6 +134,9 @@
 				}, (res) => {
 					console.log(res)
 					if (res.code == 4000) {
+						managerDetails.show_tips(res.explain)
+						that.info.fans_state = 0
+					} else {
 						managerDetails.show_tips(res.explain)
 					}
 					callBack && callBack();
