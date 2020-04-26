@@ -19,7 +19,7 @@
 						<view class="features">
 							<text>{{item.createtime}}</text>
 							<view @tap="like" :data-id="item.id" :data-index="index">
-								<icon class="iconfont icondianzan"></icon>
+								<icon :class="item.vote_type == 1 ? 'iconfont icondianzan active' : 'iconfont icondianzan'"></icon>
 								{{item.support}}
 							</view>
 						</view>
