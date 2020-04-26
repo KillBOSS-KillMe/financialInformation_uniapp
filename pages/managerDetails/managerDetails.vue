@@ -54,7 +54,7 @@
 				</view>
 			</view>
 		</view>
-		<button type="default" class="information">立即咨询</button>
+		<view class="information" @tap="advisory">立即咨询</view>
 	</view>
 </template>
 
@@ -123,6 +123,12 @@
 					}
 					callBack && callBack();
 				})
+			},
+			// 咨询
+			advisory() {
+				const that = this
+				let id = that.info.id
+				managerDetails.navigate_to(`/pages/newsChat/newsChat?id=${id}`);
 			}
 		},
 		// 下拉刷新
@@ -280,7 +286,7 @@
 		bottom: 30rpx;
 		width: 690rpx;
 		height: 80rpx;
-		background-color: @themeColor_1;
+		background: @themeColor_1;
 		font-size: @fontSize_2;
 		color: #fff;
 		border-radius: @borderRadius_10;

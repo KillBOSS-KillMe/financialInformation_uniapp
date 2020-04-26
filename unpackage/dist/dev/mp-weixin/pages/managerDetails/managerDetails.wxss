@@ -166,7 +166,7 @@
   bottom: 30rpx;
   width: 690rpx;
   height: 80rpx;
-  background-color: #265ED7;
+  background: #265ED7;
   font-size: 25rpx;
   color: #fff;
   border-radius: 10rpx;
