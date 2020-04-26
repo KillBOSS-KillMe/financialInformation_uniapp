@@ -1,4 +1,6 @@
 {
+  "navigationBarTitleText": "客户经理",
+  "enablePullDownRefresh": true,
   "usingComponents": {
     "not-list": "/components/notList"
   }

@@ -1,4 +1,6 @@
 {
+  "navigationBarTitleText": "更多资讯",
+  "enablePullDownRefresh": true,
   "usingComponents": {
     "not-list": "/components/notList"
   }

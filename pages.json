@@ -165,16 +165,34 @@
 					"titleView": false
 				}
 			}
+		}, {
+			"path": "pages/managerList/managerList",
+			"style": {
+				"navigationBarTitleText": "客户经理",
+				"enablePullDownRefresh": true,
+				// #ifdef H5
+				"navigationStyle": "custom",
+				// #endif
+				"app-plus": {
+					"bounce": "none",
+					"titleView": false
+				}
+			}
+		}, {
+			"path": "pages/articleList/articleList",
+			"style": {
+				"navigationBarTitleText": "更多资讯",
+				"enablePullDownRefresh": true,
+				// #ifdef H5
+				"navigationStyle": "custom",
+				// #endif
+				"app-plus": {
+					"bounce": "none",
+					"titleView": false
+				}
+			}
 		}
-	    ,{
-            "path" : "pages/managerList/managerList",
-            "style" : {}
-        }
-        ,{
-            "path" : "pages/articleList/articleList",
-            "style" : {}
-        }
-    ],
+	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "金融咨询",
