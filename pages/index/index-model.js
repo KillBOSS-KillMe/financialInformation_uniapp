@@ -55,6 +55,19 @@ class Index extends Base {
 		};
 		that.request(params);
 	};
+	// 最新资讯
+	getInformationList(data, callBack) {
+		var that = this;
+		var params = {
+			url: 'News/getNewsN',
+			method: 'GET',
+			data: data,
+			sCallBack: function(res) {
+				callBack && callBack(res.data);
+			}
+		};
+		that.request(params);
+	};
 }
 
 export default Index

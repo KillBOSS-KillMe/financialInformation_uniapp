@@ -9,11 +9,11 @@
 				<image :src="item.img" mode=""></image>
 			</swiper-item>
 		</swiper>
-		<view class="titleModel">
+		<view class="titleModel" v-if="managerNode.data.length > 0">
 			<view></view>金牌客户经理
 		</view>
 		<view class="managerList">
-			<view class="item" @tap="goManagerDetails" :data-managerindex="index" :data-id="item.id" v-for="(item,index) in managerNode.data" :key="index">
+			<view class="item" @tap="goManagerDetails" :data-managerindex="index" :data-id="item.id" v-for="(item,index) in managerNode.data" :key="index" v-if="managerNode.data.length > 0">
 				<image src="../../static/images/test.png" mode=""></image>
 				<view class="info">
 					<view class="details">
@@ -25,22 +25,22 @@
 				</view>
 			</view>
 		</view>
-		<view class="titleModel">
+		<view class="titleModel" v-if="informationNode.data.length > 0">
 			<view></view>最新资讯
 		</view>
 		<view class="articleList">
-			<view class="item" @tap="goInformationDetails" :data-id="1">
+			<view class="item" @tap="goInformationDetails" :data-id="item.id" v-for="(item,index) in informationNode.data" :key="index" v-if="informationNode.data.length > 0">
 				<icon class="iconfont icondian"></icon>
 				<view class="info">
 					<view class="details">
-						<view class="title">一个科技爱好者的EDC和桌面</view>
-						<view>西安甜水井街支行客户经理西安甜水井街支行客户经理西安甜水井街支行客户经理西安甜水井街支行客户经理西安甜水井街支行客户经理</view>
+						<view class="title">{{item.title}}</view>
+						<rich-text :nodes="item.content" class="content"></rich-text>
 					</view>
 					<view class="features">
-						<view>会飞的鱼</view>
+						<view>{{item.seenumber}}阅读</view>
 						<view>
 							<icon class="iconfont iconshijian"></icon>
-							<text>4小时</text>
+							<text>{{item.createtime}}</text>
 						</view>
 					</view>
 				</view>
@@ -69,7 +69,13 @@
 				interval: 2000,
 				duration: 500,
 				// 客户经理数据对象
-				managerNode: {}
+				managerNode: {
+					data: []
+				},
+				// 最新资讯
+				informationNode: {
+					data: []
+				}
 			}
 		},
 		onLoad(options) {
@@ -114,6 +120,10 @@
 				this.getManagerList(() => {
 					callBack && callBack();
 				})
+				// 客户经理列表加载
+				this.getInformationList(() => {
+					callBack && callBack();
+				})
 				// that.wx_login(() => {
 				// 	that.getUserInfo(() => {
 				// 		if (that.userInfo.type == 'member') {
@@ -136,7 +146,6 @@
 			// 进入--资讯--详情页
 			goInformationDetails(e) {
 				const that = this;
-				console.log(e)
 				const id = index.get_data_set(e, "id");
 				index.navigate_to(`/pages/informationDetails/informationDetails?id=${id}`);
 			},
@@ -206,7 +215,21 @@
 				index.getManagerList({}, (res) => {
 					if (res.code == '4000') {
 						that.managerNode = res
-						// console.log()
+					}
+					callBack && callBack();
+				})
+			},
+			// 最新资讯
+			getInformationList(callBack) {
+				const that = this
+				index.getInformationList({}, (res) => {
+					if (res.code == '4000') {
+						let list = res.data
+						for (let i = 0; i < list.length; i++) {
+							list[i].createtime = index.transformTime(list[i].createtime * 1000)
+						}
+						res.data = list
+						that.informationNode = res
 					}
 					callBack && callBack();
 				})
@@ -379,8 +402,11 @@
 						padding-bottom: 20rpx;
 						border-bottom: 1rpx solid @borderColor_1;
 						-webkit-line-clamp: 1;
+						overflow:hidden;
+						text-overflow:ellipsis;
+						white-space:nowrap;
 					}
-					view {
+					.content {
 						line-height: @fontSize_1;
 						font-size: @fontSize_2;
 						color: @fontColor_3;

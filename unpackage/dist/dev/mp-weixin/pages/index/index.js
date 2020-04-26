@@ -30,7 +30,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index.vue?vue&type=script&lang=js& */ 32);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 /* harmony import */ var _index_vue_vue_type_style_index_0_lang_less___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./index.vue?vue&type=style&index=0&lang=less& */ 35);
-/* harmony import */ var _soft_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../soft/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/runtime/componentNormalizer.js */ 14);
+/* harmony import */ var _soft_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../soft/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/runtime/componentNormalizer.js */ 15);
 
 var renderjs
 
@@ -238,7 +238,8 @@ var _indexModel = _interopRequireDefault(__webpack_require__(/*! ./index-model.j
 //
 var index = new _indexModel.default();var _default = { data: function data() {return { options: {}, title: 'Hello', imageUrl: '', authorizationButton: null, userInfo: {}, userInfoAll: {}, // 轮播图相关
       bannerData: [], indicatorDots: true, autoplay: true, interval: 2000, duration: 500, // 客户经理数据对象
-      managerNode: {} };}, onLoad: function onLoad(options) {var that = this;that.options = options;that._onLoad();}, onShow: function onShow() {// 获取已授权类别
+      managerNode: { data: [] }, // 最新资讯
+      informationNode: { data: [] } };}, onLoad: function onLoad(options) {var that = this;that.options = options;that._onLoad();}, onShow: function onShow() {// 获取已授权类别
     var that = this;uni.getSetting({ success: function success(res) {if (res.authSetting['scope.userInfo']) {// 隐藏授权按钮
           that.authorizationButton = false;that.$store.commit('updateAuthorizationButtonData', false);}}, fail: function fail() {console.log("获取授权信息授权失败");} }); // let token = index.get_storage('token_type', callBack);
     // if(token) {
@@ -250,17 +251,26 @@ var index = new _indexModel.default();var _default = { data: function data() {re
     // }
   }, methods: { _onLoad: function _onLoad(callBack) {var that = this;that.imageUrl = index.base_image_url;that.userInfo = that.$store.state.userInfo; // 轮播图加载
       this.getBanner(function () {callBack && callBack();}); // 客户经理列表加载
-      this.getManagerList(function () {callBack && callBack();}); // that.wx_login(() => {
+      this.getManagerList(function () {callBack && callBack();
+      });
+      // 客户经理列表加载
+      this.getInformationList(function () {
+        callBack && callBack();
+      });
+      // that.wx_login(() => {
       // 	that.getUserInfo(() => {
       // 		if (that.userInfo.type == 'member') {
+
       // 		} else {
       // 			// 提示用户非会员
       // 			that.promptOpenVip()
       // 		}
       // 	})
       // })
-    }, // 进入--客户经理--详情页
-    goManagerDetails: function goManagerDetails(e) {var that = this;
+    },
+    // 进入--客户经理--详情页
+    goManagerDetails: function goManagerDetails(e) {
+      var that = this;
       // const id = index.get_data_set(e, "id");
       var managerindex = index.get_data_set(e, "managerindex");
       var data = JSON.stringify(that.managerNode.data[managerindex]);
@@ -269,7 +279,6 @@ var index = new _indexModel.default();var _default = { data: function data() {re
     // 进入--资讯--详情页
     goInformationDetails: function goInformationDetails(e) {
       var that = this;
-      console.log(e);
       var id = index.get_data_set(e, "id");
       index.navigate_to("/pages/informationDetails/informationDetails?id=".concat(id));
     },
@@ -339,7 +348,21 @@ var index = new _indexModel.default();var _default = { data: function data() {re
       index.getManagerList({}, function (res) {
         if (res.code == '4000') {
           that.managerNode = res;
-          // console.log()
+        }
+        callBack && callBack();
+      });
+    },
+    // 最新资讯
+    getInformationList: function getInformationList(callBack) {
+      var that = this;
+      index.getInformationList({}, function (res) {
+        if (res.code == '4000') {
+          var list = res.data;
+          for (var i = 0; i < list.length; i++) {
+            list[i].createtime = index.transformTime(list[i].createtime * 1000);
+          }
+          res.data = list;
+          that.informationNode = res;
         }
         callBack && callBack();
       });

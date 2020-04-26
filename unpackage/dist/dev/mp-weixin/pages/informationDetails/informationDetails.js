@@ -30,7 +30,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _informationDetails_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./informationDetails.vue?vue&type=script&lang=js& */ 68);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _informationDetails_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _informationDetails_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 /* harmony import */ var _informationDetails_vue_vue_type_style_index_0_lang_less___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./informationDetails.vue?vue&type=style&index=0&lang=less& */ 71);
-/* harmony import */ var _soft_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../soft/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/runtime/componentNormalizer.js */ 14);
+/* harmony import */ var _soft_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../soft/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/runtime/componentNormalizer.js */ 15);
 
 var renderjs
 
@@ -183,7 +183,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 var _informationDetailsModel = _interopRequireDefault(__webpack_require__(/*! ./informationDetails-model.js */ 70));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
@@ -235,9 +234,35 @@ var _informationDetailsModel = _interopRequireDefault(__webpack_require__(/*! ./
 //
 //
 //
-//
-var informationDetails = new _informationDetailsModel.default();var _default = { data: function data() {return {};}, onLoad: function onLoad() {var that = this;that._onLoad();}, methods: { _onLoad: function _onLoad(callBack) {var that = this;that.userInfo = that.$store.state.userInfo;that.wx_login(function () {that.getUserInfo(function () {callBack && callBack();});});} }, // 下拉刷新
-  onPullDownRefresh: function onPullDownRefresh() {var that = this;that.page = 1;that._onLoad(function () {uni.stopPullDownRefresh();});}, //上拉加载更多
+var informationDetails = new _informationDetailsModel.default();var _default = { data: function data() {return { options: {}, userInfo: {}, informationNode: {}, imageUrl: '', commentCon: '' };}, onLoad: function onLoad(options) {var that = this;that.options = options;that._onLoad();}, methods: { _onLoad: function _onLoad(callBack) {var that = this;that.imageUrl = informationDetails.base_image_url;that.userInfo = that.$store.state.userInfo;that.getNewsContent(function () {callBack && callBack();});}, getNewsContent: function getNewsContent(callBack) {var that = this;informationDetails.getNewsContent({ openid: that.userInfo.openid, id: that.options.id }, function (res) {if (res.code == '4000') {var newsinfo = res.newsinfo;var CommentList = res.CommentList;newsinfo.createtime = informationDetails.transformTime(newsinfo.createtime * 1000);for (var i = 0; i < CommentList.length; i++) {// CommentList[i].portrait = that.imageUrl + CommentList[i].portrait
+            CommentList[i].createtime = informationDetails.transformTime(CommentList[i].createtime * 1000);}res.newsinfo = newsinfo;res.CommentList = CommentList;that.informationNode = res;}callBack && callBack();});}, // 获取评论内容
+    getCommentCon: function getCommentCon(e) {var that = this;that.commentCon = informationDetails.get_input_val(e);}, // 提交评论
+    sendComment: function sendComment(callBack) {var that = this;
+      if (that.commentCon == '') {
+        informationDetails.show_tips('请输入与评论内容');
+        return false;
+      }
+      informationDetails.sendComment({
+        openid: that.userInfo.openid,
+        id: that.options.id,
+        content: that.commentCon },
+      function (res) {
+        if (res.code == '4000') {
+          informationDetails.show_tips(res.explain);
+          that.commentCon = "";
+        }
+      });
+    } },
+
+  // 下拉刷新
+  onPullDownRefresh: function onPullDownRefresh() {
+    var that = this;
+    that.page = 1;
+    that._onLoad(function () {
+      uni.stopPullDownRefresh();
+    });
+  },
+  //上拉加载更多
   // onReachBottom() {
   //   var that = this;
   //   if (that.last_page == that.page) {
@@ -247,12 +272,14 @@ var informationDetails = new _informationDetailsModel.default();var _default = {
   //   that.get_product_list();
   // },
   // 分享
-  onShareAppMessage: function onShareAppMessage() {// let shareData = {
+  onShareAppMessage: function onShareAppMessage() {
+    // let shareData = {
     // 	title: '',
     // 	path: `pages/index/index`,
     // 	imageUrl: ''
     // }
-    return informationDetails.onShareAppMessage({});} };exports.default = _default;
+    return informationDetails.onShareAppMessage({});
+  } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

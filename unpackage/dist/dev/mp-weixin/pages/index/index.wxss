@@ -162,8 +162,11 @@
   padding-bottom: 20rpx;
   border-bottom: 1rpx solid #EEEEEE;
   -webkit-line-clamp: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
-.articleList .item .info .details view {
+.articleList .item .info .details .content {
   line-height: 29rpx;
   font-size: 25rpx;
   color: #898989;
