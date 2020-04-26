@@ -29,6 +29,7 @@
 			return {
 				userInfo: {},
 				attentionNode: {
+					page: 1,
 					data: []
 				}
 			};
@@ -49,11 +50,13 @@
 			getList(callBack) {
 				const that = this
 				userAttention.getList({
+					page: that.managerNode.page || 1,
 					openid: that.userInfo.openid
 				}, (res) => {
-					console.log(res)
+					// console.log(res)
 					if (res.code == 4000) {
-						this.attentionNode = res
+						res.data = that.attentionNode.data.concat(res.data);
+						that.attentionNode = res
 					}
 					callBack && callBack();
 				})
@@ -97,14 +100,17 @@
 			});
 		},
 		//上拉加载更多
-		// onReachBottom() {
-		//   var that = this;
-		//   if (that.last_page == that.page) {
-		//     return;
-		//   }
-		//   that.page += 1;
-		//   that.get_product_list();
-		// },
+		onReachBottom() {
+		  var that = this;
+		  if (that.attentionNode.page == that.attentionNode.page_number) {
+		    return;
+		  }
+		  that.attentionNode.page += 1;
+		  // 客户经理列表加载
+		  this.getList(() => {
+		  	callBack && callBack();
+		  })
+		},
 		// 分享
 		onShareAppMessage() {
 			// let shareData = {

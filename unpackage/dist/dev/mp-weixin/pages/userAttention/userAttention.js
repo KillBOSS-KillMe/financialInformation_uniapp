@@ -162,6 +162,7 @@ var userAttention = new _userAttentionModel.default();var _default =
     return {
       userInfo: {},
       attentionNode: {
+        page: 1,
         data: [] } };
 
 
@@ -179,14 +180,16 @@ var userAttention = new _userAttentionModel.default();var _default =
       });
     },
     // 加载列表
-    getList: function getList(callBack) {var _this = this;
+    getList: function getList(callBack) {
       var that = this;
       userAttention.getList({
+        page: that.managerNode.page || 1,
         openid: that.userInfo.openid },
       function (res) {
-        console.log(res);
+        // console.log(res)
         if (res.code == 4000) {
-          _this.attentionNode = res;
+          res.data = that.attentionNode.data.concat(res.data);
+          that.attentionNode = res;
         }
         callBack && callBack();
       });
@@ -230,14 +233,17 @@ var userAttention = new _userAttentionModel.default();var _default =
     });
   },
   //上拉加载更多
-  // onReachBottom() {
-  //   var that = this;
-  //   if (that.last_page == that.page) {
-  //     return;
-  //   }
-  //   that.page += 1;
-  //   that.get_product_list();
-  // },
+  onReachBottom: function onReachBottom() {
+    var that = this;
+    if (that.attentionNode.page == that.attentionNode.page_number) {
+      return;
+    }
+    that.attentionNode.page += 1;
+    // 客户经理列表加载
+    this.getList(function () {
+      callBack && callBack();
+    });
+  },
   // 分享
   onShareAppMessage: function onShareAppMessage() {
     // let shareData = {
