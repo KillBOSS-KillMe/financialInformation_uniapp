@@ -2,14 +2,14 @@
 	<view class="pageTopBorder">
 		<view class="content">
 			<notList v-if="attentionNode.data.length <= 0" />
-			<view class="item" v-for="(item,index) in 20" :key="index" v-if="attentionNode.data.length > 0">
-				<image src="../../static/images/test.png" mode=""></image>
+			<view class="item" v-for="(item,index) in attentionNode.data" :key="index" v-if="attentionNode.data.length > 0">
+				<image :src="item.portrait" mode=""></image>
 				<view class="info">
 					<view class="con">
-						<view>系统通知</view>
-						<text>客服消息为您推送两条新的信息</text>
+						<view>{{item.name}}/{{item.company}}</view>
+						<text>{{item.post}}</text>
 					</view>
-					<button type="default">已关注</button>
+					<button type="default" @tap="notAttention" :data-id="item.id" :data-index="index">已关注</button>
 					<!-- <button type="default" class="active">关注</button> -->
 				</view>
 			</view>
@@ -23,7 +23,7 @@
 	const userAttention = new UserAttention();
 	export default {
 		components: {
-		  notList
+			notList
 		},
 		data() {
 			return {
@@ -44,10 +44,11 @@
 					callBack && callBack();
 				})
 			},
+			// 加载列表
 			getList(callBack) {
 				const that = this
 				userAttention.getList({
-					openid: that.userInfo.openid	
+					openid: that.userInfo.openid
 				}, (res) => {
 					console.log(res)
 					if (res.code == 4000) {
@@ -55,7 +56,35 @@
 					}
 					callBack && callBack();
 				})
-			}
+			},
+			// 取消关注
+			notAttention(e) {
+				uni.showModal({
+					title: '系统提示',
+					content: '确定取消关注？',
+					success: function(res) {
+						if (res.confirm) {
+							// console.log('用户点击确定');
+							const that = this
+							let id = userAttention.get_data_set(e, "id")
+							let index = userAttention.get_data_set(e, "index")
+							userAttention.runNotAttention({
+								openid: that.userInfo.openid,
+								id: that.info.id
+							}, (res) => {
+								console.log(res)
+								if (res.code == 4000) {
+									userAttention.show_tips(res.explain)
+									that.attentionNode.data = delete_arr_index(that.attentionNode.data, index)
+								}
+								callBack && callBack();
+							})
+						} else if (res.cancel) {
+							// console.log('用户点击取消');
+						}
+					}
+				});
+			},
 		},
 		// 下拉刷新
 		onPullDownRefresh() {
@@ -88,11 +117,14 @@
 
 <style lang="less">
 	@import url("../../static/css/variable.less");
+
 	.content {
-		width: 690rpx !important;;
+		width: 690rpx !important;
+		;
 		height: auto;
 		padding: 30rpx;
 	}
+
 	.item {
 		wwidth: 630rpx;
 		padding: 30rpx;
@@ -102,11 +134,13 @@
 		align-items: center;
 		justify-content: space-between;
 		box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+
 		image {
 			width: 140rpx;
 			height: 170rpx;
 			border-radius: 10rpx;
 		}
+
 		.info {
 			width: 460rpx;
 			height: 170rpx;
@@ -114,6 +148,7 @@
 			align-items: flex-start;
 			justify-content: space-between;
 			flex-direction: column;
+
 			.con {
 				width: 536rpx;
 				height: 64rpx;
@@ -121,16 +156,19 @@
 				align-items: flex-start;
 				justify-content: space-between;
 				flex-direction: column;
+
 				view {
 					font-size: @fontSize_1;
 					font-weight: @mainFontWeight;
 					color: @fontColor_1;
 				}
+
 				text {
 					font-size: @fontSize_2;
 					color: @fontColor_2;
 				}
 			}
+
 			button {
 				width: 140rpx;
 				height: 50rpx;
@@ -142,6 +180,7 @@
 				align-items: center;
 				justify-content: center;
 			}
+
 			.active {
 				background-color: @themeColor_1;
 			}

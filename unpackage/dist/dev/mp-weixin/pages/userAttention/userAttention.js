@@ -177,6 +177,7 @@ var userAttention = new _userAttentionModel.default();var _default =
         callBack && callBack();
       });
     },
+    // 加载列表
     getList: function getList(callBack) {var _this = this;
       var that = this;
       userAttention.getList({
@@ -188,6 +189,34 @@ var userAttention = new _userAttentionModel.default();var _default =
         }
         callBack && callBack();
       });
+    },
+    // 取消关注
+    notAttention: function notAttention(e) {
+      uni.showModal({
+        title: '系统提示',
+        content: '确定取消关注？',
+        success: function success(res) {
+          if (res.confirm) {
+            // console.log('用户点击确定');
+            var that = this;
+            var id = userAttention.get_data_set(e, "id");
+            var index = userAttention.get_data_set(e, "index");
+            userAttention.runNotAttention({
+              openid: that.userInfo.openid,
+              id: that.info.id },
+            function (res) {
+              console.log(res);
+              if (res.code == 4000) {
+                userAttention.show_tips(res.explain);
+                that.attentionNode.data = delete_arr_index(that.attentionNode.data, index);
+              }
+              callBack && callBack();
+            });
+          } else if (res.cancel) {
+            // console.log('用户点击取消');
+          }
+        } });
+
     } },
 
   // 下拉刷新

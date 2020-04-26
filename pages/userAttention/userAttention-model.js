@@ -16,6 +16,19 @@ class UserAttention extends Base {
 		};
 		that.request(params);
 	};
+	// 取消关注
+	runNotAttention(data, callBack) {
+		var that = this;
+		var params = {
+			url: 'chat/cancelFollow',
+			method: 'POST',
+			data: data,
+			sCallBack: function(res) {
+				callBack && callBack(res.data);
+			}
+		};
+		that.request(params);
+	};
 }
 
 export default UserAttention

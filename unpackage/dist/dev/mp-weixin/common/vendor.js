@@ -10677,6 +10677,19 @@ UserAttention = /*#__PURE__*/function (_Base) {_inherits(UserAttention, _Base);
         } };
 
       that.request(params);
+    } }, { key: "runNotAttention",
+    // 取消关注
+    value: function runNotAttention(data, callBack) {
+      var that = this;
+      var params = {
+        url: 'chat/cancelFollow',
+        method: 'POST',
+        data: data,
+        sCallBack: function sCallBack(res) {
+          callBack && callBack(res.data);
+        } };
+
+      that.request(params);
     } }]);return UserAttention;}(_base.default);var _default =
 
 
