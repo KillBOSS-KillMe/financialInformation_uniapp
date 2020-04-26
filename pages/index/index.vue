@@ -58,6 +58,7 @@
 				</view>
 			</view>
 		</view>
+		<button open-type="getUserInfo" v-if="authorizationButton" id='getUserInfo' lang="zh_CN" @getuserinfo="wx_login"></button>
 	</view>
 </template>
 
@@ -70,7 +71,7 @@
 				options: {},
 				title: 'Hello',
 				// imageUrl: '',
-				authorizationButton: null,
+				authorizationButton: true,
 				userInfo: {},
 				userInfoAll: {},
 				// 轮播图相关
@@ -95,23 +96,9 @@
 			that._onLoad()
 		},
 		onShow() {
-			// 获取已授权类别
-			const that = this
-			uni.getSetting({
-				success(res) {
-					if (res.authSetting['scope.userInfo']) {
-						// 隐藏授权按钮
-						that.authorizationButton = false;
-						that.$store.commit('updateAuthorizationButtonData', false);
-						that.wx_login(() => {
-							callBack && callBack();
-						})
-					}
-				},
-				fail() {
-					console.log("获取授权信息授权失败")
-				}
-			})
+			
+			// const that = this
+			
 			// let token = index.get_storage('token_type', callBack);
 			// if(token) {
 			// 	that.getUserInfo(() => {
@@ -138,16 +125,27 @@
 				this.getInformationList(() => {
 					callBack && callBack();
 				})
-				// that.wx_login(() => {
-				// 	that.getUserInfo(() => {
-				// 		if (that.userInfo.type == 'member') {
-							
-				// 		} else {
-				// 			// 提示用户非会员
-				// 			that.promptOpenVip()
-				// 		}
-				// 	})
-				// })
+				// 获取已授权类别
+				uni.getSetting({
+					success(res) {
+						if (res.authSetting['scope.userInfo']) {
+							// 隐藏授权按钮
+							that.authorizationButton = false;
+							that.$store.commit('updateAuthorizationButtonData', false);
+							that.wx_login(() => {
+								callBack && callBack();
+							})
+						} else {
+							// 隐藏底部导航
+							uni.hideTabBar({
+								boolean: true
+							})
+						}
+					},
+					fail() {
+						console.log("获取授权信息授权失败")
+					}
+				})
 			},
 			// 进入客户经理列表
 			goManagerList() {
@@ -173,6 +171,8 @@
 			},
 			wx_login(e) {
 				const that = this;
+				// 显示底部导航
+				
 				uni.login({
 					provider: 'weixin',
 					success: function(loginRes) {
@@ -180,7 +180,13 @@
 						uni.getUserInfo({
 							provider: 'weixin',
 							success: function(infoRes) {
+								// 底部导航显示
+								uni.showTabBar({
+									boolean: true
+								})
 								that.userInfoAll = infoRes
+								// 隐藏授权按钮
+								that.authorizationButton = false;
 								that.$store.commit('updateUserInfo', that.userInfo);
 								that.$store.commit('updateAuthorizationButtonData', false);
 								index.login({
@@ -193,32 +199,12 @@
 									if (res.code == 4000) {
 										that.userInfo = res.data
 										that.$store.commit('updateUserInfo', that.userInfo);
-										that.$store.commit('updateAuthorizationButtonData', false);
 										if (that.userInfo.role == "") {
 											index.show_tips('检测到用户未选择权限类型，即将进入选择页')
 											setTimeout(() => {
 												index.navigate_to(`/pages/identitySel/identitySel`);
 											}, 2000)
 										}
-										// that.$store.commit('updateUserInfo', res.data);
-										// if (role == '1') {
-										// 	index.switch_tab(`/pages/index/index`);
-										// } else {
-										// 	// validation => 0  未认证
-										// 	// validation => 1  认证
-										// 	// validation => 2  审核中
-										// 	if (res.data.validation == 0) {
-										// 		// 客户经理资质 已认证
-										// 		index.switch_tab(`/pages/index/index`);
-										// 	} else if (res.data.validation == 1) {
-										// 		// 客户经理资质 未认证
-										// 		index.navigate_to(`/pages/certification/certification`);
-										// 	} else if (res.data.validation == 2) {
-										// 		// 客户经理资质 审核中
-										// 		index.show_tips('资质审核中')
-										// 		return false
-										// 	}
-										// }
 									}
 								})
 							}
@@ -262,19 +248,19 @@
 				})
 			},
 			// 提示开通会员
-			promptOpenVip(callBack) {
-				uni.showModal({
-					title: '系统提示',
-					content: '系统检测到用户未开通会员，是否开通会员',
-					success: res => {
-						if (res.confirm) {
-							index.navigate_to(`/pages/vip/vip`);
-						} else if (res.cancel) {
-							console.log('用户点击取消');
-						}
-					}
-				});
-			}
+			// promptOpenVip(callBack) {
+			// 	uni.showModal({
+			// 		title: '系统提示',
+			// 		content: '系统检测到用户未开通会员，是否开通会员',
+			// 		success: res => {
+			// 			if (res.confirm) {
+			// 				index.navigate_to(`/pages/vip/vip`);
+			// 			} else if (res.cancel) {
+			// 				console.log('用户点击取消');
+			// 			}
+			// 		}
+			// 	});
+			// }
 		},
 		// 下拉刷新
 		onPullDownRefresh() {

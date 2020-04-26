@@ -152,6 +152,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 var _newsModel = _interopRequireDefault(__webpack_require__(/*! ./news-model.js */ 43));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var notList = function notList() {__webpack_require__.e(/*! require.ensure | components/notList */ "components/notList").then((function () {return resolve(__webpack_require__(/*! @/components/notList.vue */ 136));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
 var news = new _newsModel.default();var _default =
 {
@@ -160,6 +161,7 @@ var news = new _newsModel.default();var _default =
 
   data: function data() {
     return {
+      authorizationButton: true,
       userInfo: {},
       newsList: [] };
 

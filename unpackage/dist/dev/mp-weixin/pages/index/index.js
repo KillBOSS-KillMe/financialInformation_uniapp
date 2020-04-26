@@ -195,6 +195,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 var _indexModel = _interopRequireDefault(__webpack_require__(/*! ./index-model.js */ 34));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
@@ -258,13 +259,13 @@ var _indexModel = _interopRequireDefault(__webpack_require__(/*! ./index-model.j
 //
 //
 //
+//
 var index = new _indexModel.default();var _default = { data: function data() {return { options: {}, title: 'Hello', // imageUrl: '',
-      authorizationButton: null, userInfo: {}, userInfoAll: {}, // 轮播图相关
+      authorizationButton: true, userInfo: {}, userInfoAll: {}, // 轮播图相关
       bannerData: [], indicatorDots: true, autoplay: true, interval: 2000, duration: 500, // 客户经理数据对象
       managerNode: { data: [] }, // 最新资讯
-      informationNode: { data: [] } };}, onLoad: function onLoad(options) {var that = this;that.options = options;that._onLoad();}, onShow: function onShow() {// 获取已授权类别
-    var that = this;uni.getSetting({ success: function success(res) {if (res.authSetting['scope.userInfo']) {// 隐藏授权按钮
-          that.authorizationButton = false;that.$store.commit('updateAuthorizationButtonData', false);that.wx_login(function () {callBack && callBack();});}}, fail: function fail() {console.log("获取授权信息授权失败");} }); // let token = index.get_storage('token_type', callBack);
+      informationNode: { data: [] } };}, onLoad: function onLoad(options) {var that = this;that.options = options;that._onLoad();}, onShow: function onShow() {// const that = this
+    // let token = index.get_storage('token_type', callBack);
     // if(token) {
     // 	that.getUserInfo(() => {
     // 		that.getRunData(() => {
@@ -276,17 +277,14 @@ var index = new _indexModel.default();var _default = { data: function data() {re
       that.userInfo = that.$store.state.userInfo; // 轮播图加载
       this.getBanner(function () {callBack && callBack();}); // 客户经理列表加载
       this.getManagerList(function () {callBack && callBack();}); // 客户经理列表加载
-      this.getInformationList(function () {callBack && callBack();}); // that.wx_login(() => {
-      // 	that.getUserInfo(() => {
-      // 		if (that.userInfo.type == 'member') {
-      // 		} else {
-      // 			// 提示用户非会员
-      // 			that.promptOpenVip()
-      // 		}
-      // 	})
-      // })
-    }, // 进入客户经理列表
-    goManagerList: function goManagerList() {index.navigate_to("/pages/managerList/managerList");}, // 进入资讯列表
+      this.getInformationList(function () {callBack && callBack();}); // 获取已授权类别
+      uni.getSetting({ success: function success(res) {if (res.authSetting['scope.userInfo']) {// 隐藏授权按钮
+            that.authorizationButton = false;that.$store.commit('updateAuthorizationButtonData', false);that.wx_login(function () {callBack && callBack();});} else {// 隐藏底部导航
+            uni.hideTabBar({ boolean: true });}}, fail: function fail() {console.log("获取授权信息授权失败");} });}, // 进入客户经理列表
+    goManagerList: function goManagerList() {
+      index.navigate_to("/pages/managerList/managerList");
+    },
+    // 进入资讯列表
     goArticleList: function goArticleList() {
       index.navigate_to("/pages/articleList/articleList");
     },
@@ -306,6 +304,8 @@ var index = new _indexModel.default();var _default = { data: function data() {re
     },
     wx_login: function wx_login(e) {
       var that = this;
+      // 显示底部导航
+
       uni.login({
         provider: 'weixin',
         success: function success(loginRes) {
@@ -313,7 +313,13 @@ var index = new _indexModel.default();var _default = { data: function data() {re
           uni.getUserInfo({
             provider: 'weixin',
             success: function success(infoRes) {
+              // 底部导航显示
+              uni.showTabBar({
+                boolean: true });
+
               that.userInfoAll = infoRes;
+              // 隐藏授权按钮
+              that.authorizationButton = false;
               that.$store.commit('updateUserInfo', that.userInfo);
               that.$store.commit('updateAuthorizationButtonData', false);
               index.login({
@@ -326,32 +332,12 @@ var index = new _indexModel.default();var _default = { data: function data() {re
                 if (res.code == 4000) {
                   that.userInfo = res.data;
                   that.$store.commit('updateUserInfo', that.userInfo);
-                  that.$store.commit('updateAuthorizationButtonData', false);
                   if (that.userInfo.role == "") {
                     index.show_tips('检测到用户未选择权限类型，即将进入选择页');
                     setTimeout(function () {
                       index.navigate_to("/pages/identitySel/identitySel");
                     }, 2000);
                   }
-                  // that.$store.commit('updateUserInfo', res.data);
-                  // if (role == '1') {
-                  // 	index.switch_tab(`/pages/index/index`);
-                  // } else {
-                  // 	// validation => 0  未认证
-                  // 	// validation => 1  认证
-                  // 	// validation => 2  审核中
-                  // 	if (res.data.validation == 0) {
-                  // 		// 客户经理资质 已认证
-                  // 		index.switch_tab(`/pages/index/index`);
-                  // 	} else if (res.data.validation == 1) {
-                  // 		// 客户经理资质 未认证
-                  // 		index.navigate_to(`/pages/certification/certification`);
-                  // 	} else if (res.data.validation == 2) {
-                  // 		// 客户经理资质 审核中
-                  // 		index.show_tips('资质审核中')
-                  // 		return false
-                  // 	}
-                  // }
                 }
               });
             } });
@@ -393,22 +379,22 @@ var index = new _indexModel.default();var _default = { data: function data() {re
         }
         callBack && callBack();
       });
-    },
+    }
     // 提示开通会员
-    promptOpenVip: function promptOpenVip(callBack) {
-      uni.showModal({
-        title: '系统提示',
-        content: '系统检测到用户未开通会员，是否开通会员',
-        success: function success(res) {
-          if (res.confirm) {
-            index.navigate_to("/pages/vip/vip");
-          } else if (res.cancel) {
-            console.log('用户点击取消');
-          }
-        } });
-
-    } },
-
+    // promptOpenVip(callBack) {
+    // 	uni.showModal({
+    // 		title: '系统提示',
+    // 		content: '系统检测到用户未开通会员，是否开通会员',
+    // 		success: res => {
+    // 			if (res.confirm) {
+    // 				index.navigate_to(`/pages/vip/vip`);
+    // 			} else if (res.cancel) {
+    // 				console.log('用户点击取消');
+    // 			}
+    // 		}
+    // 	});
+    // }
+  },
   // 下拉刷新
   onPullDownRefresh: function onPullDownRefresh() {
     var that = this;

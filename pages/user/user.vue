@@ -49,8 +49,8 @@
 				</button>
 			</view>
 		</view>
+		<!-- <button open-type="getUserInfo" v-if="authorizationButton" id='getUserInfo' lang="zh_CN" @getuserinfo="wx_login"></button> -->
 	</view>
-	
 </template>
 
 <script>
@@ -59,6 +59,7 @@
 	export default {
 		data() {
 			return {
+				authorizationButton: true,
 				userInfo: {}
 			};
 		},

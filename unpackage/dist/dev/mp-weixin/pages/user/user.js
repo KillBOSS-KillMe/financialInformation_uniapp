@@ -242,7 +242,7 @@ var _userModel = _interopRequireDefault(__webpack_require__(/*! ./user-model.js 
 //
 //
 //
-var user = new _userModel.default();var _default = { data: function data() {return { userInfo: {} };}, onLoad: function onLoad() {var that = this;that._onLoad();}, methods: { _onLoad: function _onLoad(callBack) {var that = this;that.userInfo = that.$store.state.userInfo; // that.wx_login(() => {
+var user = new _userModel.default();var _default = { data: function data() {return { authorizationButton: true, userInfo: {} };}, onLoad: function onLoad() {var that = this;that._onLoad();}, methods: { _onLoad: function _onLoad(callBack) {var that = this;that.userInfo = that.$store.state.userInfo; // that.wx_login(() => {
       // 	that.getUserInfo(() => {
       // 		callBack && callBack();
       // 	})

@@ -14,6 +14,7 @@
 				<text class="newNews" v-else>{{newsList.new_number}}</text>
 			</view>
 		</scroll-view>
+		<!-- <button open-type="getUserInfo" v-if="authorizationButton" id='getUserInfo' lang="zh_CN" @getuserinfo="wx_login"></button> -->
 	</view>
 </template>
 
@@ -27,6 +28,7 @@
 		},
 		data() {
 			return {
+				authorizationButton: true,
 				userInfo: {},
 				newsList: []
 			}
