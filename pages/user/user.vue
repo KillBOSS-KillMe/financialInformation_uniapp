@@ -2,7 +2,7 @@
 	<view>
 		<view class="userInfo">
 			<image :src="userInfo.portrait" mode=""></image>
-			<text>会飞的鱼</text>
+			<text>{{userInfo.nickname}}</text>
 		</view>
 		<view class="pageTopBorder">
 			<!-- 我的-用户 -->
