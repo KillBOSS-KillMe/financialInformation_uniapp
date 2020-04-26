@@ -166,7 +166,15 @@
 				}
 			}
 		}
-	],
+	    ,{
+            "path" : "pages/managerList/managerList",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/articleList/articleList",
+            "style" : {}
+        }
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "金融咨询",

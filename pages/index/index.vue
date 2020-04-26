@@ -13,7 +13,7 @@
 			<view class="titleCon">
 				<view></view>金牌客户经理
 			</view>
-			<view class="more">
+			<view class="more" @tap="goManagerList">
 				更多
 				<icon class="iconfont iconxiangyou"></icon>
 			</view>
@@ -35,7 +35,7 @@
 			<view class="titleCon">
 				<view></view>最新资讯
 			</view>
-			<view class="more">
+			<view class="more" @tap="goArticleList">
 				更多
 				<icon class="iconfont iconxiangyou"></icon>
 			</view>
@@ -146,6 +146,14 @@
 				// 		}
 				// 	})
 				// })
+			},
+			// 进入客户经理列表
+			goManagerList() {
+				index.navigate_to(`/pages/managerList/managerList`);
+			},
+			// 进入资讯列表
+			goArticleList() {
+				index.navigate_to(`/pages/articleList/articleList`);
 			},
 			// 进入--客户经理--详情页
 			goManagerDetails(e) {

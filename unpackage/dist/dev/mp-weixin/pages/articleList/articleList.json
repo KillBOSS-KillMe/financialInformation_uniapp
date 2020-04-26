@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "not-list": "/components/notList"
+  }
+}

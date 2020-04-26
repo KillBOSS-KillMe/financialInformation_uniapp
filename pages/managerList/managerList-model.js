@@ -1,5 +1,5 @@
 import Base from '../../static/js/base'
-class IdentitySel extends Base {
+class ManagerList extends Base {
 	constructor() {
 		super();
 	}
@@ -31,4 +31,4 @@ class IdentitySel extends Base {
 	// };
 }
 
-export default IdentitySel
+export default ManagerList

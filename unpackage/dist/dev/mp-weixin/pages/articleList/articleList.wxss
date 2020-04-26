@@ -1,0 +1,108 @@
+.articleList {
+  width: 750rpx;
+  height: auto;
+}
+.articleList .item {
+  width: 630rpx;
+  height: 170rpx;
+  margin: 30rpx;
+  padding: 30rpx;
+  border-radius: 10rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+  background-color: #ffffff;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+}
+.articleList .item {
+  -webkit-box-align: start !important;
+  -webkit-align-items: flex-start !important;
+          align-items: flex-start !important;
+}
+.articleList .item .iconfont {
+  width: 30rpx;
+  height: 30rpx;
+  font-size: 25rpx;
+  color: #265ED7;
+}
+.articleList .item .info {
+  width: 590rpx;
+  height: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+          align-items: flex-start;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+}
+.articleList .item .info .details {
+  width: 100%;
+}
+.articleList .item .info .details .title {
+  width: 100%;
+  font-size: 29rpx;
+  font-weight: 800;
+  color: #343434;
+  margin-bottom: 10rpx;
+  padding-bottom: 20rpx;
+  border-bottom: 1rpx solid #EEEEEE;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.articleList .item .info .details .content {
+  line-height: 29rpx;
+  font-size: 25rpx;
+  color: #898989;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.articleList .item .info .features {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+          justify-content: flex-end;
+}
+.articleList .item .info .features view {
+  margin-left: 30rpx;
+  font-size: 25rpx;
+  color: #666666;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+}
+.articleList .item .info .features .iconfont {
+  font-size: 25rpx;
+  color: #666666;
+  margin-right: 10rpx;
+}
+

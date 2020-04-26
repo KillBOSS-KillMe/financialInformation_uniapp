@@ -287,10 +287,18 @@ var index = new _indexModel.default();var _default = { data: function data() {re
       // 		}
       // 	})
       // })
-    }, // 进入--客户经理--详情页
-    goManagerDetails: function goManagerDetails(e) {var that = this; // const id = index.get_data_set(e, "id");
-      var managerindex = index.get_data_set(e, "managerindex");var data = JSON.stringify(that.managerNode.data[managerindex]);index.navigate_to("/pages/managerDetails/managerDetails?data=".concat(data));}, // 进入--资讯--详情页
-    goInformationDetails: function goInformationDetails(e) {var that = this;
+    }, // 进入客户经理列表
+    goManagerList: function goManagerList() {index.navigate_to("/pages/managerList/managerList");}, // 进入资讯列表
+    goArticleList: function goArticleList() {index.navigate_to("/pages/articleList/articleList");}, // 进入--客户经理--详情页
+    goManagerDetails: function goManagerDetails(e) {var that = this;
+      // const id = index.get_data_set(e, "id");
+      var managerindex = index.get_data_set(e, "managerindex");
+      var data = JSON.stringify(that.managerNode.data[managerindex]);
+      index.navigate_to("/pages/managerDetails/managerDetails?data=".concat(data));
+    },
+    // 进入--资讯--详情页
+    goInformationDetails: function goInformationDetails(e) {
+      var that = this;
       var id = index.get_data_set(e, "id");
       index.navigate_to("/pages/informationDetails/informationDetails?id=".concat(id));
     },
