@@ -183,7 +183,7 @@ var userAttention = new _userAttentionModel.default();var _default =
     getList: function getList(callBack) {
       var that = this;
       userAttention.getList({
-        page: that.managerNode.page || 1,
+        page: that.attentionNode.page || 1,
         openid: that.userInfo.openid },
       function (res) {
         // console.log(res)
@@ -236,13 +236,12 @@ var userAttention = new _userAttentionModel.default();var _default =
   onReachBottom: function onReachBottom() {
     var that = this;
     if (that.attentionNode.page == that.attentionNode.page_number) {
+      userAttention.show_tips('没有更多数据了');
       return;
     }
     that.attentionNode.page += 1;
     // 客户经理列表加载
-    this.getList(function () {
-      callBack && callBack();
-    });
+    this.getList();
   },
   // 分享
   onShareAppMessage: function onShareAppMessage() {

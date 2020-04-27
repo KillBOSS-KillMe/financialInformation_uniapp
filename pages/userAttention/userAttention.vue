@@ -50,7 +50,7 @@
 			getList(callBack) {
 				const that = this
 				userAttention.getList({
-					page: that.managerNode.page || 1,
+					page: that.attentionNode.page || 1,
 					openid: that.userInfo.openid
 				}, (res) => {
 					// console.log(res)
@@ -103,13 +103,12 @@
 		onReachBottom() {
 		  var that = this;
 		  if (that.attentionNode.page == that.attentionNode.page_number) {
+				userAttention.show_tips('没有更多数据了')
 		    return;
 		  }
 		  that.attentionNode.page += 1;
 		  // 客户经理列表加载
-		  this.getList(() => {
-		  	callBack && callBack();
-		  })
+		  this.getList()
 		},
 		// 分享
 		onShareAppMessage() {

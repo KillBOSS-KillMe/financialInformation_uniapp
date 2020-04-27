@@ -244,6 +244,7 @@
 						font-size: @titleSize;
 						font-weight: @mainFontWeight;
 						color: @fontColor_1;
+						padding-bottom: 20rpx;
 					}
 					text {
 						font-size: @fontSize_2;

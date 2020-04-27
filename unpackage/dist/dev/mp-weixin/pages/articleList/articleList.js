@@ -219,6 +219,7 @@ var articleList = new _articleListModel.default();var _default =
   onReachBottom: function onReachBottom() {
     var that = this;
     if (that.articleList.page == that.articleList.page_number) {
+      articleList.show_tips('没有更多数据了');
       return;
     }
     that.articleList.page += 1;

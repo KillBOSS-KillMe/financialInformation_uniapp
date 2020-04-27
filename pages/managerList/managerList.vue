@@ -9,8 +9,8 @@
 					<view>{{item.name}} / {{item.company}}</view>
 					<text>{{item.post}}</text>
 				</view>
-				<button class="active">关注</button>
-				<!-- <button class="noActive">取消关注</button> -->
+				<button class="active" v-if="item.fans_type == 0">关注</button>
+				<button class="noActive" v-else>取消关注</button>
 			</view>
 		</view>
 	</view>
@@ -81,6 +81,7 @@
 		onReachBottom() {
 		  var that = this;
 		  if (that.managerNode.page == that.managerNode.page_number) {
+				managerList.show_tips('没有更多数据了')
 		    return;
 		  }
 		  that.managerNode.page += 1;

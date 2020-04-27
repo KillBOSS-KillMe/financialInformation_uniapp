@@ -214,6 +214,7 @@ var managerList = new _managerListModel.default();var _default =
   onReachBottom: function onReachBottom() {
     var that = this;
     if (that.managerNode.page == that.managerNode.page_number) {
+      managerList.show_tips('没有更多数据了');
       return;
     }
     that.managerNode.page += 1;
