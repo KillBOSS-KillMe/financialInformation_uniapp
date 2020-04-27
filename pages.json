@@ -91,7 +91,7 @@
 			"path": "pages/newsChat/newsChat",
 			"style": {
 				"navigationBarTitleText": "消息",
-				"enablePullDownRefresh": true,
+				"enablePullDownRefresh": false,
 				// #ifdef H5
 				"navigationStyle": "custom",
 				// #endif

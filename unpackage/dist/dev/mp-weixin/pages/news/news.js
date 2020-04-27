@@ -165,7 +165,8 @@ var news = new _newsModel.default();var _default =
       authorizationButton: true,
       userInfo: {},
       newsList: [],
-      newNewsList: [] };
+      newNewsList: [],
+      updataTimes: null };
 
   },
   onLoad: function onLoad(options) {
@@ -177,29 +178,43 @@ var news = new _newsModel.default();var _default =
     var that = this;
     that._onLoad();
   },
+  onUnload: function onUnload() {
+    this.runClearInterval();
+  },
+  onHide: function onHide() {
+    this.runClearInterval();
+  },
   methods: {
     _onLoad: function _onLoad(callBack) {
       var that = this;
       that.userInfo = that.$store.state.userInfo;
+      that.upDataNewsList();
+      // that.updataTimes = setInterval(() => {
+      // 	that.upDataNewsList()
+      // }, 3000);
+    },
+    // 刷新列表
+    upDataNewsList: function upDataNewsList(callBack) {
+      var that = this;
       var newNewsNum = that.$store.state.newNewsNum;
-      that.getNewNewsList(function () {
-        that.getNewsList(function () {
-          callBack && callBack();
-        });
-      });
-      // if (newNewsNum == 0) {
-      // 	// 加载新的消息列表和原有消息列表,然后二者合并
-      // 	that.getNewNewsList(() => {
-      // 		that.getNewsList(() => {
-      // 			callBack && callBack();
-      // 		})
-      // 	})
-      // } else {
-      // 	// 只加载原有消息列表
+      // that.getNewNewsList(() => {
       // 	that.getNewsList(() => {
       // 		callBack && callBack();
       // 	})
-      // }
+      // })
+      if (newNewsNum > 0) {
+        // 加载新的消息列表和原有消息列表,然后二者合并
+        that.getNewNewsList(function () {
+          that.getNewsList(function () {
+            callBack && callBack();
+          });
+        });
+      } else {
+        // 只加载原有消息列表
+        that.getNewsList(function () {
+          callBack && callBack();
+        });
+      }
     },
     // 加载新消息列表
     getNewNewsList: function getNewNewsList(callBack) {
@@ -271,6 +286,13 @@ var news = new _newsModel.default();var _default =
         url = "/pages/sysNewsList/sysNewsList?id=".concat(id);
       }
       news.navigate_to(url);
+    },
+    // 清理定时器
+    runClearInterval: function runClearInterval() {
+      if (this.updataTimes) {
+        clearInterval(this.updataTimes);
+        this.updataTimes = null;
+      }
     } },
 
   // 下拉刷新

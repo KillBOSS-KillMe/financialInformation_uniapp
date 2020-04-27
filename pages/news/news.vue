@@ -32,7 +32,8 @@
 				authorizationButton: true,
 				userInfo: {},
 				newsList: [],
-				newNewsList: []
+				newNewsList: [],
+				updataTimes: null
 			}
 		},
 		onLoad(options) {
@@ -44,29 +45,43 @@
 			const that = this
 			that._onLoad()
 		},
+		onUnload() {
+			this.runClearInterval()
+		},
+		onHide() {
+			this.runClearInterval()
+		},
 		methods: {
 			_onLoad(callBack) {
 				const that = this
 				that.userInfo = that.$store.state.userInfo;
+				that.upDataNewsList()
+				// that.updataTimes = setInterval(() => {
+				// 	that.upDataNewsList()
+				// }, 3000);
+			},
+			// 刷新列表
+			upDataNewsList(callBack) {
+				const that = this
 				let newNewsNum = that.$store.state.newNewsNum;
-				that.getNewNewsList(() => {
-					that.getNewsList(() => {
-						callBack && callBack();
-					})
-				})
-				// if (newNewsNum == 0) {
-				// 	// 加载新的消息列表和原有消息列表,然后二者合并
-				// 	that.getNewNewsList(() => {
-				// 		that.getNewsList(() => {
-				// 			callBack && callBack();
-				// 		})
-				// 	})
-				// } else {
-				// 	// 只加载原有消息列表
+				// that.getNewNewsList(() => {
 				// 	that.getNewsList(() => {
 				// 		callBack && callBack();
 				// 	})
-				// }
+				// })
+				if (newNewsNum > 0) {
+					// 加载新的消息列表和原有消息列表,然后二者合并
+					that.getNewNewsList(() => {
+						that.getNewsList(() => {
+							callBack && callBack();
+						})
+					})
+				} else {
+					// 只加载原有消息列表
+					that.getNewsList(() => {
+						callBack && callBack();
+					})
+				}
 			},
 			// 加载新消息列表
 			getNewNewsList(callBack) {
@@ -138,7 +153,14 @@
 					url = `/pages/sysNewsList/sysNewsList?id=${id}`
 				}
 				news.navigate_to(url);
-			}
+			},
+			// 清理定时器
+			runClearInterval() {
+				if (this.updataTimes) {
+					clearInterval(this.updataTimes);
+					this.updataTimes = null;
+				}
+			},
 		},
 		// 下拉刷新
 		onPullDownRefresh() {

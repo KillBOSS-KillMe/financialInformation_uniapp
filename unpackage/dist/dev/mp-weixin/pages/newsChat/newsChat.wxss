@@ -3,9 +3,11 @@ scroll-view {
 }
 .content {
   width: 690rpx !important;
+  height: 100vh;
   height: auto;
   padding: 30rpx;
   padding-bottom: 110rpx;
+  background-color: #333;
 }
 .content .item1,
 .content .item2 {

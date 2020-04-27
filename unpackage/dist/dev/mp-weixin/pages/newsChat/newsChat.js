@@ -154,6 +154,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 var _newsChatModel = _interopRequireDefault(__webpack_require__(/*! ./newsChat-model.js */ 88));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
@@ -176,9 +177,9 @@ var _newsChatModel = _interopRequireDefault(__webpack_require__(/*! ./newsChat-m
 //
 //
 //
-var newsChat = new _newsChatModel.default();var _default = { data: function data() {return { options: {}, updataTimes: null, userInfo: {}, message: '', newsNode: {}, newList: [], windowHeight: 0 };}, onLoad: function onLoad(options) {// console.log(options)
-    var that = this;that.options = options;var _uni$getSystemInfoSyn = uni.getSystemInfoSync(),windowWidth = _uni$getSystemInfoSyn.windowWidth,windowHeight = _uni$getSystemInfoSyn.windowHeight;that.windowHeight = windowHeight;that._onLoad();
-  },
+//
+var newsChat = new _newsChatModel.default();var _default = { data: function data() {return { options: {}, updataTimes: null, userInfo: {}, message: '', newsNode: { page_number: 1, page: 1, data: [] }, newList: [], scrollviewHight: 0, historyTime: 0 };}, onLoad: function onLoad(options) {// console.log(options)
+    var that = this;that.options = options;that._onLoad();},
   onShow: function onShow() {
 
   },
@@ -192,12 +193,34 @@ var newsChat = new _newsChatModel.default();var _default = { data: function data
     _onLoad: function _onLoad(callBack) {
       var that = this;
       that.userInfo = that.$store.state.userInfo;
+      // 计算消息区域高度
+      // uni.getSystemInfo({
+      // 	success(res) {
+      // 		let windowHeight = res.windowHeight
+      // 		// 计算组件的高度
+      // 		let view = uni.createSelectorQuery().select(".sendMessage")
+      // 		view.boundingClientRect(data => {
+      // 			let navHeight = data.height
+      // 			let scrollviewHigh = windowHeight - navHeight
+      // 		}).exec()
+      // 	}
+      // })
+      var heightAll = uni.getSystemInfo().windowHeight;
+      console.log(heightAll);
+      // 加载消息
       that.getNewsList(function () {
         callBack && callBack();
       });
       that.updataTimes = setInterval(function () {
         that.updataNewsList();
       }, 3000);
+    },
+    // 滚动触顶执行,加载历史消息
+    runscroll: function runscroll(e) {
+      var that = this;
+      if (that.newsNode.page != that.newsNode.page_number) {
+        that.gethistoryList();
+      }
     },
     // 刷新消息
     updataNewsList: function updataNewsList() {
@@ -231,16 +254,37 @@ var newsChat = new _newsChatModel.default();var _default = { data: function data
         } });
 
     },
+    // 加载历史消息
+    gethistoryList: function gethistoryList(callBack) {
+      var that = this;
+      var page = parseInt(that.newsNode.page) + 1;
+      newsChat.getNewsList({
+        openid: that.userInfo.openid,
+        id: that.options.id,
+        page: page,
+        time: that.historyTime },
+      function (res) {
+        // console.log(res)
+        if (res.code == 4000) {
+          var newNode = res;
+          that.newList = newNode.data.reverse().concat(that.newList);
+          that.newsNode = res;
+        }
+        callBack && callBack();
+      });
+    },
     // 初始化消息
     getNewsList: function getNewsList(callBack) {
       var that = this;
       newsChat.getNewsList({
         openid: that.userInfo.openid,
-        id: that.options.id },
+        id: that.options.id,
+        page: that.newsNode.page },
       function (res) {
         console.log(res);
         if (res.code == 4000) {
           var newNode = res;
+          that.historyTime = newNode.time;
           that.newList = newNode.data.reverse();
           that.newsNode = res;
           setTimeout(function () {
@@ -300,7 +344,7 @@ var newsChat = new _newsChatModel.default();var _default = { data: function data
           var view = uni.createSelectorQuery().select(".pageTopBorder");
           view.boundingClientRect(function (data) {
             var navHeight = data.height;
-            var scrollviewHigh = windowHeight - navHeight;
+            that.scrollviewHight = windowHeight - navHeight - 20;
             // 滚动到底部
             uni.pageScrollTo({
               scrollTop: navHeight,
