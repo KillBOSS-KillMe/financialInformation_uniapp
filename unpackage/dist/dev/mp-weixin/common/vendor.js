@@ -1645,10 +1645,11 @@ function Config() {_classCallCheck(this, Config);
 };
 
 //接口域名
-Config.requset_url = "http://192.168.1.113/api/";
-Config.img_url = "http://192.168.1.113/static/rotation_chart/";
-Config.up_img_url = "http://192.168.1.113/uploads/";
+Config.requset_url = "http://1th5928945.oicp.vip/api/";
+Config.img_url = "http://1th5928945.oicp.vip/static/rotation_chart/";
+Config.up_img_url = "http://1th5928945.oicp.vip/uploads/";
 //微信授权域名192.168.1.168
+
 //Config.wx_login_url = "https://diancan.lvacms.cn/wechat/login";
 
 
@@ -10693,7 +10694,7 @@ NewsChat = /*#__PURE__*/function (_Base) {_inherits(NewsChat, _Base);
   function NewsChat() {_classCallCheck(this, NewsChat);return _possibleConstructorReturn(this, _getPrototypeOf(NewsChat).call(this));
 
   }
-  // 登录
+  // 消息加载及更新
   _createClass(NewsChat, [{ key: "getNewsList", value: function getNewsList(data, callBack) {
       var that = this;
       var params = {
@@ -10706,7 +10707,7 @@ NewsChat = /*#__PURE__*/function (_Base) {_inherits(NewsChat, _Base);
 
       that.request(params);
     } }, { key: "sendMessage",
-    // 获取用户信息
+    // 发送消息
     value: function sendMessage(data, callBack) {
       var that = this;
       var params = {

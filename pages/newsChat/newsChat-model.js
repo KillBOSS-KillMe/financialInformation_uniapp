@@ -3,7 +3,7 @@ class NewsChat extends Base {
 	constructor() {
 		super();
 	}
-	// 登录
+	// 消息加载及更新
 	getNewsList(data, callBack) {
 		var that = this;
 		var params = {
@@ -16,7 +16,7 @@ class NewsChat extends Base {
 		};
 		that.request(params);
 	};
-	// 获取用户信息
+	// 发送消息
 	sendMessage(data, callBack) {
 		var that = this;
 		var params = {

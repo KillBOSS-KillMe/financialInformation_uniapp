@@ -2,16 +2,16 @@
 	<view class="pageTopBorder">
 		<scroll-view  scroll-y="true" class="content">
 			<notList v-if="newsList.length <= 0" />
-			<view class="item" @tap="goNewDetails" :data-id="1" :data-type="0" v-for="(item,index) in newsList" :key="index" v-if="newsList.length > 0">
+			<view class="item" @tap="goNewDetails" :data-id="item.id" :data-type="0" v-for="(item,index) in newsList" :key="index" v-if="newsList.length > 0">
 				<view class="info">
-					<image :src="newsList.portrait" mode=""></image>
+					<image :src="item.portrait" mode=""></image>
 					<view class="con">
-						<view>{{newsList.nickname}}</view>
-						<text>{{newsList.new_msg}}</text>
+						<view>{{item.nickname}}</view>
+						<text>{{item.new_msg}}</text>
 					</view>
 				</view>
-				<icon class="iconfont iconxiangyou" v-if="newsList.new_number == 0"></icon>
-				<text class="newNews" v-else>{{newsList.new_number}}</text>
+				<icon class="iconfont iconxiangyou" v-if="item.commentnumber == 0"></icon>
+				<text class="newNews" v-else>{{item.commentnumber}}</text>
 			</view>
 		</scroll-view>
 		<!-- <button open-type="getUserInfo" v-if="authorizationButton" id='getUserInfo' lang="zh_CN" @getuserinfo="wx_login"></button> -->
@@ -30,7 +30,8 @@
 			return {
 				authorizationButton: true,
 				userInfo: {},
-				newsList: []
+				newsList: [],
+				newNewsList: []
 			}
 		},
 		onLoad(options) {
@@ -80,7 +81,7 @@
 				news.getNewsList({
 					openid: that.userInfo.openid	
 				}, (res) => {
-					// console.log(res)
+					console.log(res)
 					if (res.code == 4000) {
 						let newsList = res.data
 						if (that.newNewsList.length > 0) {
@@ -88,7 +89,6 @@
 							for (let i = 0; i < newsList.length; i++) {
 								for (let y = 0; y < newNewsList.length; y++) {
 									if (newNewsList[y].id == newsList[i].id) {
-										// newsList[i] = newNewsList[y]
 										// 删除原有消息中与新消息重复的项
 										newsList.splice(i, 1)
 									}

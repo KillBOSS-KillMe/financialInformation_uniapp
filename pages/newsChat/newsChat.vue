@@ -1,14 +1,15 @@
 <template>
 	<view class="pageTopBorder">
 		<scroll-view scroll-y="true" class="content">
-			<view class="item1" v-for="(item,index) in 20" :key="index">
-				<image src="../../static/images/test.png" mode=""></image>
-				<view class="info">我想咨询一下银行现在对于个人贷款这块有什么政策？</view>
+			<view :class="item.direction == 2 ? 'item1' : 'item2'" v-for="(item,index) in newsNode.data" :key="index">
+				<image :src="item.portrait" mode="" v-if="item.direction == 2 "></image>
+				<view class="info">{{item.content}}</view>
+				<image :src="item.portrait" mode="" v-if="item.direction == 1 "></image>
 			</view>
-			<view class="item2" v-for="(item,index) in 20" :key="index">
+			<!-- <view class="item2" v-for="(item,index) in 20" :key="index">
 				<view class="info">我想咨询一下银行现在对于个人贷款这块有什么政策？</view>
 				<image src="../../static/images/test.png" mode=""></image>
-			</view>
+			</view> -->
 		</scroll-view>
 		<view class="sendMessage">
 			<view class="con">
@@ -26,14 +27,26 @@
 		data() {
 			return {
 				options: {},
+				updataTimes: null,
 				userInfo: {},
-				message: ''
+				message: '',
+				newsNode: {}
 			};
 		},
 		onLoad(options) {
+			// console.log(options)
 			const that = this
 			that.options = options
 			that._onLoad()
+		},
+		onShow() {
+			
+		},
+		onUnload(){  
+			this.runClearInterval()
+		},
+		onHide() {
+			this.runClearInterval()
 		},
 		methods: {
 			_onLoad(callBack) {
@@ -42,7 +55,32 @@
 				that.getNewsList(() => {
 					callBack && callBack();
 				})
+				// that.updataTimes = setInterval(() => {
+				// 	that.updataNewsList()
+				// }, 3000);
 			},
+			// 刷新消息
+			updataNewsList() {
+				const that = this
+				uni.request({
+					url: `${newsChat.base_qequest_url}chat/getNewMessage`,
+					data: {
+						openid: that.userInfo.openid,
+						id: that.options.id
+					},
+					method: 'POST',
+					success: (res) => {
+						if (res.code == 4000) {
+							let newNode = res
+							that.newNode.data.push(res.data)
+							console.log('||||||||||||||||||||||||||||||||||||||')
+							console.log(that.newNode.data)
+							// that.newsNode = res
+						}
+					}
+				});
+			},
+			// 初始化消息
 			getNewsList(callBack) {
 				const that = this
 				newsChat.getNewsList({
@@ -51,11 +89,14 @@
 				}, (res) => {
 					console.log(res)
 					if (res.code == 4000) {
-						
+						let newNode = res
+						newNode.data = newNode.data.reverse()
+						that.newsNode = res
 					}
 					callBack && callBack();
 				})
 			},
+			
 			// 发送消息
 			sendMessage(callBack) {
 				const that = this
@@ -66,12 +107,26 @@
 				}, (res) => {
 					console.log(res)
 					if (res.code == 4000) {
+						// that.updataNewsList()
 						
+						let myNewMessage = {
+							content: that.message,
+							direction: 1,
+							portrait: that.userInfo.portrait
+						}
+						that.newsNode.data.push(myNewMessage)
+						that.message = ''
 					} else {
 						newsChat.show_tips(res.explain)
 					}
 					// callBack && callBack();
 				})
+			},
+			runClearInterval() {
+				if(this.updataTimes) {
+				    clearInterval(this.updataTimes);  
+				    this.updataTimes = null;  
+				}
 			},
 			getMessage(e) {
 				const that = this

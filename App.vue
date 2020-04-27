@@ -69,9 +69,9 @@ text-overflow: ellipsis; -->
 			// 首次刷新新消息条数
 			this.alwaysUpdataNews()
 			// 定时刷新新消息条数
-			this.updataNews = setInterval(() => {
-				this.alwaysUpdataNews()
-			}, 3000);
+			// this.updataNews = setInterval(() => {
+			// 	this.alwaysUpdataNews()
+			// }, 3000);
 			// setTimeout(() => {
 			// 	clearTimeout(this.updataNews);
 			// }, 6000)
@@ -95,9 +95,11 @@ text-overflow: ellipsis; -->
 						method: 'POST',
 						success: (res) => {
 							let index = 1
+							// that.$store.commit('setNewNewsNum', res.data.number);
+							// console.log(that.$store.state.newNewsNum)
 							if (res.data.number > 0) {
 								// 添加底部导航右上角文字
-								that.$store.commit('getNewNewsNum', res.data.number);
+								that.$store.commit('setNewNewsNum', res.data.number);
 								uni.setTabBarBadge({
 									index: index,
 									text: res.data.number+''

@@ -153,6 +153,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 var _newsChatModel = _interopRequireDefault(__webpack_require__(/*! ./newsChat-model.js */ 88));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
@@ -174,8 +175,45 @@ var _newsChatModel = _interopRequireDefault(__webpack_require__(/*! ./newsChat-m
 //
 //
 //
-var newsChat = new _newsChatModel.default();var _default = { data: function data() {return { options: {}, userInfo: {}, message: '' };}, onLoad: function onLoad(options) {var that = this;that.options = options;that._onLoad();}, methods: { _onLoad: function _onLoad(callBack) {var that = this;that.userInfo = that.$store.state.userInfo;that.getNewsList(function () {callBack && callBack();});
+//
+var newsChat = new _newsChatModel.default();var _default = { data: function data() {return { options: {}, updataTimes: null, userInfo: {}, message: '', newsNode: {} };}, onLoad: function onLoad(options) {// console.log(options)
+    var that = this;that.options = options;that._onLoad();}, onShow: function onShow() {}, onUnload: function onUnload() {this.runClearInterval();},
+  onHide: function onHide() {
+    this.runClearInterval();
+  },
+  methods: {
+    _onLoad: function _onLoad(callBack) {
+      var that = this;
+      that.userInfo = that.$store.state.userInfo;
+      that.getNewsList(function () {
+        callBack && callBack();
+      });
+      // that.updataTimes = setInterval(() => {
+      // 	that.updataNewsList()
+      // }, 3000);
     },
+    // 刷新消息
+    updataNewsList: function updataNewsList() {
+      var that = this;
+      uni.request({
+        url: "".concat(newsChat.base_qequest_url, "chat/getNewMessage"),
+        data: {
+          openid: that.userInfo.openid,
+          id: that.options.id },
+
+        method: 'POST',
+        success: function success(res) {
+          if (res.code == 4000) {
+            var newNode = res;
+            that.newNode.data.push(res.data);
+            console.log('||||||||||||||||||||||||||||||||||||||');
+            console.log(that.newNode.data);
+            // that.newsNode = res
+          }
+        } });
+
+    },
+    // 初始化消息
     getNewsList: function getNewsList(callBack) {
       var that = this;
       newsChat.getNewsList({
@@ -184,11 +222,14 @@ var newsChat = new _newsChatModel.default();var _default = { data: function data
       function (res) {
         console.log(res);
         if (res.code == 4000) {
-
+          var newNode = res;
+          newNode.data = newNode.data.reverse();
+          that.newsNode = res;
         }
         callBack && callBack();
       });
     },
+
     // 发送消息
     sendMessage: function sendMessage(callBack) {
       var that = this;
@@ -199,12 +240,26 @@ var newsChat = new _newsChatModel.default();var _default = { data: function data
       function (res) {
         console.log(res);
         if (res.code == 4000) {
+          // that.updataNewsList()
 
+          var myNewMessage = {
+            content: that.message,
+            direction: 1,
+            portrait: that.userInfo.portrait };
+
+          that.newsNode.data.push(myNewMessage);
+          that.message = '';
         } else {
           newsChat.show_tips(res.explain);
         }
         // callBack && callBack();
       });
+    },
+    runClearInterval: function runClearInterval() {
+      if (this.updataTimes) {
+        clearInterval(this.updataTimes);
+        this.updataTimes = null;
+      }
     },
     getMessage: function getMessage(e) {
       var that = this;

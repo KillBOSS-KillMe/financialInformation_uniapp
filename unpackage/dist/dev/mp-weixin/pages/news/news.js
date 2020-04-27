@@ -163,7 +163,8 @@ var news = new _newsModel.default();var _default =
     return {
       authorizationButton: true,
       userInfo: {},
-      newsList: [] };
+      newsList: [],
+      newNewsList: [] };
 
   },
   onLoad: function onLoad(options) {
@@ -213,7 +214,7 @@ var news = new _newsModel.default();var _default =
       news.getNewsList({
         openid: that.userInfo.openid },
       function (res) {
-        // console.log(res)
+        console.log(res);
         if (res.code == 4000) {
           var newsList = res.data;
           if (that.newNewsList.length > 0) {
@@ -221,7 +222,6 @@ var news = new _newsModel.default();var _default =
             for (var i = 0; i < newsList.length; i++) {
               for (var y = 0; y < newNewsList.length; y++) {
                 if (newNewsList[y].id == newsList[i].id) {
-                  // newsList[i] = newNewsList[y]
                   // 删除原有消息中与新消息重复的项
                   newsList.splice(i, 1);
                 }
