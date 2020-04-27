@@ -176,8 +176,9 @@ var _newsChatModel = _interopRequireDefault(__webpack_require__(/*! ./newsChat-m
 //
 //
 //
-var newsChat = new _newsChatModel.default();var _default = { data: function data() {return { options: {}, updataTimes: null, userInfo: {}, message: '', newsNode: {} };}, onLoad: function onLoad(options) {// console.log(options)
-    var that = this;that.options = options;that._onLoad();}, onShow: function onShow() {}, onUnload: function onUnload() {this.runClearInterval();},
+var newsChat = new _newsChatModel.default();var _default = { data: function data() {return { options: {}, updataTimes: null, userInfo: {}, message: '', newsNode: {}, newList: [] };}, onLoad: function onLoad(options) {// console.log(options)
+    var that = this;that.options = options;that._onLoad();}, onShow: function onShow() {}, onUnload: function onUnload() {this.runClearInterval();
+  },
   onHide: function onHide() {
     this.runClearInterval();
   },
@@ -188,9 +189,9 @@ var newsChat = new _newsChatModel.default();var _default = { data: function data
       that.getNewsList(function () {
         callBack && callBack();
       });
-      // that.updataTimes = setInterval(() => {
-      // 	that.updataNewsList()
-      // }, 3000);
+      that.updataTimes = setInterval(function () {
+        that.updataNewsList();
+      }, 3000);
     },
     // 刷新消息
     updataNewsList: function updataNewsList() {
@@ -203,12 +204,18 @@ var newsChat = new _newsChatModel.default();var _default = { data: function data
 
         method: 'POST',
         success: function success(res) {
-          if (res.code == 4000) {
-            var newNode = res;
-            that.newNode.data.push(res.data);
-            console.log('||||||||||||||||||||||||||||||||||||||');
-            console.log(that.newNode.data);
-            // that.newsNode = res
+          if (res.data.code == 4000) {
+            var newsNode = res.data.data;
+            var newMessageList = [];
+            for (var i = 0; i < newsNode.length; i++) {
+              newMessageList.push({
+                content: newsNode[i].content,
+                direction: 2,
+                portrait: newsNode[i].portrait,
+                nickname: newsNode[i].nickname });
+
+            }
+            that.newList = that.newList.concat(newMessageList);
           }
         } });
 
@@ -223,7 +230,7 @@ var newsChat = new _newsChatModel.default();var _default = { data: function data
         console.log(res);
         if (res.code == 4000) {
           var newNode = res;
-          newNode.data = newNode.data.reverse();
+          that.newList = newNode.data.reverse();
           that.newsNode = res;
         }
         callBack && callBack();
@@ -238,16 +245,15 @@ var newsChat = new _newsChatModel.default();var _default = { data: function data
         id: that.options.id,
         content: this.message },
       function (res) {
-        console.log(res);
         if (res.code == 4000) {
-          // that.updataNewsList()
-
+          // 给消息列表中加入自己发送的消息
           var myNewMessage = {
             content: that.message,
             direction: 1,
             portrait: that.userInfo.portrait };
 
           that.newsNode.data.push(myNewMessage);
+          // 清空输入的消息
           that.message = '';
         } else {
           newsChat.show_tips(res.explain);

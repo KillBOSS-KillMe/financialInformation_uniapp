@@ -1,7 +1,7 @@
 <template>
 	<view class="pageTopBorder">
 		<scroll-view scroll-y="true" class="content">
-			<view :class="item.direction == 2 ? 'item1' : 'item2'" v-for="(item,index) in newsNode.data" :key="index">
+			<view :class="item.direction == 2 ? 'item1' : 'item2'" v-for="(item,index) in newList" :key="index">
 				<image :src="item.portrait" mode="" v-if="item.direction == 2 "></image>
 				<view class="info">{{item.content}}</view>
 				<image :src="item.portrait" mode="" v-if="item.direction == 1 "></image>
@@ -30,7 +30,8 @@
 				updataTimes: null,
 				userInfo: {},
 				message: '',
-				newsNode: {}
+				newsNode: {},
+				newList: []
 			};
 		},
 		onLoad(options) {
@@ -55,9 +56,9 @@
 				that.getNewsList(() => {
 					callBack && callBack();
 				})
-				// that.updataTimes = setInterval(() => {
-				// 	that.updataNewsList()
-				// }, 3000);
+				that.updataTimes = setInterval(() => {
+					that.updataNewsList()
+				}, 3000);
 			},
 			// 刷新消息
 			updataNewsList() {
@@ -70,12 +71,18 @@
 					},
 					method: 'POST',
 					success: (res) => {
-						if (res.code == 4000) {
-							let newNode = res
-							that.newNode.data.push(res.data)
-							console.log('||||||||||||||||||||||||||||||||||||||')
-							console.log(that.newNode.data)
-							// that.newsNode = res
+						if (res.data.code == 4000) {
+							let newsNode = res.data.data
+							let newMessageList = []
+							for (let i = 0; i < newsNode.length; i++) {
+								newMessageList.push({
+									content: newsNode[i].content,
+									direction: 2,
+									portrait: newsNode[i].portrait,
+									nickname: newsNode[i].nickname
+								})
+							}
+							that.newList = that.newList.concat(newMessageList)
 						}
 					}
 				});
@@ -90,7 +97,7 @@
 					console.log(res)
 					if (res.code == 4000) {
 						let newNode = res
-						newNode.data = newNode.data.reverse()
+						that.newList = newNode.data.reverse()
 						that.newsNode = res
 					}
 					callBack && callBack();
@@ -105,16 +112,15 @@
 					id: that.options.id,
 					content: this.message
 				}, (res) => {
-					console.log(res)
 					if (res.code == 4000) {
-						// that.updataNewsList()
-						
+						// 给消息列表中加入自己发送的消息
 						let myNewMessage = {
 							content: that.message,
 							direction: 1,
 							portrait: that.userInfo.portrait
 						}
 						that.newsNode.data.push(myNewMessage)
+						// 清空输入的消息
 						that.message = ''
 					} else {
 						newsChat.show_tips(res.explain)
