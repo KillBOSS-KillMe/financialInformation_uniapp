@@ -184,6 +184,7 @@ var managerList = new _managerListModel.default();var _default =
     getManagerList: function getManagerList(callBack) {
       var that = this;
       managerList.getManagerList({
+        openid: that.userInfo.openid,
         page: that.managerNode.page || 1 },
       function (res) {
         if (res.code == '4000') {
@@ -217,9 +218,7 @@ var managerList = new _managerListModel.default();var _default =
     }
     that.managerNode.page += 1;
     // 客户经理列表加载
-    this.getManagerList(function () {
-      callBack && callBack();
-    });
+    this.getManagerList();
   },
   // 分享
   onShareAppMessage: function onShareAppMessage() {

@@ -90,9 +90,7 @@
 		  }
 		  that.articleList.page += 1;
 		  // 客户经理列表加载
-		  this.getArticleList(() => {
-		  	callBack && callBack();
-		  })
+		  this.getArticleList()
 		},
 		// 分享
 		onShareAppMessage() {

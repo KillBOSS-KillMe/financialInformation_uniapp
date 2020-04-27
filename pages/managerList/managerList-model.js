@@ -8,7 +8,7 @@ class ManagerList extends Base {
 		var that = this;
 		var params = {
 			url: 'index/get_merchant',
-			method: 'GET',
+			method: 'POST',
 			data: data,
 			sCallBack: function(res) {
 				callBack && callBack(res.data);

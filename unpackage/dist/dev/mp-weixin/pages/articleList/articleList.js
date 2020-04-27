@@ -223,9 +223,7 @@ var articleList = new _articleListModel.default();var _default =
     }
     that.articleList.page += 1;
     // 客户经理列表加载
-    this.getArticleList(function () {
-      callBack && callBack();
-    });
+    this.getArticleList();
   },
   // 分享
   onShareAppMessage: function onShareAppMessage() {

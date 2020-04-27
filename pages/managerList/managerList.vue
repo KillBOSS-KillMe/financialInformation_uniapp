@@ -51,6 +51,7 @@
 			getManagerList(callBack) {
 				const that = this
 				managerList.getManagerList({
+					openid: that.userInfo.openid,
 					page: that.managerNode.page || 1
 				}, (res) => {
 					if (res.code == '4000') {
@@ -84,9 +85,7 @@
 		  }
 		  that.managerNode.page += 1;
 		  // 客户经理列表加载
-		  this.getManagerList(() => {
-		  	callBack && callBack();
-		  })
+		  this.getManagerList()
 		},
 		// 分享
 		onShareAppMessage() {
