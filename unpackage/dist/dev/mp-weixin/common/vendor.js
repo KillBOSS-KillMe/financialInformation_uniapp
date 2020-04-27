@@ -9432,7 +9432,7 @@ Index = /*#__PURE__*/function (_Base) {_inherits(Index, _Base);
       var that = this;
       var params = {
         url: 'index/get_merchant',
-        method: 'GET',
+        method: 'POST',
         data: data,
         sCallBack: function sCallBack(res) {
           callBack && callBack(res.data);
