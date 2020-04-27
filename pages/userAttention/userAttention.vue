@@ -2,6 +2,7 @@
 	<view class="pageTopBorder">
 		<view class="content">
 			<notList v-if="attentionNode.data.length <= 0" />
+			<!-- <view class="item" v-for="(item,index) in attentionNode.data" :key="index" v-if="attentionNode.data.length > 0" @tap="goManagerDetails" :data-managerindex="index" :data-id="item.id"> -->
 			<view class="item" v-for="(item,index) in attentionNode.data" :key="index" v-if="attentionNode.data.length > 0">
 				<image :src="item.portrait" mode=""></image>
 				<view class="info">
@@ -61,6 +62,13 @@
 					callBack && callBack();
 				})
 			},
+			// // 进入--客户经理--详情页
+			// goManagerDetails(e) {
+			// 	const that = this;
+			// 	const managerindex = userAttention.get_data_set(e, "managerindex");
+			// 	let data = JSON.stringify(that.attentionNode.data[managerindex]);
+			// 	userAttention.navigate_to(`/pages/managerDetails/managerDetails?data=${data}`);
+			// },
 			// 取消关注
 			notAttention(e) {
 				const that = this
@@ -94,7 +102,10 @@
 		// 下拉刷新
 		onPullDownRefresh() {
 			var that = this;
-			that.page = 1;
+			that.attentionNode = {
+				page: 1,
+				data: []
+			}
 			that._onLoad(() => {
 				uni.stopPullDownRefresh();
 			});

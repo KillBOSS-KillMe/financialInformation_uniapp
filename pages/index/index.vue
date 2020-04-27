@@ -93,10 +93,11 @@
 		onLoad(options) {
 			const that = this
 			that.options = options
-			that._onLoad()
+			// that._onLoad()
 		},
 		onShow() {
-			
+			const that = this
+			that._onLoad()
 			// const that = this
 			
 			// let token = index.get_storage('token_type', callBack);

@@ -152,6 +152,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 var _userAttentionModel = _interopRequireDefault(__webpack_require__(/*! ./userAttention-model.js */ 97));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var notList = function notList() {__webpack_require__.e(/*! require.ensure | components/notList */ "components/notList").then((function () {return resolve(__webpack_require__(/*! @/components/notList.vue */ 154));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
 var userAttention = new _userAttentionModel.default();var _default =
 {
@@ -194,6 +195,13 @@ var userAttention = new _userAttentionModel.default();var _default =
         callBack && callBack();
       });
     },
+    // // 进入--客户经理--详情页
+    // goManagerDetails(e) {
+    // 	const that = this;
+    // 	const managerindex = userAttention.get_data_set(e, "managerindex");
+    // 	let data = JSON.stringify(that.attentionNode.data[managerindex]);
+    // 	userAttention.navigate_to(`/pages/managerDetails/managerDetails?data=${data}`);
+    // },
     // 取消关注
     notAttention: function notAttention(e) {
       var that = this;
@@ -227,7 +235,10 @@ var userAttention = new _userAttentionModel.default();var _default =
   // 下拉刷新
   onPullDownRefresh: function onPullDownRefresh() {
     var that = this;
-    that.page = 1;
+    that.attentionNode = {
+      page: 1,
+      data: [] };
+
     that._onLoad(function () {
       uni.stopPullDownRefresh();
     });

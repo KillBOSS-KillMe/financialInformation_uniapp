@@ -205,7 +205,10 @@ var managerList = new _managerListModel.default();var _default =
   // 下拉刷新
   onPullDownRefresh: function onPullDownRefresh() {
     var that = this;
-    that.page = 1;
+    that.managerNode = {
+      page: 1,
+      data: [] };
+
     that._onLoad(function () {
       uni.stopPullDownRefresh();
     });

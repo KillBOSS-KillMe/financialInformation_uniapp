@@ -72,7 +72,10 @@
 		// 下拉刷新
 		onPullDownRefresh() {
 			var that = this;
-			that.page = 1;
+			that.managerNode = {
+				page: 1,
+				data: []
+			}
 			that._onLoad(() => {
 				uni.stopPullDownRefresh();
 			});

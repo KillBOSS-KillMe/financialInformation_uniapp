@@ -264,7 +264,8 @@ var index = new _indexModel.default();var _default = { data: function data() {re
       authorizationButton: true, userInfo: {}, userInfoAll: {}, // 轮播图相关
       bannerData: [], indicatorDots: true, autoplay: true, interval: 2000, duration: 500, // 客户经理数据对象
       managerNode: { data: [] }, // 最新资讯
-      informationNode: { data: [] } };}, onLoad: function onLoad(options) {var that = this;that.options = options;that._onLoad();}, onShow: function onShow() {// const that = this
+      informationNode: { data: [] } };}, onLoad: function onLoad(options) {var that = this;that.options = options; // that._onLoad()
+  }, onShow: function onShow() {var that = this;that._onLoad(); // const that = this
     // let token = index.get_storage('token_type', callBack);
     // if(token) {
     // 	that.getUserInfo(() => {

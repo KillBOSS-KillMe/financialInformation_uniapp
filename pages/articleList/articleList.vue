@@ -77,7 +77,10 @@
 		// 下拉刷新
 		onPullDownRefresh() {
 			var that = this;
-			that.page = 1;
+			that.articleList = {
+				page: 1,
+				data: []
+			}
 			that._onLoad(() => {
 				uni.stopPullDownRefresh();
 			});
