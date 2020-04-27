@@ -24,8 +24,8 @@
 				</view>
 				<view class="image">
 					<image :src="info.portrait" mode=""></image>
-					<view class="active" @tap="attention" v-if="info.fans_state == 0">关注</view>
-					<view @tap="notAttention" v-if="info.fans_state == 1">取消关注</view>
+					<view class="active" @tap="attention" v-if="info.fans_state == '0'">关注</view>
+					<view @tap="notAttention" v-if="info.fans_state == '1'">取消关注</view>
 				</view>
 			</view>
 			<view class="titleModel">
@@ -86,7 +86,6 @@
 				const that = this
 				that.userInfo = that.$store.state.userInfo;
 				that.info = JSON.parse(that.options.data);
-				// console.log(that.info)
 				that.getDetails(() => {
 					callBack && callBack();
 				})
@@ -98,10 +97,11 @@
 					openid: that.userInfo.openid,
 					id: that.info.id
 				}, (res) => {
-					console.log(res)
 					if (res.code == 4000) {
-						// info
-						that.info = Object.assign(that.info, res.data);
+						let newInfo = Object.assign(that.info, res.data);
+						newInfo = managerDetails.num2str(newInfo)
+						that.info = newInfo
+					} else {
 						managerDetails.show_tips(res.explain)
 					}
 					callBack && callBack();
@@ -114,7 +114,6 @@
 					openid: that.userInfo.openid,
 					id: that.info.id
 				}, (res) => {
-					console.log(res)
 					if (res.code == 4000) {
 						managerDetails.show_tips(res.explain)
 						that.info.fans_state = 1
@@ -131,7 +130,6 @@
 					openid: that.userInfo.openid,
 					id: that.info.id
 				}, (res) => {
-					console.log(res)
 					if (res.code == 4000) {
 						managerDetails.show_tips(res.explain)
 						that.info.fans_state = 0

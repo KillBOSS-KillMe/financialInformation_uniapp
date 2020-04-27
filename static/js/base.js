@@ -274,6 +274,16 @@ class Base {
 			return '';
 		}
 	}
+	// json对象中的数字转换为字符串
+	num2str(data) {
+		for (let x in data) {
+			console.log(typeof data[x])
+			if (typeof data[x] === 'number') { // 如果是数字 把直接内容转为 字符串
+				data[x] += ''
+			}
+		}
+		return data
+	}
 	// json对象中的null转换为""
 	null2str(data) {
 		for (let x in data) {

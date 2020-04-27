@@ -9372,6 +9372,16 @@ Base = /*#__PURE__*/function () {
         return '';
       }
     }
+    // json对象中的数字转换为字符串
+  }, { key: "num2str", value: function num2str(data) {
+      for (var x in data) {
+        console.log(typeof data[x]);
+        if (typeof data[x] === 'number') {// 如果是数字 把直接内容转为 字符串
+          data[x] += '';
+        }
+      }
+      return data;
+    }
     // json对象中的null转换为""
   }, { key: "null2str", value: function null2str(data) {var _this = this;
       for (var x in data) {

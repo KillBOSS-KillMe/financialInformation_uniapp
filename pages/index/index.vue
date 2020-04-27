@@ -26,8 +26,8 @@
 						<view>{{item.name}} / {{item.company}}</view>
 						<text>{{item.post}}</text>
 					</view>
-					<button class="active">关注</button>
-					<!-- <button class="noActive">取消关注</button> -->
+					<button class="active" v-if="item.fans_type == 0">关注</button>
+					<button class="noActive" v-else>取消关注</button>
 				</view>
 			</view>
 		</view>
