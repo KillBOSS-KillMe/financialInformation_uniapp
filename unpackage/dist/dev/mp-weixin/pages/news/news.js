@@ -153,6 +153,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 var _newsModel = _interopRequireDefault(__webpack_require__(/*! ./news-model.js */ 43));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var notList = function notList() {__webpack_require__.e(/*! require.ensure | components/notList */ "components/notList").then((function () {return resolve(__webpack_require__(/*! @/components/notList.vue */ 154));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
 var news = new _newsModel.default();var _default =
 {
@@ -181,19 +182,24 @@ var news = new _newsModel.default();var _default =
       var that = this;
       that.userInfo = that.$store.state.userInfo;
       var newNewsNum = that.$store.state.newNewsNum;
-      if (newNewsNum == 0) {
-        // 加载新的消息列表和原有消息列表,然后二者合并
-        that.getNewNewsList(function () {
-          that.getNewsList(function () {
-            callBack && callBack();
-          });
-        });
-      } else {
-        // 只加载原有消息列表
+      that.getNewNewsList(function () {
         that.getNewsList(function () {
           callBack && callBack();
         });
-      }
+      });
+      // if (newNewsNum == 0) {
+      // 	// 加载新的消息列表和原有消息列表,然后二者合并
+      // 	that.getNewNewsList(() => {
+      // 		that.getNewsList(() => {
+      // 			callBack && callBack();
+      // 		})
+      // 	})
+      // } else {
+      // 	// 只加载原有消息列表
+      // 	that.getNewsList(() => {
+      // 		callBack && callBack();
+      // 	})
+      // }
     },
     // 加载新消息列表
     getNewNewsList: function getNewNewsList(callBack) {
@@ -205,6 +211,21 @@ var news = new _newsModel.default();var _default =
         if (res.code == 4000) {
           that.newNewsList = res.data;
         }
+        that.newNewsList = [{
+          "id": 5,
+          "new_msg": "高规格",
+          "portrait": that.userInfo.portrait,
+          "nickname": "韩梅梅",
+          "new_number": 1 },
+
+        {
+          "id": 2,
+          "new_msg": "速度快死掉了",
+          "portrait": that.userInfo.portrait,
+          "nickname": "KASD",
+          "new_number": 2 }];
+
+
         callBack && callBack();
       });
     },

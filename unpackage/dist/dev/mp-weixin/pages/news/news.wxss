@@ -76,6 +76,9 @@
 }
 .item .newNews {
   font-size: 29rpx;
-  color: #FF5953;
+  color: #fff;
+  padding: 10rpx;
+  border-radius: 20rpx;
+  background-color: #FF5953;
 }
 
