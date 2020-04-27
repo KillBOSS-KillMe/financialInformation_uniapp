@@ -4,8 +4,8 @@
 			<view class="managerDetails">
 				<view class="info">
 					<view class="managerUserInfo">
-						<view>{{info.name}} / {{info.post}}</view>
-						<text>{{info.company}}</text>
+						<view>{{infoDetails.name}} / {{infoDetails.post}}</view>
+						<text>{{infoDetails.company}}</text>
 					</view>
 					<view class="address">
 						<icon class="iconfont icondizhi"></icon>
@@ -13,19 +13,19 @@
 					</view>
 					<view class="data">
 						<view class="item">
-							<view>{{info.follow_number}}</view>
+							<view>{{infoDetails.follow_number}}</view>
 							<text>关注</text>
 						</view>
 						<view class="item">
-							<view>{{info.fans_number}}</view>
+							<view>{{infoDetails.fans_number}}</view>
 							<text>粉丝</text>
 						</view>
 					</view>
 				</view>
 				<view class="image">
-					<image :src="info.portrait" mode=""></image>
-					<view class="active" @tap="attention" v-if="info.fans_state == '0'">关注</view>
-					<view @tap="notAttention" v-if="info.fans_state == '1'">取消关注</view>
+					<image :src="infoDetails.portrait" mode=""></image>
+					<view class="active" @tap="attention" v-if="fans_state == '0'">关注</view>
+					<view @tap="notAttention" v-else-if="fans_state == '1'">取消关注</view>
 				</view>
 			</view>
 			<view class="titleModel">
@@ -40,25 +40,25 @@
 			<view class="managerInfo">
 				<view class="item">
 					<view>工作单位</view>
-					<text>{{info.company}}</text>
+					<text>{{infoDetails.company}}</text>
 				</view>
 				<view class="item">
 					<view>岗位名称</view>
-					<text>{{info.post}}</text>
+					<text>{{infoDetails.post}}</text>
 				</view>
 				<view class="item">
 					<view>实名认证</view>
-					<text v-if="info.validation == 0">未认证</text>
-					<text v-else-if="info.validation == 1">已认证</text>
-					<text v-else-if="info.validation == 2">待审核</text>
+					<text v-if="infoDetails.validation == 0">未认证</text>
+					<text v-else-if="infoDetails.validation == 1">已认证</text>
+					<text v-else-if="infoDetails.validation == 2">待审核</text>
 				</view>
 		<!-- 		<view class="item">
 					<view>CCBP认证</view>
-					<text>{{info.company}}</text>
+					<text>{{infoDetails.company}}</text>
 				</view> -->
 				<view class="item">
 					<view>工作经验</view>
-					<text>{{info.experience}}</text>
+					<text>{{infoDetails.experience}}</text>
 				</view>
 			</view>
 		</view>
@@ -72,8 +72,9 @@
 	export default {
 		data() {
 			return {
+				fans_state: '',
 				options: {},
-				info: {}
+				infoDetails: {}
 			};
 		},
 		onLoad(options) {
@@ -85,7 +86,7 @@
 			_onLoad(callBack) {
 				const that = this
 				that.userInfo = that.$store.state.userInfo;
-				that.info = JSON.parse(that.options.data);
+				that.infoDetails = JSON.parse(that.options.data);
 				that.getDetails(() => {
 					callBack && callBack();
 				})
@@ -95,12 +96,13 @@
 				const that = this
 				managerDetails.getDetails({
 					openid: that.userInfo.openid,
-					id: that.info.id
+					id: that.infoDetails.id
 				}, (res) => {
 					if (res.code == 4000) {
-						let newInfo = Object.assign(that.info, res.data);
+						let newInfo = Object.assign(that.infoDetails, res.data);
 						newInfo = managerDetails.num2str(newInfo)
-						that.info = newInfo
+						that.infoDetails = newInfo
+						that.fans_state = newInfo.fans_state
 					} else {
 						managerDetails.show_tips(res.explain)
 					}
@@ -112,11 +114,11 @@
 				const that = this
 				managerDetails.runAttention({
 					openid: that.userInfo.openid,
-					id: that.info.id
+					id: that.infoDetails.id
 				}, (res) => {
 					if (res.code == 4000) {
 						managerDetails.show_tips(res.explain)
-						that.info.fans_state = 1
+						that.fans_state = '1'
 					} else {
 						managerDetails.show_tips(res.explain)
 					}
@@ -128,11 +130,11 @@
 				const that = this
 				managerDetails.runNotAttention({
 					openid: that.userInfo.openid,
-					id: that.info.id
+					id: that.infoDetails.id
 				}, (res) => {
 					if (res.code == 4000) {
 						managerDetails.show_tips(res.explain)
-						that.info.fans_state = 0
+						that.fans_state = '0'
 					} else {
 						managerDetails.show_tips(res.explain)
 					}
@@ -142,7 +144,7 @@
 			// 咨询
 			advisory() {
 				const that = this
-				let id = that.info.id
+				let id = that.infoDetails.id
 				managerDetails.navigate_to(`/pages/newsChat/newsChat?id=${id}`);
 			}
 		},

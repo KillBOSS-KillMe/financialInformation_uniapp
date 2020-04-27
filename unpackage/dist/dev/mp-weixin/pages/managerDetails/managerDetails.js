@@ -268,14 +268,16 @@ var _managerDetailsModel = _interopRequireDefault(__webpack_require__(/*! ./mana
 //
 //
 //
-var managerDetails = new _managerDetailsModel.default();var _default = { data: function data() {return { options: {}, info: {} };}, onLoad: function onLoad(options) {var that = this;that.options = options;that._onLoad();}, methods: { _onLoad: function _onLoad(callBack) {var that = this;that.userInfo = that.$store.state.userInfo;that.info = JSON.parse(that.options.data);that.getDetails(function () {callBack && callBack();});}, // 详情加载
-    getDetails: function getDetails(callBack) {var that = this;managerDetails.getDetails({ openid: that.userInfo.openid, id: that.info.id }, function (res) {if (res.code == 4000) {var newInfo = Object.assign(that.info, res.data);newInfo = managerDetails.num2str(newInfo);that.info = newInfo;} else {managerDetails.show_tips(res.explain);}callBack && callBack();});}, // 关注
-    attention: function attention(callBack) {var that = this;managerDetails.runAttention({ openid: that.userInfo.openid, id: that.info.id }, function (res) {if (res.code == 4000) {managerDetails.show_tips(res.explain);that.info.fans_state = 1;} else {managerDetails.show_tips(res.explain);} // callBack && callBack();
+var managerDetails = new _managerDetailsModel.default();var _default = { data: function data() {return { fans_state: '', options: {}, infoDetails: {} };}, onLoad: function onLoad(options) {var that = this;that.options = options;that._onLoad();}, methods: { _onLoad: function _onLoad(callBack) {var that = this;that.userInfo = that.$store.state.userInfo;that.infoDetails = JSON.parse(that.options.data);that.getDetails(function () {callBack && callBack();});}, // 详情加载
+    getDetails: function getDetails(callBack) {var that = this;managerDetails.getDetails({ openid: that.userInfo.openid, id: that.infoDetails.id }, function (res) {if (res.code == 4000) {var newInfo = Object.assign(that.infoDetails, res.data);newInfo = managerDetails.num2str(newInfo);that.infoDetails = newInfo;that.fans_state = newInfo.fans_state;} else {managerDetails.show_tips(res.explain);}callBack && callBack();});}, // 关注
+    attention: function attention(callBack) {var that = this;managerDetails.runAttention({ openid: that.userInfo.openid, id: that.infoDetails.id }, function (res) {if (res.code == 4000) {managerDetails.show_tips(res.explain);that.fans_state = '1';} else {managerDetails.show_tips(res.explain);} // callBack && callBack();
       });}, // 取消关注
-    notAttention: function notAttention(callBack) {var that = this;managerDetails.runNotAttention({ openid: that.userInfo.openid, id: that.info.id }, function (res) {if (res.code == 4000) {managerDetails.show_tips(res.explain);that.info.fans_state = 0;} else {managerDetails.show_tips(res.explain);} // callBack && callBack();
-      });}, // 咨询
-    advisory: function advisory() {var that = this;
-      var id = that.info.id;
+    notAttention: function notAttention(callBack) {var that = this;managerDetails.runNotAttention({ openid: that.userInfo.openid, id: that.infoDetails.id }, function (res) {if (res.code == 4000) {managerDetails.show_tips(res.explain);that.fans_state = '0';} else {managerDetails.show_tips(res.explain);} // callBack && callBack();
+      });},
+    // 咨询
+    advisory: function advisory() {
+      var that = this;
+      var id = that.infoDetails.id;
       managerDetails.navigate_to("/pages/newsChat/newsChat?id=".concat(id));
     } },
 
