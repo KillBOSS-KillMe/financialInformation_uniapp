@@ -176,8 +176,14 @@ var _newsChatModel = _interopRequireDefault(__webpack_require__(/*! ./newsChat-m
 //
 //
 //
-var newsChat = new _newsChatModel.default();var _default = { data: function data() {return { options: {}, updataTimes: null, userInfo: {}, message: '', newsNode: {}, newList: [] };}, onLoad: function onLoad(options) {// console.log(options)
-    var that = this;that.options = options;that._onLoad();}, onShow: function onShow() {}, onUnload: function onUnload() {this.runClearInterval();
+var newsChat = new _newsChatModel.default();var _default = { data: function data() {return { options: {}, updataTimes: null, userInfo: {}, message: '', newsNode: {}, newList: [], windowHeight: 0 };}, onLoad: function onLoad(options) {// console.log(options)
+    var that = this;that.options = options;var _uni$getSystemInfoSyn = uni.getSystemInfoSync(),windowWidth = _uni$getSystemInfoSyn.windowWidth,windowHeight = _uni$getSystemInfoSyn.windowHeight;that.windowHeight = windowHeight;that._onLoad();
+  },
+  onShow: function onShow() {
+
+  },
+  onUnload: function onUnload() {
+    this.runClearInterval();
   },
   onHide: function onHide() {
     this.runClearInterval();
@@ -207,15 +213,20 @@ var newsChat = new _newsChatModel.default();var _default = { data: function data
           if (res.data.code == 4000) {
             var newsNode = res.data.data;
             var newMessageList = [];
-            for (var i = 0; i < newsNode.length; i++) {
-              newMessageList.push({
-                content: newsNode[i].content,
-                direction: 2,
-                portrait: newsNode[i].portrait,
-                nickname: newsNode[i].nickname });
+            if (newsNode.length > 0) {
+              for (var i = 0; i < newsNode.length; i++) {
+                newMessageList.push({
+                  content: newsNode[i].content,
+                  direction: 2,
+                  portrait: newsNode[i].portrait,
+                  nickname: newsNode[i].nickname });
 
+              }
+              that.newList = that.newList.concat(newMessageList);
+              // 滚动到聊天底部
+              that.getScrollviewHigh();
             }
-            that.newList = that.newList.concat(newMessageList);
+
           }
         } });
 
@@ -232,6 +243,10 @@ var newsChat = new _newsChatModel.default();var _default = { data: function data
           var newNode = res;
           that.newList = newNode.data.reverse();
           that.newsNode = res;
+          setTimeout(function () {
+            // 滚动到聊天底部
+            that.getScrollviewHigh();
+          }, 100);
         }
         callBack && callBack();
       });
@@ -255,21 +270,45 @@ var newsChat = new _newsChatModel.default();var _default = { data: function data
           that.newsNode.data.push(myNewMessage);
           // 清空输入的消息
           that.message = '';
+          // 滚动到聊天底部
+          that.getScrollviewHigh();
         } else {
           newsChat.show_tips(res.explain);
         }
         // callBack && callBack();
       });
     },
+    // 清理定时器
     runClearInterval: function runClearInterval() {
       if (this.updataTimes) {
         clearInterval(this.updataTimes);
         this.updataTimes = null;
       }
     },
+    // 获取输入框中的内容
     getMessage: function getMessage(e) {
       var that = this;
       this.message = newsChat.get_input_val(e);
+    },
+    // 聊天区域滚动到底部
+    getScrollviewHigh: function getScrollviewHigh() {
+      var that = this;
+      uni.getSystemInfo({
+        success: function success(res) {
+          var windowHeight = res.windowHeight;
+          // 计算组件的高度
+          var view = uni.createSelectorQuery().select(".pageTopBorder");
+          view.boundingClientRect(function (data) {
+            var navHeight = data.height;
+            var scrollviewHigh = windowHeight - navHeight;
+            // 滚动到底部
+            uni.pageScrollTo({
+              scrollTop: navHeight,
+              duration: 0 });
+
+          }).exec();
+        } });
+
     } },
 
   // 下拉刷新

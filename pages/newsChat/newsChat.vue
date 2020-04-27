@@ -31,19 +31,25 @@
 				userInfo: {},
 				message: '',
 				newsNode: {},
-				newList: []
+				newList: [],
+				windowHeight: 0
 			};
 		},
 		onLoad(options) {
 			// console.log(options)
 			const that = this
 			that.options = options
+			const {
+				windowWidth,
+				windowHeight
+			} = uni.getSystemInfoSync();
+			that.windowHeight = windowHeight
 			that._onLoad()
 		},
 		onShow() {
-			
+
 		},
-		onUnload(){  
+		onUnload() {
 			this.runClearInterval()
 		},
 		onHide() {
@@ -74,15 +80,20 @@
 						if (res.data.code == 4000) {
 							let newsNode = res.data.data
 							let newMessageList = []
-							for (let i = 0; i < newsNode.length; i++) {
-								newMessageList.push({
-									content: newsNode[i].content,
-									direction: 2,
-									portrait: newsNode[i].portrait,
-									nickname: newsNode[i].nickname
-								})
+							if (newsNode.length > 0) {
+								for (let i = 0; i < newsNode.length; i++) {
+									newMessageList.push({
+										content: newsNode[i].content,
+										direction: 2,
+										portrait: newsNode[i].portrait,
+										nickname: newsNode[i].nickname
+									})
+								}
+								that.newList = that.newList.concat(newMessageList)
+								// 滚动到聊天底部
+								that.getScrollviewHigh()
 							}
-							that.newList = that.newList.concat(newMessageList)
+
 						}
 					}
 				});
@@ -99,11 +110,15 @@
 						let newNode = res
 						that.newList = newNode.data.reverse()
 						that.newsNode = res
+						setTimeout(() => {
+							// 滚动到聊天底部
+							that.getScrollviewHigh()
+						}, 100)
 					}
 					callBack && callBack();
 				})
 			},
-			
+
 			// 发送消息
 			sendMessage(callBack) {
 				const that = this
@@ -122,21 +137,45 @@
 						that.newsNode.data.push(myNewMessage)
 						// 清空输入的消息
 						that.message = ''
+						// 滚动到聊天底部
+						that.getScrollviewHigh()
 					} else {
 						newsChat.show_tips(res.explain)
 					}
 					// callBack && callBack();
 				})
 			},
+			// 清理定时器
 			runClearInterval() {
-				if(this.updataTimes) {
-				    clearInterval(this.updataTimes);  
-				    this.updataTimes = null;  
+				if (this.updataTimes) {
+					clearInterval(this.updataTimes);
+					this.updataTimes = null;
 				}
 			},
+			// 获取输入框中的内容
 			getMessage(e) {
 				const that = this
 				this.message = newsChat.get_input_val(e)
+			},
+			// 聊天区域滚动到底部
+			getScrollviewHigh() {
+				let that = this
+				uni.getSystemInfo({
+					success(res) {
+						let windowHeight = res.windowHeight
+						// 计算组件的高度
+						let view = uni.createSelectorQuery().select(".pageTopBorder")
+						view.boundingClientRect(data => {
+							let navHeight = data.height
+							let scrollviewHigh = windowHeight - navHeight
+							// 滚动到底部
+							uni.pageScrollTo({
+								scrollTop: navHeight,
+								duration: 0
+							});
+						}).exec()
+					}
+				})
 			}
 		},
 		// 下拉刷新
@@ -170,25 +209,32 @@
 
 <style lang="less">
 	@import url("../../static/css/variable.less");
+
 	scroll-view {
 		height: 100vh;
 	}
+
 	.content {
-		width: 690rpx !important;;
+		width: 690rpx !important;
+		;
 		height: auto;
 		padding: 30rpx;
 		padding-bottom: 110rpx;
-		.item1, .item2 {
+
+		.item1,
+		.item2 {
 			width: 100%;
 			height: auto;
 			display: flex;
 			align-items: flex-start;
 			padding: 30rpx 0;
+
 			image {
 				width: 64rpx;
 				height: 64rpx;
 				border-radius: 64rpx;
 			}
+
 			.info {
 				width: auto;
 				max-width: 442rpx;
@@ -196,22 +242,28 @@
 				padding: 30rpx;
 			}
 		}
+
 		.item1 {
 			justify-content: flex-start;
+
 			image {
 				margin-right: 30rpx;
 			}
+
 			.info {
 				color: @fontColor_1;
 				border-radius: 0 20rpx 20rpx 20rpx;
 				background-color: @inputBgColot;
 			}
 		}
+
 		.item2 {
 			justify-content: flex-end;
+
 			image {
 				margin-left: 30rpx;
 			}
+
 			.info {
 				color: #fff;
 				border-radius: 20rpx 0 20rpx 20rpx;
@@ -219,6 +271,7 @@
 			}
 		}
 	}
+
 	.sendMessage {
 		position: fixed;
 		left: 30rpx;
@@ -227,12 +280,14 @@
 		height: auto;
 		padding: 30rpx 0;
 		background-color: #fff;
+
 		.con {
 			width: 100%;
 			height: auto;
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
+
 			button {
 				width: 166rpx;
 				height: 60rpx;
@@ -241,6 +296,7 @@
 				font-size: @fontSize_2;
 				color: #fff;
 			}
+
 			input {
 				width: 434rpx;
 				height: 60rpx;
@@ -251,6 +307,6 @@
 				background-color: @inputBgColot;
 			}
 		}
-		
+
 	}
 </style>
