@@ -9375,7 +9375,6 @@ Base = /*#__PURE__*/function () {
     // json对象中的数字转换为字符串
   }, { key: "num2str", value: function num2str(data) {
       for (var x in data) {
-        console.log(typeof data[x]);
         if (typeof data[x] === 'number') {// 如果是数字 把直接内容转为 字符串
           data[x] += '';
         }
