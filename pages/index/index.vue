@@ -216,16 +216,17 @@
 			getSearchCon(e) {
 				const that = this
 				that.searchKey = index.get_input_val(e)
+				// searchKey不为空的时候执行搜索,为空的时候加载原有列表
 				if (that.searchKey != '') {
-					console.log('======')
-					// // 执行搜索
-					// this.getSearchList()
+					// console.log('======')
+					// 执行搜索
+					this.getSearchList()
 				} else {
-					console.log('|||||||')
-					// // 客户经理列表加载
-					// this.getManagerList()
-					// // 客户经理列表加载
-					// this.getInformationList()
+					// console.log('|||||||')
+					// 客户经理列表加载
+					this.getManagerList()
+					// 客户经理列表加载
+					this.getInformationList()
 				}
 			},
 			// 执行搜索

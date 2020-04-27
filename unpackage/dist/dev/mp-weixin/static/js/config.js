@@ -3,9 +3,9 @@ class Config{
   }
 }
 //接口域名
-Config.requset_url = "http://192.168.1.112/api/";
-Config.img_url = "http://192.168.1.112/static/rotation_chart/";
-Config.up_img_url = "http://192.168.1.112/uploads/";
+Config.requset_url = "http://192.168.1.113/api/";
+Config.img_url = "http://192.168.1.113/static/rotation_chart/";
+Config.up_img_url = "http://192.168.1.113/uploads/";
 //微信授权域名192.168.1.168
 //Config.wx_login_url = "https://diancan.lvacms.cn/wechat/login";
 

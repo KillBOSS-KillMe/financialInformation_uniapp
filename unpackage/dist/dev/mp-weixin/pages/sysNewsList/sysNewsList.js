@@ -153,7 +153,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _sysNewsListModel = _interopRequireDefault(__webpack_require__(/*! ./sysNewsList-model.js */ 133));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var notList = function notList() {__webpack_require__.e(/*! require.ensure | components/notList */ "components/notList").then((function () {return resolve(__webpack_require__(/*! @/components/notList.vue */ 136));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
+var _sysNewsListModel = _interopRequireDefault(__webpack_require__(/*! ./sysNewsList-model.js */ 133));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var notList = function notList() {__webpack_require__.e(/*! require.ensure | components/notList */ "components/notList").then((function () {return resolve(__webpack_require__(/*! @/components/notList.vue */ 154));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
 var sysNewsList = new _sysNewsListModel.default();var _default =
 {
   components: {
