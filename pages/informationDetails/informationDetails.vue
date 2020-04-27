@@ -121,6 +121,7 @@
 					if (res.code == '4000') {
 						informationDetails.show_tips(res.explain)
 						that.informationNode.CommentList[index].support += 1
+						that.informationNode.CommentList[index].vote_type = 1
 					} else {
 						informationDetails.show_tips(res.explain)
 					}
