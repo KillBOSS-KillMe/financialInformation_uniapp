@@ -237,6 +237,7 @@
 
 			.info {
 				width: auto;
+				line-height: 35rpx;
 				max-width: 442rpx;
 				font-size: @fontSize_2;
 				padding: 30rpx;

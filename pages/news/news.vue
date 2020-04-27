@@ -180,11 +180,18 @@
 				align-items: flex-start;
 				justify-content: space-between;
 				flex-direction: column;
+				view, text {
+					width: 100%;
+					overflow:hidden;
+					text-overflow:ellipsis;
+					white-space:nowrap;
+				}
 				view {
 					font-size: @fontSize_1;
 					color: @fontColor_1;
 				}
 				text {
+					width: 100%;
 					font-size: @fontSize_2;
 					color: @fontColor_2;
 				}

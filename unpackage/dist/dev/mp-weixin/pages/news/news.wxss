@@ -52,11 +52,19 @@
   -webkit-flex-direction: column;
           flex-direction: column;
 }
+.item .info .con view,
+.item .info .con text {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .item .info .con view {
   font-size: 29rpx;
   color: #343434;
 }
 .item .info .con text {
+  width: 100%;
   font-size: 25rpx;
   color: #666666;
 }

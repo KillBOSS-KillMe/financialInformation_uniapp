@@ -28,6 +28,7 @@ scroll-view {
 .content .item1 .info,
 .content .item2 .info {
   width: auto;
+  line-height: 35rpx;
   max-width: 442rpx;
   font-size: 25rpx;
   padding: 30rpx;
