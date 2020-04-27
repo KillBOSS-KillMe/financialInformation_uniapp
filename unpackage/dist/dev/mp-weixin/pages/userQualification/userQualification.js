@@ -179,6 +179,12 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
+
+
+
+
+
+
 var _userQualificationModel = _interopRequireDefault(__webpack_require__(/*! ./userQualification-model.js */ 106));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
@@ -226,16 +232,21 @@ var _userQualificationModel = _interopRequireDefault(__webpack_require__(/*! ./u
 //
 //
 //
+//
+//
+//
+//
+//
+//
 var userQualification = new _userQualificationModel.default();var _default = { data: function data() {return { userInfo: {}, info: {} };}, onLoad: function onLoad() {var that = this;that._onLoad();}, methods: { _onLoad: function _onLoad(callBack) {var that = this;that.userInfo = that.$store.state.userInfo;that.getDetails(function () {callBack && callBack();});}, // 详情加载
-    getDetails: function getDetails(callBack) {var that = this;userQualification.getDetails({ openid: that.userInfo.openid, id: that.userInfo.id }, function (res) {if (res.code == 4000) {that.info = res.data;userQualification.show_tips(res.explain);}callBack && callBack();});}, goValidation: function goValidation() {var that = this;var userInfo = that.userInfo; // validation => 0  未认证
+    getDetails: function getDetails(callBack) {var that = this;userQualification.getDetails({ openid: that.userInfo.openid, id: that.userInfo.id }, function (res) {if (res.code == 4000) {that.info = res.data; // userQualification.show_tips(res.explain)
+        }callBack && callBack();});}, goValidation: function goValidation() {var that = this;var userInfo = that.userInfo; // validation => 0  未认证
       // validation => 1  认证
       // validation => 2  审核中
       if (userInfo.validation == 0) {// 客户经理资质 未认证
         userQualification.switch_tab("/pages/certification/certification");} else if (userInfo.validation == 2) {// 客户经理资质 审核中
         userQualification.show_tips('资质审核中');return false;}} }, // 下拉刷新
-  onPullDownRefresh: function onPullDownRefresh() {var that = this;that._onLoad();
-  },
-  //上拉加载更多
+  onPullDownRefresh: function onPullDownRefresh() {var that = this;that._onLoad();}, //上拉加载更多
   // onReachBottom() {
   //   var that = this;
   //   if (that.last_page == that.page) {
@@ -245,14 +256,12 @@ var userQualification = new _userQualificationModel.default();var _default = { d
   //   that.get_product_list();
   // },
   // 分享
-  onShareAppMessage: function onShareAppMessage() {
-    // let shareData = {
+  onShareAppMessage: function onShareAppMessage() {// let shareData = {
     // 	title: '',
     // 	path: `pages/index/index`,
     // 	imageUrl: ''
     // }
-    return userQualification.onShareAppMessage({});
-  } };exports.default = _default;
+    return userQualification.onShareAppMessage({});} };exports.default = _default;
 
 /***/ }),
 

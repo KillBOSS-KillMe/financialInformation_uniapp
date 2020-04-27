@@ -26,16 +26,22 @@
 				<view class="item">
 					<view>身份证号码</view>
 					<text v-if="info.validation == 1">已认证</text>
+					<text v-else-if="info.validation == 2">审核中</text>
+					<text v-else-if="info.validation == 0">未认证</text>
 					<text v-else>未认证</text>
 				</view>
 				<view class="item">
 					<view>身份证正面照</view>
 					<text v-if="info.validation == 1">已认证</text>
+					<text v-else-if="info.validation == 2">审核中</text>
+					<text v-else-if="info.validation == 0">未认证</text>
 					<text v-else>未认证</text>
 				</view>
 				<view class="item">
 					<view>身份证反面照</view>
 					<text v-if="info.validation == 1">已认证</text>
+					<text v-else-if="info.validation == 2">审核中</text>
+					<text v-else-if="info.validation == 0">未认证</text>
 					<text v-else>未认证</text>
 				</view>
 			</view>
@@ -76,7 +82,7 @@
 				}, (res) => {
 					if (res.code == 4000) {
 						that.info = res.data
-						userQualification.show_tips(res.explain)
+						// userQualification.show_tips(res.explain)
 					}
 					callBack && callBack();
 				})
