@@ -199,11 +199,16 @@
 									if (res.code == 4000) {
 										that.userInfo = res.data
 										that.$store.commit('updateUserInfo', that.userInfo);
-										if (that.userInfo.role == 0) {
-											index.show_tips('检测到用户未选择权限类型，即将进入选择页')
+										if (!that.userInfo.role) {
+											// console.log(that.userInfo.role, '-=--------');
+											// index.show_tips('用户未选择权限类型，即将进入选择页');
+											index.show_modal({
+												title: '系统提示',
+												content: '检测到用户未选择权限类型，即将进入选择页'
+											});
 											setTimeout(() => {
 												index.navigate_to(`/pages/identitySel/identitySel`);
-											}, 2000)
+											}, 3000)
 										}
 									}
 									callBack && callBack();

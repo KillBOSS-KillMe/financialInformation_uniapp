@@ -101,7 +101,7 @@ class Base {
 									formData: data.data.data,
 									success(res) {
 										res = JSON.parse(res.data)
-										res.url = that.base_up_image_url + res.url
+										// res.url = that.base_up_image_url + res.url
 										resolve({
 											// path: JSON.parse(res.data)
 											data: res

@@ -93,9 +93,10 @@
 				// validation => 0  未认证
 				// validation => 1  认证
 				// validation => 2  审核中
+				console.log('=======', userInfo)
 				if (userInfo.validation == 0) {
 					// 客户经理资质 未认证
-					userQualification.switch_tab(`/pages/certification/certification`);
+					userQualification.navigate_to(`/pages/certification/certification`);
 				} else if (userInfo.validation == 2) {
 					// 客户经理资质 审核中
 					userQualification.show_tips('资质审核中')

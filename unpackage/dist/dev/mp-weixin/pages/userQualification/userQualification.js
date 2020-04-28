@@ -243,8 +243,8 @@ var userQualification = new _userQualificationModel.default();var _default = { d
         }callBack && callBack();});}, goValidation: function goValidation() {var that = this;var userInfo = that.userInfo; // validation => 0  未认证
       // validation => 1  认证
       // validation => 2  审核中
-      if (userInfo.validation == 0) {// 客户经理资质 未认证
-        userQualification.switch_tab("/pages/certification/certification");} else if (userInfo.validation == 2) {// 客户经理资质 审核中
+      console.log('=======', userInfo);if (userInfo.validation == 0) {// 客户经理资质 未认证
+        userQualification.navigate_to("/pages/certification/certification");} else if (userInfo.validation == 2) {// 客户经理资质 审核中
         userQualification.show_tips('资质审核中');return false;}} }, // 下拉刷新
   onPullDownRefresh: function onPullDownRefresh() {var that = this;that._onLoad();}, //上拉加载更多
   // onReachBottom() {

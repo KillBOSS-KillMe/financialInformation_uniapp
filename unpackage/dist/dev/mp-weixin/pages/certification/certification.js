@@ -223,7 +223,7 @@ var certification = new _certificationModel.default();var _default = { data: fun
         if (res.code == 4000) {
           certification.show_tips('提交成功，已提交审核');
           setTimeout(function () {
-            certification.navigate_back();
+            certification.switch_tab('/pages/index/index');
           }, 2000);
         } else {
           certification.show_tips(res.explain);

@@ -6,8 +6,8 @@
 		</view>
 		<view class="pageTopBorder">
 			<!-- 我的-用户 -->
-			<!-- <view class="content" v-if="userInfo.role == 1"> -->
-			<view class="content">
+			<view class="content" v-if="userInfo.role == 1">
+			<!-- <view class="content"> -->
 				<view class="item" @tap="goUserAttention">
 					<view>
 						<icon class="iconfont iconxingxing"></icon>
@@ -24,8 +24,8 @@
 				</button>
 			</view>
 			<!-- 我的-客户经理 -->
-			<!-- <view class="content" v-if="userInfo.role == 2"> -->
-			<view class="content">
+			<view class="content" v-if="userInfo.role == 2">
+			<!-- <view class="content"> -->
 				<view class="item" @tap="goUserVIP">
 					<view>
 						<icon class="iconfont iconhuiyuan"></icon>
