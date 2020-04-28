@@ -57,7 +57,9 @@ text-overflow: ellipsis; -->
 			return: {
 				updataNews: null,
 				userInfo: {},
-				requset_url: ''
+				requset_url: '',
+				// 监听新消息心跳时间
+				times: 3000
 			}
 		},
 		onLaunch: function() {
@@ -71,7 +73,7 @@ text-overflow: ellipsis; -->
 			// 定时刷新新消息条数
 			// this.updataNews = setInterval(() => {
 			// 	this.alwaysUpdataNews()
-			// }, 3000);
+			// }, this.times);
 			// setTimeout(() => {
 			// 	clearTimeout(this.updataNews);
 			// }, 6000)

@@ -33,7 +33,9 @@
 				userInfo: {},
 				newsList: [],
 				newNewsList: [],
-				updataTimes: null
+				updataTimes: null,
+				// 监听新消息心跳时间
+				times: 3000
 			}
 		},
 		onLoad(options) {
@@ -58,7 +60,7 @@
 				that.upDataNewsList()
 				// that.updataTimes = setInterval(() => {
 				// 	that.upDataNewsList()
-				// }, 3000);
+				// }, that.times);
 			},
 			// 刷新列表
 			upDataNewsList(callBack) {
@@ -93,21 +95,21 @@
 					if (res.code == 4000) {
 						that.newNewsList = res.data
 					}
-					that.newNewsList = [{
-							"id": 5,
-							"new_msg": "高规格",
-							"portrait": that.userInfo.portrait,
-							"nickname": "韩梅梅",
-							"new_number": 1
-						},
-						{
-							"id": 2,
-							"new_msg": "速度快死掉了",
-							"portrait": that.userInfo.portrait,
-							"nickname": "KASD",
-							"new_number": 2
-						}
-					]
+					// that.newNewsList = [{
+					// 		"id": 5,
+					// 		"new_msg": "高规格",
+					// 		"portrait": that.userInfo.portrait,
+					// 		"nickname": "韩梅梅",
+					// 		"new_number": 1
+					// 	},
+					// 	{
+					// 		"id": 2,
+					// 		"new_msg": "速度快死掉了",
+					// 		"portrait": that.userInfo.portrait,
+					// 		"nickname": "KASD",
+					// 		"new_number": 2
+					// 	}
+					// ]
 					callBack && callBack();
 				})
 			},

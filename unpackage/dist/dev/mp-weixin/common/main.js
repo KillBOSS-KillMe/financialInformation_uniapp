@@ -199,11 +199,12 @@ var _config = _interopRequireDefault(__webpack_require__(/*! static/js/config.js
 //
 //
 //
-var _default = { data: { return: { updataNews: null, userInfo: {}, requset_url: '' } }, onLaunch: function onLaunch() {this.requset_url = _config.default.requset_url;console.log('App Launch');}, onShow: function onShow() {console.log('App Show'); // 首次刷新新消息条数
+var _default = { data: { return: { updataNews: null, userInfo: {}, requset_url: '', // 监听新消息心跳时间
+      times: 3000 } }, onLaunch: function onLaunch() {this.requset_url = _config.default.requset_url;console.log('App Launch');}, onShow: function onShow() {console.log('App Show'); // 首次刷新新消息条数
     this.alwaysUpdataNews(); // 定时刷新新消息条数
     // this.updataNews = setInterval(() => {
     // 	this.alwaysUpdataNews()
-    // }, 3000);
+    // }, this.times);
     // setTimeout(() => {
     // 	clearTimeout(this.updataNews);
     // }, 6000)
