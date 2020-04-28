@@ -70,8 +70,13 @@
   font-size: 29rpx;
   font-weight: 800;
   color: #343434;
+  -webkit-line-clamp: 1;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-.item .info text {
+.item .info .content {
   line-height: 35rpx;
   margin-top: 30rpx;
   font-size: 25rpx;

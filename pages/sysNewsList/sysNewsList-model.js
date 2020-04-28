@@ -4,24 +4,11 @@ class SysNewsList extends Base {
 		super();
 	}
 	// 登录
-	login(data, callBack) {
+	getNewNewsList(data, callBack) {
 		var that = this;
 		var params = {
-			url: 'auth/login',
-			method: 'POST',
-			data: data,
-			sCallBack: function(res) {
-				callBack && callBack(res.data);
-			}
-		};
-		that.request(params);
-	};
-	// 获取用户信息
-	getUserInfo(data, callBack) {
-		var that = this;
-		var params = {
-			url: 'auth/me',
-			method: 'POST',
+			url: 'News/getNewsList',
+			method: 'GET',
 			data: data,
 			sCallBack: function(res) {
 				callBack && callBack(res.data);

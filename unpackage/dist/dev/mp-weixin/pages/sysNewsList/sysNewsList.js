@@ -162,32 +162,39 @@ var sysNewsList = new _sysNewsListModel.default();var _default =
   data: function data() {
     return {
       userInfo: {},
-      sysNewsList: [] };
+      sysNewsNode: {
+        page: 1,
+        data: [] } };
+
 
   },
   onLoad: function onLoad(options) {
     var that = this;
     that.options = options;
+    that._onLoad();
   },
   onShow: function onShow() {
-    // 获取已授权类别
-    var that = this;
-    that._onLoad();
   },
   methods: {
     _onLoad: function _onLoad(callBack) {
       var that = this;
       that.userInfo = that.$store.state.userInfo;
+      that.getNewNewsList();
     },
     // 加载新消息列表
     getNewNewsList: function getNewNewsList(callBack) {
       var that = this;
       sysNewsList.getNewNewsList({
-        openid: that.userInfo.openid },
+        openid: that.userInfo.openid,
+        page: that.sysNewsNode.page },
       function (res) {
-        // console.log(res)
         if (res.code == 4000) {
-          that.newNewsList = res.data;
+          var list = res.data;
+          for (var i = 0; i < list.length; i++) {
+            list[i].createtime = sysNewsList.transformTime(list[i].createtime * 1000);
+          }
+          res.data = that.sysNewsNode.data.concat(list);
+          that.sysNewsNode = res;
         }
         callBack && callBack();
       });
@@ -202,20 +209,25 @@ var sysNewsList = new _sysNewsListModel.default();var _default =
   // 下拉刷新
   onPullDownRefresh: function onPullDownRefresh() {
     var that = this;
-    that.page = 1;
+    that.sysNewsNode = {
+      page: 1,
+      data: [] };
+
     that._onLoad(function () {
       uni.stopPullDownRefresh();
     });
   },
   //上拉加载更多
-  // onReachBottom() {
-  //   var that = this;
-  //   if (that.last_page == that.page) {
-  //     return;
-  //   }
-  //   that.page += 1;
-  //   that.get_product_list();
-  // },
+  onReachBottom: function onReachBottom() {
+    var that = this;
+    if (that.sysNewsNode.page == that.sysNewsNode.page_number) {
+      articleList.show_tips('没有更多数据了');
+      return;
+    }
+    that.sysNewsNode.page += 1;
+    // 客户经理列表加载
+    this.getNewNewsList();
+  },
   // 分享
   onShareAppMessage: function onShareAppMessage() {
     // let shareData = {

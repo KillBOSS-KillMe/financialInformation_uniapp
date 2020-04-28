@@ -1,18 +1,18 @@
 <template>
 	<view class="list">
-		<notList v-if="true" />
-		<view class="item" v-for="(item,index) in 6" :key="index">
+		<notList v-if="sysNewsNode.data.length == 0" />
+		<view class="item" v-for="(item,index) in sysNewsNode.data" :key="index" @tap="goNewDetails" :data-id="item.id">
 			<view class="newsTitle">
 				<view>
-					<image src="../../static/images/test.png" mode=""></image>
-					标题标题
+					<image src="../../static/images/vipBg_1.png" mode=""></image>
+					系统消息
 				</view>
-				<text>3分钟前</text>
+				<text>{{item.createtime}}</text>
 			</view>
-			<image src="../../static/images/test.png" class="coverImg" mode=""></image>
+			<image :src="item.title_img" class="coverImg" mode=""></image>
 			<view class="info">
-				<view>标题标题标题标题标题标题标题标题</view>
-				<text>标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题</text>
+				<view>{{item.title}}</view>
+				<rich-text :nodes="item.content" class="content"></rich-text>
 			</view>
 		</view>
 	</view>
@@ -29,32 +29,39 @@
 		data() {
 			return {
 				userInfo: {},
-				sysNewsList: []
+				sysNewsNode: {
+					page: 1,
+					data: []
+				}
 			}
 		},
 		onLoad(options) {
 			const that = this
 			that.options = options
+			that._onLoad()
 		},
 		onShow() {
-			// 获取已授权类别
-			const that = this
-			that._onLoad()
 		},
 		methods: {
 			_onLoad(callBack) {
 				const that = this
 				that.userInfo = that.$store.state.userInfo;
+				that.getNewNewsList()
 			},
 			// 加载新消息列表
 			getNewNewsList(callBack) {
 				const that = this
 				sysNewsList.getNewNewsList({
-					openid: that.userInfo.openid	
+					openid: that.userInfo.openid,
+					page: that.sysNewsNode.page
 				}, (res) => {
-					// console.log(res)
 					if (res.code == 4000) {
-						that.newNewsList = res.data
+						let list = res.data
+						for (let i = 0; i < list.length; i++) {
+							list[i].createtime = sysNewsList.transformTime(list[i].createtime * 1000)
+						}
+						res.data = that.sysNewsNode.data.concat(list);
+						that.sysNewsNode = res
 					}
 					callBack && callBack();
 				})
@@ -69,20 +76,25 @@
 		// 下拉刷新
 		onPullDownRefresh() {
 			var that = this;
-			that.page = 1;
+			that.sysNewsNode = {
+					page: 1,
+					data: []
+				}
 			that._onLoad(() => {
 				uni.stopPullDownRefresh();
 			});
 		},
 		//上拉加载更多
-		// onReachBottom() {
-		//   var that = this;
-		//   if (that.last_page == that.page) {
-		//     return;
-		//   }
-		//   that.page += 1;
-		//   that.get_product_list();
-		// },
+		onReachBottom() {
+		  var that = this;
+		  if (that.sysNewsNode.page == that.sysNewsNode.page_number) {
+				articleList.show_tips('没有更多数据了')
+		    return;
+		  }
+		  that.sysNewsNode.page += 1;
+		  // 客户经理列表加载
+		  this.getNewNewsList()
+		},
 		// 分享
 		onShareAppMessage() {
 			// let shareData = {
@@ -147,8 +159,13 @@
 				font-size: @fontSize_1;
 				font-weight: @mainFontWeight;
 				color: @fontColor_1;
+				-webkit-line-clamp: 1;
+				display: -webkit-box;
+				-webkit-box-orient: vertical;
+				overflow: hidden;
+				text-overflow: ellipsis;
 			}
-			text {
+			.content {
 				line-height: 35rpx;
 				margin-top: 30rpx;
 				font-size: @fontSize_2;

@@ -1,5 +1,5 @@
 {
   "navigationBarTitleText": "资质认证",
-  "enablePullDownRefresh": true,
+  "enablePullDownRefresh": false,
   "usingComponents": {}
 }

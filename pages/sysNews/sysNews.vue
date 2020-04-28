@@ -1,39 +1,26 @@
 <template>
 	<view class="pageTopBorder">
 		<view class="content">
-			<view class="articleTitle">旧电脑平板别丢了！将你的屏幕都利用起来</view>
+			<view class="articleTitle">{{informationNode.newsinfo.title}}</view>
 			<view class="articleInfo">
-				<text>会飞的鱼</text>
-				<text>4小时前</text>
+				<text>{{informationNode.newsinfo.seenumber}}阅读</text>
+				<text>{{informationNode.newsinfo.createtime}}</text>
 			</view>
-			<view class="articleContent">
-				12313123123123123
-			</view>
+			<!-- <view class="articleContent">
+				{{informationNode.newsinfo.content}}
+			</view> -->
+			<rich-text :nodes="informationNode.newsinfo.content" class="articleContent"></rich-text>
 			<view class="articleCommentList">
-				<view class="item" v-for="(item,index) in 20" :key="index">
-					<image src="../../static/images/test.png" mode=""></image>
+				<view class="item" v-for="(item,index) in informationNode.CommentList" :key="index">
+					<image :src="item.portrait" mode=""></image>
 					<view class="comment">
-						<view class="name">会飞的鱼</view>
-						<view class="commentCon">只要有行驶证就可以按揭，全款，抵押，报税只要有行驶证就可以按揭，全款，抵押，报税走流程。</view>
+						<view class="name">{{item.nickname}}</view>
+						<view class="commentCon">{{item.ccontent}}</view>
 						<view class="features">
-							<text>2020-03-13</text>
-							<view>
-								<icon class="iconfont iconchongzhi"></icon>
-								33
-							</view>
-						</view>
-					</view>
-				</view>
-				<view class="item">
-					<image src="../../static/images/test.png" mode=""></image>
-					<view class="comment">
-						<view class="name">会飞的鱼</view>
-						<view class="commentCon">只要有行驶证就可以按揭，全款，抵押，报税只要有行驶证就可以按揭，全款，抵押，报税走流程。</view>
-						<view class="features">
-							<text>2020-03-13</text>
-							<view>
-								<icon class="iconfont iconchongzhi active"></icon>
-								33
+							<text>{{item.createtime}}</text>
+							<view @tap="like" :data-id="item.id" :data-index="index">
+								<icon :class="item.vote_type == 1 ? 'iconfont icondianzan active' : 'iconfont icondianzan'"></icon>
+								{{item.support}}
 							</view>
 						</view>
 					</view>
@@ -41,10 +28,9 @@
 			</view>
 			<view class="articleComment">
 				<view class="con">
-					<input type="text" value="" placeholder="请填写您的评论信息" />
-					<button type="default">发送</button>
+					<input type="text" :value="commentCon" @input="getCommentCon" placeholder="请填写您的评论信息" />
+					<button type="default" @tap="sendComment">发送</button>
 				</view>
-				
 			</view>
 		</view>
 	</view>
@@ -56,32 +42,100 @@
 	export default {
 		data() {
 			return {
-				
+				options: {},
+				userInfo: {},
+				informationNode: {},
+				// imageUrl: '',
+				commentCon: ''
 			};
 		},
-		onLoad() {
+		onLoad(options) {
 			const that = this
+			that.options = options
 			that._onLoad()
 		},
 		methods: {
 			_onLoad(callBack) {
 				const that = this
+				// that.imageUrl = sysNews.base_image_url
 				that.userInfo = that.$store.state.userInfo;
-				that.wx_login(() => {
-					that.getUserInfo(() => {
-						callBack && callBack();
-					})
+				that.getNewsContent(() => {
+					callBack && callBack();
 				})
 			},
+			// 获取详情
+			getNewsContent(callBack) {
+				const that = this
+				sysNews.getNewsContent({
+					openid: that.userInfo.openid,
+					id: that.options.id
+				}, (res) => {
+					if (res.code == '4000') {
+						let newsinfo = res.newsinfo
+						let CommentList = res.CommentList
+						newsinfo.createtime = sysNews.transformTime(newsinfo.createtime * 1000)
+						for (let i = 0; i < CommentList.length; i++) {
+							// CommentList[i].portrait = that.imageUrl + CommentList[i].portrait
+							CommentList[i].createtime = sysNews.transformTime(CommentList[i].createtime * 1000)
+						}
+						res.newsinfo = newsinfo
+						res.CommentList = CommentList
+						that.informationNode = res
+					}
+					callBack && callBack();
+				})
+			},
+			// 获取评论内容
+			getCommentCon(e) {
+				const that = this
+				that.commentCon = sysNews.get_input_val(e)
+			},
+			// 提交评论
+			sendComment(callBack) {
+				const that = this
+				if (that.commentCon == '') {
+					sysNews.show_tips('请输入与评论内容')
+					return false
+				}
+				sysNews.sendComment({
+					openid: that.userInfo.openid,
+					id: that.options.id,
+					content: that.commentCon
+				}, (res) => {
+					if (res.code == '4000') {
+						sysNews.show_tips(res.explain)
+						that.commentCon = ""
+					}
+				})
+			},
+			// 点赞
+			like(e) {
+				const that = this
+				let id = sysNews.get_data_set(e, "id")
+				let index = sysNews.get_data_set(e, "index")
+				sysNews.like({
+					openid: that.userInfo.openid,
+					id: id,
+					vote_type: 1
+				}, (res) => {
+					if (res.code == '4000') {
+						sysNews.show_tips(res.explain)
+						that.informationNode.CommentList[index].support += 1
+						that.informationNode.CommentList[index].vote_type = 1
+					} else {
+						sysNews.show_tips(res.explain)
+					}
+				})
+			}
 		},
 		// 下拉刷新
-		onPullDownRefresh() {
-			var that = this;
-			that.page = 1;
-			that._onLoad(() => {
-				uni.stopPullDownRefresh();
-			});
-		},
+		// onPullDownRefresh() {
+		// 	var that = this;
+		// 	that.page = 1;
+		// 	that._onLoad(() => {
+		// 		uni.stopPullDownRefresh();
+		// 	});
+		// },
 		//上拉加载更多
 		// onReachBottom() {
 		//   var that = this;

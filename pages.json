@@ -41,7 +41,7 @@
 			"path": "pages/user/user",
 			"style": {
 				"navigationBarTitleText": "用户",
-				"enablePullDownRefresh": true,
+				"enablePullDownRefresh": false,
 				"navigationStyle": "custom",
 				"app-plus": {
 					"bounce": "none",
@@ -64,8 +64,8 @@
 		}, {
 			"path": "pages/informationDetails/informationDetails",
 			"style": {
-				"navigationBarTitleText": "咨询详情",
-				"enablePullDownRefresh": true,
+				"navigationBarTitleText": "资讯详情",
+				"enablePullDownRefresh": false,
 				// #ifdef H5
 				"navigationStyle": "custom",
 				// #endif
@@ -78,7 +78,7 @@
 			"path": "pages/sysNews/sysNews",
 			"style": {
 				"navigationBarTitleText": "系统消息",
-				"enablePullDownRefresh": true,
+				"enablePullDownRefresh": false,
 				// #ifdef H5
 				"navigationStyle": "custom",
 				// #endif
@@ -117,7 +117,7 @@
 			"path": "pages/userQualification/userQualification",
 			"style": {
 				"navigationBarTitleText": "我的资质",
-				"enablePullDownRefresh": true,
+				"enablePullDownRefresh": false,
 				// #ifdef H5
 				"navigationStyle": "custom",
 				// #endif
@@ -130,7 +130,7 @@
 			"path": "pages/userVIP/userVIP",
 			"style": {
 				"navigationBarTitleText": "我的会员",
-				"enablePullDownRefresh": true,
+				"enablePullDownRefresh": false,
 				// #ifdef H5
 				"navigationStyle": "custom",
 				// #endif
@@ -143,7 +143,7 @@
 			"path": "pages/certification/certification",
 			"style": {
 				"navigationBarTitleText": "资质认证",
-				"enablePullDownRefresh": true,
+				"enablePullDownRefresh": false,
 				// #ifdef H5
 				"navigationStyle": "custom",
 				// #endif

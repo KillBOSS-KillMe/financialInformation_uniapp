@@ -1,6 +1,16 @@
 <template>
 	<view class="pageTopBorder">
 		<scroll-view scroll-y="true" class="content">
+			<view class="item" @tap="goNewDetails" data-type="11">
+				<view class="info">
+					<image src="../../static/images/IDcard_1.png" mode=""></image>
+					<view class="con">
+						<view>系统消息</view>
+						<text>点击进入系统消息列表</text>
+					</view>
+				</view>
+				<icon class="iconfont iconxiangyou"></icon>
+			</view>
 			<notList v-if="newsList.length <= 0" />
 			<view class="item" @tap="goNewDetails" :data-id="item.id" :data-type="0" v-for="(item,index) in newsList" :key="index"
 			 v-if="newsList.length > 0">

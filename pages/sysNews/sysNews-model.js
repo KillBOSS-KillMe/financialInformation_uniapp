@@ -3,11 +3,11 @@ class SysNews extends Base {
 	constructor() {
 		super();
 	}
-	// 登录
-	login(data, callBack) {
+	// 加载详情
+	getNewsContent(data, callBack) {
 		var that = this;
 		var params = {
-			url: 'auth/login',
+			url: 'News/getNewsContent',
 			method: 'POST',
 			data: data,
 			sCallBack: function(res) {
@@ -16,11 +16,24 @@ class SysNews extends Base {
 		};
 		that.request(params);
 	};
-	// 获取用户信息
-	getUserInfo(data, callBack) {
+	// 评论
+	sendComment(data, callBack) {
 		var that = this;
 		var params = {
-			url: 'auth/me',
+			url: 'Comment/sendComment',
+			method: 'POST',
+			data: data,
+			sCallBack: function(res) {
+				callBack && callBack(res.data);
+			}
+		};
+		that.request(params);
+	};
+	// 点赞
+	like(data, callBack) {
+		var that = this;
+		var params = {
+			url: 'vote/vote',
 			method: 'POST',
 			data: data,
 			sCallBack: function(res) {

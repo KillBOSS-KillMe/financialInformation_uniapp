@@ -1725,24 +1725,11 @@ SysNewsList = /*#__PURE__*/function (_Base) {_inherits(SysNewsList, _Base);
 
   }
   // 登录
-  _createClass(SysNewsList, [{ key: "login", value: function login(data, callBack) {
+  _createClass(SysNewsList, [{ key: "getNewNewsList", value: function getNewNewsList(data, callBack) {
       var that = this;
       var params = {
-        url: 'auth/login',
-        method: 'POST',
-        data: data,
-        sCallBack: function sCallBack(res) {
-          callBack && callBack(res.data);
-        } };
-
-      that.request(params);
-    } }, { key: "getUserInfo",
-    // 获取用户信息
-    value: function getUserInfo(data, callBack) {
-      var that = this;
-      var params = {
-        url: 'auth/me',
-        method: 'POST',
+        url: 'News/getNewsList',
+        method: 'GET',
         data: data,
         sCallBack: function sCallBack(res) {
           callBack && callBack(res.data);
@@ -10613,7 +10600,7 @@ ManagerDetails;exports.default = _default;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationBarTitleText": "首页", "enablePullDownRefresh": true }, "pages/identitySel/identitySel": { "navigationBarTitleText": "身份选择", "navigationStyle": "custom" }, "pages/news/news": { "navigationBarTitleText": "消息", "enablePullDownRefresh": true }, "pages/user/user": { "navigationBarTitleText": "用户", "enablePullDownRefresh": true, "navigationStyle": "custom" }, "pages/managerDetails/managerDetails": { "navigationBarTitleText": "个人主页", "enablePullDownRefresh": true }, "pages/informationDetails/informationDetails": { "navigationBarTitleText": "咨询详情", "enablePullDownRefresh": true }, "pages/sysNews/sysNews": { "navigationBarTitleText": "系统消息", "enablePullDownRefresh": true }, "pages/newsChat/newsChat": { "navigationBarTitleText": "消息", "enablePullDownRefresh": true }, "pages/userAttention/userAttention": { "navigationBarTitleText": "我的关注", "enablePullDownRefresh": true }, "pages/userQualification/userQualification": { "navigationBarTitleText": "我的资质", "enablePullDownRefresh": true }, "pages/userVIP/userVIP": { "navigationBarTitleText": "我的会员", "enablePullDownRefresh": true }, "pages/certification/certification": { "navigationBarTitleText": "资质认证", "enablePullDownRefresh": true }, "pages/sysNewsList/sysNewsList": { "navigationBarTitleText": "系统消息", "enablePullDownRefresh": true }, "pages/managerList/managerList": { "navigationBarTitleText": "客户经理", "enablePullDownRefresh": true }, "pages/articleList/articleList": { "navigationBarTitleText": "更多资讯", "enablePullDownRefresh": true } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "金融咨询", "navigationBarBackgroundColor": "#FFFFFF", "backgroundColor": "#FFFFFF" } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationBarTitleText": "首页", "enablePullDownRefresh": true, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/identitySel/identitySel": { "navigationBarTitleText": "身份选择", "navigationStyle": "custom", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/news/news": { "navigationBarTitleText": "消息", "enablePullDownRefresh": true, "usingComponents": { "not-list": "/components/notList" }, "usingAutoImportComponents": {} }, "pages/user/user": { "navigationBarTitleText": "用户", "enablePullDownRefresh": false, "navigationStyle": "custom", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/managerDetails/managerDetails": { "navigationBarTitleText": "个人主页", "enablePullDownRefresh": true, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/informationDetails/informationDetails": { "navigationBarTitleText": "资讯详情", "enablePullDownRefresh": false, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/sysNews/sysNews": { "navigationBarTitleText": "系统消息", "enablePullDownRefresh": false, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/newsChat/newsChat": { "navigationBarTitleText": "消息", "enablePullDownRefresh": true, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/userAttention/userAttention": { "navigationBarTitleText": "我的关注", "enablePullDownRefresh": true, "usingComponents": { "not-list": "/components/notList" }, "usingAutoImportComponents": {} }, "pages/userQualification/userQualification": { "navigationBarTitleText": "我的资质", "enablePullDownRefresh": false, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/userVIP/userVIP": { "navigationBarTitleText": "我的会员", "enablePullDownRefresh": false, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/certification/certification": { "navigationBarTitleText": "资质认证", "enablePullDownRefresh": false, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/sysNewsList/sysNewsList": { "navigationBarTitleText": "系统消息", "enablePullDownRefresh": true, "usingComponents": { "not-list": "/components/notList" }, "usingAutoImportComponents": {} }, "pages/managerList/managerList": { "navigationBarTitleText": "客户经理", "enablePullDownRefresh": true, "usingComponents": { "not-list": "/components/notList" }, "usingAutoImportComponents": {} }, "pages/articleList/articleList": { "navigationBarTitleText": "更多资讯", "enablePullDownRefresh": true, "usingComponents": { "not-list": "/components/notList" }, "usingAutoImportComponents": {} } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "金融咨询", "navigationBarBackgroundColor": "#FFFFFF", "backgroundColor": "#FFFFFF" } };exports.default = _default;
 
 /***/ }),
 
@@ -10688,11 +10675,11 @@ SysNews = /*#__PURE__*/function (_Base) {_inherits(SysNews, _Base);
   function SysNews() {_classCallCheck(this, SysNews);return _possibleConstructorReturn(this, _getPrototypeOf(SysNews).call(this));
 
   }
-  // 登录
-  _createClass(SysNews, [{ key: "login", value: function login(data, callBack) {
+  // 加载详情
+  _createClass(SysNews, [{ key: "getNewsContent", value: function getNewsContent(data, callBack) {
       var that = this;
       var params = {
-        url: 'auth/login',
+        url: 'News/getNewsContent',
         method: 'POST',
         data: data,
         sCallBack: function sCallBack(res) {
@@ -10700,12 +10687,25 @@ SysNews = /*#__PURE__*/function (_Base) {_inherits(SysNews, _Base);
         } };
 
       that.request(params);
-    } }, { key: "getUserInfo",
-    // 获取用户信息
-    value: function getUserInfo(data, callBack) {
+    } }, { key: "sendComment",
+    // 评论
+    value: function sendComment(data, callBack) {
       var that = this;
       var params = {
-        url: 'auth/me',
+        url: 'Comment/sendComment',
+        method: 'POST',
+        data: data,
+        sCallBack: function sCallBack(res) {
+          callBack && callBack(res.data);
+        } };
+
+      that.request(params);
+    } }, { key: "like",
+    // 点赞
+    value: function like(data, callBack) {
+      var that = this;
+      var params = {
+        url: 'vote/vote',
         method: 'POST',
         data: data,
         sCallBack: function sCallBack(res) {
