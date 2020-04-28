@@ -276,7 +276,7 @@ var index = new _indexModel.default();var _default = { data: function data() {re
     // }
   }, methods: { _onLoad: function _onLoad(callBack) {var that = this; // that.imageUrl = index.base_image_url
       that.userInfo = that.$store.state.userInfo; // 轮播图加载
-      this.getBanner(function () {callBack && callBack();}); // 客户经理列表加载
+      this.getBanner(function () {callBack && callBack();}); // 最新资讯列表加载
       this.getInformationList(function () {callBack && callBack();}); // 获取已授权类别
       uni.getSetting({ success: function success(res) {if (res.authSetting['scope.userInfo']) {// 隐藏授权按钮
             that.authorizationButton = false;that.$store.commit('updateAuthorizationButtonData', false);that.wx_login(function () {// 客户经理列表加载
@@ -306,7 +306,6 @@ var index = new _indexModel.default();var _default = { data: function data() {re
     wx_login: function wx_login(callBack) {
       var that = this;
       // 显示底部导航
-
       uni.login({
         provider: 'weixin',
         success: function success(loginRes) {
@@ -333,7 +332,7 @@ var index = new _indexModel.default();var _default = { data: function data() {re
                 if (res.code == 4000) {
                   that.userInfo = res.data;
                   that.$store.commit('updateUserInfo', that.userInfo);
-                  if (that.userInfo.role == "") {
+                  if (that.userInfo.role == 0) {
                     index.show_tips('检测到用户未选择权限类型，即将进入选择页');
                     setTimeout(function () {
                       index.navigate_to("/pages/identitySel/identitySel");
@@ -352,11 +351,9 @@ var index = new _indexModel.default();var _default = { data: function data() {re
       that.searchKey = index.get_input_val(e);
       // searchKey不为空的时候执行搜索,为空的时候加载原有列表
       if (that.searchKey != '') {
-        // console.log('======')
         // 执行搜索
         this.getSearchList();
       } else {
-        // console.log('|||||||')
         // 客户经理列表加载
         this.getManagerList();
         // 客户经理列表加载
@@ -396,7 +393,7 @@ var index = new _indexModel.default();var _default = { data: function data() {re
         if (res.code == '4000') {
           that.managerNode = res;
         }
-        callBack && callBack();
+        // callBack && callBack();
       });
     },
     // 最新资讯

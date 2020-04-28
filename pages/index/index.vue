@@ -58,7 +58,7 @@
 				</view>
 			</view>
 		</view>
-		<button open-type="getUserInfo" v-if="authorizationButton" id='getUserInfo' lang="zh_CN" @getuserinfo="wx_login"></button>
+		<button open-type="getUserInfo" v-if="authorizationButton" id='getUserInfo' lang="zh_CN" @getuserinfo="_onLoad"></button>
 	</view>
 </template>
 
@@ -119,7 +119,7 @@
 					callBack && callBack();
 				})
 				
-				// 客户经理列表加载
+				// 最新资讯列表加载
 				this.getInformationList(() => {
 					callBack && callBack();
 				})
@@ -173,7 +173,6 @@
 			wx_login(callBack) {
 				const that = this;
 				// 显示底部导航
-				
 				uni.login({
 					provider: 'weixin',
 					success: function(loginRes) {
@@ -200,7 +199,7 @@
 									if (res.code == 4000) {
 										that.userInfo = res.data
 										that.$store.commit('updateUserInfo', that.userInfo);
-										if (that.userInfo.role == "") {
+										if (that.userInfo.role == 0) {
 											index.show_tips('检测到用户未选择权限类型，即将进入选择页')
 											setTimeout(() => {
 												index.navigate_to(`/pages/identitySel/identitySel`);
@@ -219,11 +218,9 @@
 				that.searchKey = index.get_input_val(e)
 				// searchKey不为空的时候执行搜索,为空的时候加载原有列表
 				if (that.searchKey != '') {
-					// console.log('======')
 					// 执行搜索
 					this.getSearchList()
 				} else {
-					// console.log('|||||||')
 					// 客户经理列表加载
 					this.getManagerList()
 					// 客户经理列表加载
@@ -263,7 +260,7 @@
 					if (res.code == '4000') {
 						that.managerNode = res
 					}
-					callBack && callBack();
+					// callBack && callBack();
 				})
 			},
 			// 最新资讯
