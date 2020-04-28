@@ -1601,10 +1601,10 @@ UserVIP = /*#__PURE__*/function (_Base) {_inherits(UserVIP, _Base);
 
   }
   // 登录
-  _createClass(UserVIP, [{ key: "login", value: function login(data, callBack) {
+  _createClass(UserVIP, [{ key: "getPayInfo", value: function getPayInfo(data, callBack) {
       var that = this;
       var params = {
-        url: 'auth/login',
+        url: 'wechat/createOrder',
         method: 'POST',
         data: data,
         sCallBack: function sCallBack(res) {
@@ -1612,12 +1612,12 @@ UserVIP = /*#__PURE__*/function (_Base) {_inherits(UserVIP, _Base);
         } };
 
       that.request(params);
-    } }, { key: "getUserInfo",
-    // 获取用户信息
-    value: function getUserInfo(data, callBack) {
+    } }, { key: "login",
+    // 登录
+    value: function login(data, callBack) {
       var that = this;
       var params = {
-        url: 'auth/me',
+        url: 'users/login',
         method: 'POST',
         data: data,
         sCallBack: function sCallBack(res) {

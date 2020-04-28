@@ -166,26 +166,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 var _userVIPModel = _interopRequireDefault(__webpack_require__(/*! ./userVIP-model.js */ 115));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
@@ -220,29 +200,89 @@ var _userVIPModel = _interopRequireDefault(__webpack_require__(/*! ./userVIP-mod
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var userVIP = new _userVIPModel.default();var _default = { data: function data() {return {};}, onLoad: function onLoad() {var that = this; // that._onLoad()
-  }, methods: { _onLoad: function _onLoad(callBack) {var that = this;that.userInfo = that.$store.state.userInfo;that.wx_login(function () {that.getUserInfo(function () {callBack && callBack();});});} }, // 下拉刷新
-  onPullDownRefresh: function onPullDownRefresh() {var that = this;that.page = 1;that._onLoad(function () {uni.stopPullDownRefresh();});}, //上拉加载更多
+var userVIP = new _userVIPModel.default();var _default = { data: function data() {return { vipType: [{ type: '3', name: '年度会员', content: '年度卡会员享受更多权益' }, { type: '2', name: '季度卡会员', content: '季度卡会员享受更多权益' }, { type: '1', name: '月卡会员', content: '月卡会员享受更多权益' }], userInfo: {}, payData: {} };}, onLoad: function onLoad() {var that = this;that._onLoad();}, methods: { _onLoad: function _onLoad(callBack) {var that = this;that.userInfo = that.$store.state.userInfo; // that.wx_login(() => {
+      // 	that.getUserInfo(() => {
+      // 		callBack && callBack();
+      // 	})
+      // })
+    },
+    // 获取支付所需参数
+    openVIP: function openVIP(e) {
+      var that = this;
+      var type = userVIP.get_data_set(e, "type");
+      userVIP.getPayInfo({
+        openid: that.userInfo.openid,
+        member_type: type },
+      function (res) {
+        if (res.code == '4000') {
+          that.payData = res.data;
+          // 执行支付
+          that.runPay();
+        }
+        // callBack && callBack();
+      });
+    },
+    runPay: function runPay() {
+      // 仅作为示例，非真实参数信息。
+      var that = this;
+      var payData = that.payData;
+      uni.requestPayment({
+        provider: 'wxpay',
+        timeStamp: payData.timeStamp,
+        nonceStr: payData.nonceStr,
+        package: payData.package,
+        signType: payData.signType,
+        paySign: payData.paySign,
+        success: function success(res) {
+          console.log('success:' + JSON.stringify(res));
+          console.log(res);
+          // if (res.errMsg == "requestPayment:ok") {
+          that.getUserInfo();
+          // }
+
+        },
+        fail: function fail(err) {
+          console.log('fail:' + JSON.stringify(err));
+        } });
+
+    },
+    getUserInfo: function getUserInfo(callBack) {
+      var that = this;
+      uni.login({
+        provider: 'weixin',
+        success: function success(loginRes) {
+          var code = loginRes.code;
+          uni.getUserInfo({
+            provider: 'weixin',
+            success: function success(infoRes) {
+              userVIP.login({
+                code: code,
+                role: that.userInfo.role, // 角色
+                portrait: infoRes.userInfo.avatarUrl,
+                nickname: infoRes.userInfo.nickName },
+              function (res) {
+                // console.log(res)
+                if (res.code == 4000) {
+                  that.userInfo = res.data;
+                  that.$store.commit('updateUserInfo', that.userInfo);
+                }
+                callBack && callBack();
+              });
+            } });
+
+        } });
+
+    } },
+
+  // 下拉刷新
+  onPullDownRefresh: function onPullDownRefresh() {
+    var that = this;
+    that.page = 1;
+    that._onLoad(function () {
+      uni.stopPullDownRefresh();
+    });
+  },
+  //上拉加载更多
   // onReachBottom() {
   //   var that = this;
   //   if (that.last_page == that.page) {
@@ -252,12 +292,14 @@ var userVIP = new _userVIPModel.default();var _default = { data: function data()
   //   that.get_product_list();
   // },
   // 分享
-  onShareAppMessage: function onShareAppMessage() {// let shareData = {
+  onShareAppMessage: function onShareAppMessage() {
+    // let shareData = {
     // 	title: '',
     // 	path: `pages/index/index`,
     // 	imageUrl: ''
     // }
-    return userVIP.onShareAppMessage({});} };exports.default = _default;
+    return userVIP.onShareAppMessage({});
+  } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

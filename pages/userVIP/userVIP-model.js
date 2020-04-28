@@ -4,10 +4,10 @@ class UserVIP extends Base {
 		super();
 	}
 	// 登录
-	login(data, callBack) {
+	getPayInfo(data, callBack) {
 		var that = this;
 		var params = {
-			url: 'auth/login',
+			url: 'wechat/createOrder',
 			method: 'POST',
 			data: data,
 			sCallBack: function(res) {
@@ -16,11 +16,11 @@ class UserVIP extends Base {
 		};
 		that.request(params);
 	};
-	// 获取用户信息
-	getUserInfo(data, callBack) {
+	// 登录
+	login(data, callBack) {
 		var that = this;
 		var params = {
-			url: 'auth/me',
+			url: 'users/login',
 			method: 'POST',
 			data: data,
 			sCallBack: function(res) {

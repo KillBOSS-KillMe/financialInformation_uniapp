@@ -2,34 +2,14 @@
 	<view class="pageTopBorder">
 		<view class="content">
 			<scroll-view scroll-x="true" class="vipCard">
-				<view class="item">
-					<image src="../../static/images/vipBg_1.png" mode=""></image>
+				<view class="item" v-for="(item,index) in vipType" :key="index">
+					<image :src="'../../static/images/vipBg_' + (index + 1) + '.png'" mode=""></image>
 					<view class="info">
 						<view class="con">
-							<view>年度会员</view>
-							<text>年度会员享受更多权益</text>
+							<view>{{item.name}}</view>
+							<text>{{item.content}}</text>
 						</view>
-						<button type="default" class="color1">立即开通</button>
-					</view>
-				</view>
-				<view class="item">
-					<image src="../../static/images/vipBg_2.png" mode=""></image>
-					<view class="info">
-						<view class="con">
-							<view>季度卡会员</view>
-							<text>季度卡会员享受更多权益</text>
-						</view>
-						<button type="default" class="color2">立即开通</button>
-					</view>
-				</view>
-				<view class="item">
-					<image src="../../static/images/vipBg_3.png" mode=""></image>
-					<view class="info">
-						<view class="con">
-							<view>月卡会员</view>
-							<text>到期日期：2020-12-12</text>
-						</view>
-						<button type="default" class="color3">立即开通</button>
+						<button type="default" :class="'color' + index + 1" :data-type="item.type" @tap="openVIP">立即开通</button>
 					</view>
 				</view>
 			</scroll-view>
@@ -58,23 +38,108 @@
 	export default {
 		data() {
 			return {
-				
+				vipType: [
+					{
+						type: '3',
+						name: '年度会员',
+						content: '年度卡会员享受更多权益'
+					},
+					{
+						type: '2',
+						name: '季度卡会员',
+						content: '季度卡会员享受更多权益'
+					},
+					{
+						type: '1',
+						name: '月卡会员',
+						content: '月卡会员享受更多权益'
+					}
+				],
+				userInfo: {},
+				payData: {}
 			};
 		},
 		onLoad() {
 			const that = this
-			// that._onLoad()
+			that._onLoad()
 		},
 		methods: {
 			_onLoad(callBack) {
 				const that = this
 				that.userInfo = that.$store.state.userInfo;
-				that.wx_login(() => {
-					that.getUserInfo(() => {
-						callBack && callBack();
-					})
+				// that.wx_login(() => {
+				// 	that.getUserInfo(() => {
+				// 		callBack && callBack();
+				// 	})
+				// })
+			},
+			// 获取支付所需参数
+			openVIP(e) {
+				const that = this
+				let type = userVIP.get_data_set(e, "type");
+				userVIP.getPayInfo({
+					openid: that.userInfo.openid,
+					member_type: type
+				}, (res) => {
+					if (res.code == '4000') {
+						that.payData = res.data
+						// 执行支付
+						that.runPay()
+					}
+					// callBack && callBack();
 				})
 			},
+			runPay() {
+				// 仅作为示例，非真实参数信息。
+				const that = this
+				const payData = that.payData
+				uni.requestPayment({
+					provider: 'wxpay',
+					timeStamp: payData.timeStamp,
+					nonceStr: payData.nonceStr,
+					package: payData.package,
+					signType: payData.signType,
+					paySign: payData.paySign,
+					success: function (res) {
+						console.log('success:' + JSON.stringify(res));
+						console.log(res)
+						// if (res.errMsg == "requestPayment:ok") {
+							that.getUserInfo()
+						// }
+						
+					},
+					fail: function (err) {
+							console.log('fail:' + JSON.stringify(err));
+					}
+				});
+			},
+			getUserInfo(callBack) {
+				const that = this
+				uni.login({
+					provider: 'weixin',
+					success: function(loginRes) {
+						var code = loginRes.code;
+						uni.getUserInfo({
+							provider: 'weixin',
+							success: function(infoRes) {
+								userVIP.login({
+									code: code,
+									role: that.userInfo.role, // 角色
+									portrait: infoRes.userInfo.avatarUrl,
+									nickname: infoRes.userInfo.nickName
+								}, (res) => {
+									// console.log(res)
+									if (res.code == 4000) {
+										that.userInfo = res.data
+										that.$store.commit('updateUserInfo', that.userInfo);
+									}
+									callBack && callBack();
+								})
+							}
+						})
+					}
+				});
+			}
 		},
 		// 下拉刷新
 		onPullDownRefresh() {
