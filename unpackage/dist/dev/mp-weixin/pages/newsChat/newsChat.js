@@ -152,9 +152,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
-
 var _newsChatModel = _interopRequireDefault(__webpack_require__(/*! ./newsChat-model.js */ 88));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
@@ -175,11 +172,9 @@ var _newsChatModel = _interopRequireDefault(__webpack_require__(/*! ./newsChat-m
 //
 //
 //
-//
-//
-//
-var newsChat = new _newsChatModel.default();var _default = { data: function data() {return { options: {}, updataTimes: null, userInfo: {}, message: '', newsNode: { page_number: 1, page: 1, data: [] }, newList: [], scrollviewHight: 0, historyTime: 0 };}, onLoad: function onLoad(options) {// console.log(options)
-    var that = this;that.options = options;that._onLoad();},
+var newsChat = new _newsChatModel.default();var _default = { data: function data() {return { options: {}, updataTimes: null, userInfo: {}, message: '', newsNode: { page_number: 1, page: 1, data: [] }, newList: [], historyTime: 0 };}, onLoad: function onLoad(options) {var that = this;that.options = options;
+    that._onLoad();
+  },
   onShow: function onShow() {
 
   },
@@ -193,20 +188,7 @@ var newsChat = new _newsChatModel.default();var _default = { data: function data
     _onLoad: function _onLoad(callBack) {
       var that = this;
       that.userInfo = that.$store.state.userInfo;
-      // 计算消息区域高度
-      // uni.getSystemInfo({
-      // 	success(res) {
-      // 		let windowHeight = res.windowHeight
-      // 		// 计算组件的高度
-      // 		let view = uni.createSelectorQuery().select(".sendMessage")
-      // 		view.boundingClientRect(data => {
-      // 			let navHeight = data.height
-      // 			let scrollviewHigh = windowHeight - navHeight
-      // 		}).exec()
-      // 	}
-      // })
-      var heightAll = uni.getSystemInfo().windowHeight;
-      console.log(heightAll);
+      that.historyTime = Date.parse(new Date()) / 1000;
       // 加载消息
       that.getNewsList(function () {
         callBack && callBack();
@@ -214,13 +196,6 @@ var newsChat = new _newsChatModel.default();var _default = { data: function data
       that.updataTimes = setInterval(function () {
         that.updataNewsList();
       }, 3000);
-    },
-    // 滚动触顶执行,加载历史消息
-    runscroll: function runscroll(e) {
-      var that = this;
-      if (that.newsNode.page != that.newsNode.page_number) {
-        that.gethistoryList();
-      }
     },
     // 刷新消息
     updataNewsList: function updataNewsList() {
@@ -257,6 +232,10 @@ var newsChat = new _newsChatModel.default();var _default = { data: function data
     // 加载历史消息
     gethistoryList: function gethistoryList(callBack) {
       var that = this;
+      if (that.newsNode.page == that.newsNode.page_number) {
+        newsChat.show_tips('没有更多消息了');
+        return false;
+      }
       var page = parseInt(that.newsNode.page) + 1;
       newsChat.getNewsList({
         openid: that.userInfo.openid,
@@ -279,9 +258,10 @@ var newsChat = new _newsChatModel.default();var _default = { data: function data
       newsChat.getNewsList({
         openid: that.userInfo.openid,
         id: that.options.id,
-        page: that.newsNode.page },
+        page: that.newsNode.page,
+        time: that.historyTime },
       function (res) {
-        console.log(res);
+        // console.log(res)
         if (res.code == 4000) {
           var newNode = res;
           that.historyTime = newNode.time;
@@ -341,13 +321,13 @@ var newsChat = new _newsChatModel.default();var _default = { data: function data
         success: function success(res) {
           var windowHeight = res.windowHeight;
           // 计算组件的高度
-          var view = uni.createSelectorQuery().select(".pageTopBorder");
+          var view = uni.createSelectorQuery().select(".sendMessage");
           view.boundingClientRect(function (data) {
             var navHeight = data.height;
-            that.scrollviewHight = windowHeight - navHeight - 20;
+            var scrollviewHight = windowHeight - navHeight + 100;
             // 滚动到底部
             uni.pageScrollTo({
-              scrollTop: navHeight,
+              scrollTop: scrollviewHight,
               duration: 0 });
 
           }).exec();
@@ -358,8 +338,9 @@ var newsChat = new _newsChatModel.default();var _default = { data: function data
   // 下拉刷新
   onPullDownRefresh: function onPullDownRefresh() {
     var that = this;
-    that.page = 1;
-    that._onLoad(function () {
+    // that.runscroll()
+    // 下拉加载历史消息
+    that.gethistoryList(function () {
       uni.stopPullDownRefresh();
     });
   },

@@ -1,16 +1,13 @@
 <template>
 	<view class="pageTopBorder">
-		<!-- {{scrollviewHight}} -->
-		<scroll-view scroll-y="true" :style="{height:scrollviewHight + 'px'}" class="content" @scrolltoupper="runscroll" :upper-threshold="10">
+		<!-- {{scrollviewHight}} :style="{height:scrollviewHight + 'px'}" -->
+		<!-- <scroll-view scroll-y="true" class="content" @scrolltoupper="runscroll" :upper-threshold="10"> -->
+		<scroll-view scroll-y="true" class="content" :upper-threshold="10">
 			<view :class="item.direction == 2 ? 'item1' : 'item2'" v-for="(item,index) in newList" :key="index">
 				<image :src="item.portrait" mode="" v-if="item.direction == 2 "></image>
 				<view class="info">{{item.content}}</view>
 				<image :src="item.portrait" mode="" v-if="item.direction == 1 "></image>
 			</view>
-			<!-- <view class="item2" v-for="(item,index) in 20" :key="index">
-				<view class="info">我想咨询一下银行现在对于个人贷款这块有什么政策？</view>
-				<image src="../../static/images/test.png" mode=""></image>
-			</view> -->
 		</scroll-view>
 		<view class="sendMessage">
 			<view class="con">
@@ -37,12 +34,10 @@
 					data: []
 				},
 				newList: [],
-				scrollviewHight: 0,
 				historyTime: 0
 			};
 		},
 		onLoad(options) {
-			// console.log(options)
 			const that = this
 			that.options = options
 			that._onLoad()
@@ -60,20 +55,7 @@
 			_onLoad(callBack) {
 				const that = this
 				that.userInfo = that.$store.state.userInfo;
-				// 计算消息区域高度
-				// uni.getSystemInfo({
-				// 	success(res) {
-				// 		let windowHeight = res.windowHeight
-				// 		// 计算组件的高度
-				// 		let view = uni.createSelectorQuery().select(".sendMessage")
-				// 		view.boundingClientRect(data => {
-				// 			let navHeight = data.height
-				// 			let scrollviewHigh = windowHeight - navHeight
-				// 		}).exec()
-				// 	}
-				// })
-				let heightAll = uni.getSystemInfo().windowHeight
-				console.log(heightAll)
+				that.historyTime = Date.parse(new Date()) / 1000;
 				// 加载消息
 				that.getNewsList(() => {
 					callBack && callBack();
@@ -81,13 +63,6 @@
 				that.updataTimes = setInterval(() => {
 					that.updataNewsList()
 				}, 3000);
-			},
-			// 滚动触顶执行,加载历史消息
-			runscroll(e) {
-				const that = this
-				if (that.newsNode.page != that.newsNode.page_number) {
-					that.gethistoryList()
-				}
 			},
 			// 刷新消息
 			updataNewsList() {
@@ -124,6 +99,10 @@
 			// 加载历史消息
 			gethistoryList(callBack) {
 				const that = this
+				if (that.newsNode.page == that.newsNode.page_number) {
+					newsChat.show_tips('没有更多消息了')
+					return false
+				}
 				let page = parseInt(that.newsNode.page) + 1
 				newsChat.getNewsList({
 					openid: that.userInfo.openid,
@@ -146,9 +125,10 @@
 				newsChat.getNewsList({
 					openid: that.userInfo.openid,
 					id: that.options.id,
-					page: that.newsNode.page
+					page: that.newsNode.page,
+					time: that.historyTime
 				}, (res) => {
-					console.log(res)
+					// console.log(res)
 					if (res.code == 4000) {
 						let newNode = res
 						that.historyTime = newNode.time
@@ -208,13 +188,13 @@
 					success(res) {
 						let windowHeight = res.windowHeight
 						// 计算组件的高度
-						let view = uni.createSelectorQuery().select(".pageTopBorder")
+						let view = uni.createSelectorQuery().select(".sendMessage")
 						view.boundingClientRect(data => {
 							let navHeight = data.height
-							that.scrollviewHight = windowHeight - navHeight - 20
+							let scrollviewHight = windowHeight - navHeight + 100
 							// 滚动到底部
 							uni.pageScrollTo({
-								scrollTop: navHeight,
+								scrollTop: scrollviewHight,
 								duration: 0
 							});
 						}).exec()
@@ -225,8 +205,9 @@
 		// 下拉刷新
 		onPullDownRefresh() {
 			var that = this;
-			that.page = 1;
-			that._onLoad(() => {
+			// that.runscroll()
+			// 下拉加载历史消息
+			that.gethistoryList(() => {
 				uni.stopPullDownRefresh();
 			});
 		},

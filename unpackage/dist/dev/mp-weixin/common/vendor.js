@@ -757,7 +757,7 @@ function initData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -8494,7 +8494,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -8515,14 +8515,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -8598,7 +8598,7 @@ var patch = function(oldVnode, vnode) {
     });
     var diffData = this.$shouldDiffData === false ? data : diff(data, mpData);
     if (Object.keys(diffData).length) {
-      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
           ']差量更新',
           JSON.stringify(diffData));
@@ -10562,7 +10562,7 @@ ManagerDetails;exports.default = _default;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationBarTitleText": "首页", "enablePullDownRefresh": true, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/identitySel/identitySel": { "navigationBarTitleText": "身份选择", "navigationStyle": "custom", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/news/news": { "navigationBarTitleText": "消息", "enablePullDownRefresh": true, "usingComponents": { "not-list": "/components/notList" }, "usingAutoImportComponents": {} }, "pages/user/user": { "navigationBarTitleText": "用户", "enablePullDownRefresh": true, "navigationStyle": "custom", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/managerDetails/managerDetails": { "navigationBarTitleText": "个人主页", "enablePullDownRefresh": true, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/informationDetails/informationDetails": { "navigationBarTitleText": "咨询详情", "enablePullDownRefresh": true, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/sysNews/sysNews": { "navigationBarTitleText": "系统消息", "enablePullDownRefresh": true, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/newsChat/newsChat": { "navigationBarTitleText": "消息", "enablePullDownRefresh": false, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/userAttention/userAttention": { "navigationBarTitleText": "我的关注", "enablePullDownRefresh": true, "usingComponents": { "not-list": "/components/notList" }, "usingAutoImportComponents": {} }, "pages/userQualification/userQualification": { "navigationBarTitleText": "我的资质", "enablePullDownRefresh": true, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/userVIP/userVIP": { "navigationBarTitleText": "我的会员", "enablePullDownRefresh": true, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/certification/certification": { "navigationBarTitleText": "资质认证", "enablePullDownRefresh": true, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/sysNewsList/sysNewsList": { "navigationBarTitleText": "系统消息", "enablePullDownRefresh": true, "usingComponents": { "not-list": "/components/notList" }, "usingAutoImportComponents": {} }, "pages/managerList/managerList": { "navigationBarTitleText": "客户经理", "enablePullDownRefresh": true, "usingComponents": { "not-list": "/components/notList" }, "usingAutoImportComponents": {} }, "pages/articleList/articleList": { "navigationBarTitleText": "更多资讯", "enablePullDownRefresh": true, "usingComponents": { "not-list": "/components/notList" }, "usingAutoImportComponents": {} } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "金融咨询", "navigationBarBackgroundColor": "#FFFFFF", "backgroundColor": "#FFFFFF" } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationBarTitleText": "首页", "enablePullDownRefresh": true, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/identitySel/identitySel": { "navigationBarTitleText": "身份选择", "navigationStyle": "custom", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/news/news": { "navigationBarTitleText": "消息", "enablePullDownRefresh": true, "usingComponents": { "not-list": "/components/notList" }, "usingAutoImportComponents": {} }, "pages/user/user": { "navigationBarTitleText": "用户", "enablePullDownRefresh": true, "navigationStyle": "custom", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/managerDetails/managerDetails": { "navigationBarTitleText": "个人主页", "enablePullDownRefresh": true, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/informationDetails/informationDetails": { "navigationBarTitleText": "咨询详情", "enablePullDownRefresh": true, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/sysNews/sysNews": { "navigationBarTitleText": "系统消息", "enablePullDownRefresh": true, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/newsChat/newsChat": { "navigationBarTitleText": "消息", "enablePullDownRefresh": true, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/userAttention/userAttention": { "navigationBarTitleText": "我的关注", "enablePullDownRefresh": true, "usingComponents": { "not-list": "/components/notList" }, "usingAutoImportComponents": {} }, "pages/userQualification/userQualification": { "navigationBarTitleText": "我的资质", "enablePullDownRefresh": true, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/userVIP/userVIP": { "navigationBarTitleText": "我的会员", "enablePullDownRefresh": true, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/certification/certification": { "navigationBarTitleText": "资质认证", "enablePullDownRefresh": true, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/sysNewsList/sysNewsList": { "navigationBarTitleText": "系统消息", "enablePullDownRefresh": true, "usingComponents": { "not-list": "/components/notList" }, "usingAutoImportComponents": {} }, "pages/managerList/managerList": { "navigationBarTitleText": "客户经理", "enablePullDownRefresh": true, "usingComponents": { "not-list": "/components/notList" }, "usingAutoImportComponents": {} }, "pages/articleList/articleList": { "navigationBarTitleText": "更多资讯", "enablePullDownRefresh": true, "usingComponents": { "not-list": "/components/notList" }, "usingAutoImportComponents": {} } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "金融咨询", "navigationBarBackgroundColor": "#FFFFFF", "backgroundColor": "#FFFFFF" } };exports.default = _default;
 
 /***/ }),
 
