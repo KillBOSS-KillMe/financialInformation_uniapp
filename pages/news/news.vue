@@ -56,11 +56,13 @@
 		methods: {
 			_onLoad(callBack) {
 				const that = this
+				that.newsList = [],
+				that.newNewsList = []
 				that.userInfo = that.$store.state.userInfo;
 				that.upDataNewsList()
-				// that.updataTimes = setInterval(() => {
-				// 	that.upDataNewsList()
-				// }, that.times);
+				that.updataTimes = setInterval(() => {
+					that.upDataNewsList()
+				}, 3000);
 			},
 			// 刷新列表
 			upDataNewsList(callBack) {
@@ -119,7 +121,7 @@
 				news.getNewsList({
 					openid: that.userInfo.openid
 				}, (res) => {
-					console.log(res)
+					// console.log(res)
 					if (res.code == 4000) {
 						let newsList = res.data
 						if (that.newNewsList.length > 0) {

@@ -200,15 +200,15 @@ var _config = _interopRequireDefault(__webpack_require__(/*! static/js/config.js
 //
 //
 var _default = { data: { return: { updataNews: null, userInfo: {}, requset_url: '', // 监听新消息心跳时间
-      times: 3000 } }, onLaunch: function onLaunch() {this.requset_url = _config.default.requset_url;console.log('App Launch');}, onShow: function onShow() {console.log('App Show'); // 首次刷新新消息条数
+      times: 3000 } }, onLaunch: function onLaunch() {this.requset_url = _config.default.requset_url; // console.log('App Launch')
+  }, onShow: function onShow() {var _this = this; // console.log('App Show')
+    // 首次刷新新消息条数
     this.alwaysUpdataNews(); // 定时刷新新消息条数
-    // this.updataNews = setInterval(() => {
-    // 	this.alwaysUpdataNews()
-    // }, this.times);
-    // setTimeout(() => {
+    this.updataNews = setInterval(function () {_this.alwaysUpdataNews();}, 3000); // setTimeout(() => {
     // 	clearTimeout(this.updataNews);
     // }, 6000)
-  }, onHide: function onHide() {console.log('App Hide'); // 停止新消息的刷新
+  }, onHide: function onHide() {// console.log('App Hide')
+    // 停止新消息的刷新
     clearTimeout(this.updataNews);}, methods: { alwaysUpdataNews: function alwaysUpdataNews() {var that = this;that.userInfo = that.$store.state.userInfo; // 判断用户信息是否已经获取
       if (that.userInfo.openid) {uni.request({ url: "".concat(that.requset_url, "chat/unreadNumber"), data: { openid: that.userInfo.openid }, method: 'POST', success: function success(res) {var index = 1; // that.$store.commit('setNewNewsNum', res.data.number);
             // console.log(that.$store.state.newNewsNum)

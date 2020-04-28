@@ -14,7 +14,7 @@ class News extends Base {
 				callBack && callBack(res.data);
 			}
 		};
-		that.request(params);
+		that.requestTimes(params);
 	};
 	// 加载原有消息列表
 	getNewsList(data, callBack) {
@@ -27,7 +27,7 @@ class News extends Base {
 				callBack && callBack(res.data);
 			}
 		};
-		that.request(params);
+		that.requestTimes(params);
 	};
 	// 获取用户信息
 	getUserInfo(data, callBack) {
@@ -40,7 +40,7 @@ class News extends Base {
 				callBack && callBack(res.data);
 			}
 		};
-		that.request(params);
+		that.requestTimes(params);
 	};
 }
 

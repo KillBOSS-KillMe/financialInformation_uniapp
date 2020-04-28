@@ -189,11 +189,13 @@ var news = new _newsModel.default();var _default =
   methods: {
     _onLoad: function _onLoad(callBack) {
       var that = this;
+      that.newsList = [],
+      that.newNewsList = [];
       that.userInfo = that.$store.state.userInfo;
       that.upDataNewsList();
-      // that.updataTimes = setInterval(() => {
-      // 	that.upDataNewsList()
-      // }, that.times);
+      that.updataTimes = setInterval(function () {
+        that.upDataNewsList();
+      }, 3000);
     },
     // 刷新列表
     upDataNewsList: function upDataNewsList(callBack) {
@@ -252,7 +254,7 @@ var news = new _newsModel.default();var _default =
       news.getNewsList({
         openid: that.userInfo.openid },
       function (res) {
-        console.log(res);
+        // console.log(res)
         if (res.code == 4000) {
           var newsList = res.data;
           if (that.newNewsList.length > 0) {

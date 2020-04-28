@@ -14,7 +14,7 @@ class NewsChat extends Base {
 				callBack && callBack(res.data);
 			}
 		};
-		that.request(params);
+		that.requestTimes(params);
 	};
 	// 发送消息
 	sendMessage(data, callBack) {
@@ -27,7 +27,7 @@ class NewsChat extends Base {
 				callBack && callBack(res.data);
 			}
 		};
-		that.request(params);
+		that.requestTimes(params);
 	};
 }
 

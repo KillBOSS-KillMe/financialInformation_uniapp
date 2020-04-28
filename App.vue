@@ -64,22 +64,22 @@ text-overflow: ellipsis; -->
 		},
 		onLaunch: function() {
 			this.requset_url = Config.requset_url
-			console.log('App Launch')
+			// console.log('App Launch')
 		},
 		onShow: function() {
-			console.log('App Show')
+			// console.log('App Show')
 			// 首次刷新新消息条数
 			this.alwaysUpdataNews()
 			// 定时刷新新消息条数
-			// this.updataNews = setInterval(() => {
-			// 	this.alwaysUpdataNews()
-			// }, this.times);
+			this.updataNews = setInterval(() => {
+				this.alwaysUpdataNews()
+			}, 3000);
 			// setTimeout(() => {
 			// 	clearTimeout(this.updataNews);
 			// }, 6000)
 		},
 		onHide: function() {
-			console.log('App Hide')
+			// console.log('App Hide')
 			// 停止新消息的刷新
 			clearTimeout(this.updataNews);
 		},

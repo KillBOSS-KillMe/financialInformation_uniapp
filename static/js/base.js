@@ -73,6 +73,57 @@ class Base {
 				// that.remove_storage('token');
 				// that.remove_storage('token_type');
 				that.hide_loading();
+			},
+			complete: function(err) {
+				that.hide_loading();
+				uni.stopPullDownRefresh();
+			}
+		})
+		// })
+		// })
+	}
+	//网络请求
+	requestTimes(params) {
+		var that = this;
+		// that.show_loading('加载中...');
+		var url = that.base_qequest_url + params.url;
+		// var token = '';
+		// var token_type = '';
+		// that.get_storage('token', (res) => {
+		// 	token = res;
+		// that.get_storage('token_type', (res) => {
+		// token_type = res;
+		uni.request({
+			url: url,
+			data: params.data || {},
+			header: {
+				'content-type': 'application/json',
+				// 'apikey': that.apikey,
+				// 'Authorization': token_type + ' ' + token
+			},
+			method: params.method || 'GET',
+			success: function(ret) {
+				ret = that.null2str(ret);
+				var code = ret.statusCode.toString().charAt(0);
+				if (code == '2' || code == '4' || code == '5') {
+					// that.hide_loading();
+					// token实效,更新token
+					// if (ret.data.status_code == 500) {
+					// 	that.refresh_token(params); return;
+					// }
+					// 返回请求到的数据
+					params.sCallBack && params.sCallBack(ret);
+					return;
+				}
+			},
+			fail: function(err) {
+				// that.remove_storage('token');
+				// that.remove_storage('token_type');
+				that.hide_loading();
+			},
+			complete: function(err) {
+				that.hide_loading();
+				uni.stopPullDownRefresh();
 			}
 		})
 		// })
