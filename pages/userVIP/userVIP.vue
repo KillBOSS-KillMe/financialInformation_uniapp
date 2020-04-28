@@ -13,7 +13,10 @@
 					</view>
 				</view>
 			</scroll-view>
-			<view class="titleModel" v-if="informationNode.data.length > 0">
+			<view class="info" v-if="timeShow">
+				<text>会员到期时间：{{vipTime}}</text>
+			</view>
+			<view class="titleModel">
 				<view class="titleCon">
 					<view></view>会员权益
 				</view>
@@ -23,10 +26,10 @@
 				</view> -->
 			</view>
 			<view class="info">
+				<text>客户经理开通会员即可开通咨询服务，入驻平台获得更多客户信息</text>
+		<!-- 		<text>1.会员权益会员权益会员权益会员权益</text>
 				<text>1.会员权益会员权益会员权益会员权益</text>
-				<text>1.会员权益会员权益会员权益会员权益</text>
-				<text>1.会员权益会员权益会员权益会员权益</text>
-				<text>1.会员权益会员权益会员权益会员权益</text>
+				<text>1.会员权益会员权益会员权益会员权益</text> -->
 			</view>
 		</view>
 	</view>
@@ -56,7 +59,9 @@
 					}
 				],
 				userInfo: {},
-				payData: {}
+				payData: {},
+				timeShow: false,
+				vipTime: ''
 			};
 		},
 		onLoad() {
@@ -67,11 +72,16 @@
 			_onLoad(callBack) {
 				const that = this
 				that.userInfo = that.$store.state.userInfo;
-				// that.wx_login(() => {
-				// 	that.getUserInfo(() => {
-				// 		callBack && callBack();
-				// 	})
-				// })
+				let userInfo = that.userInfo
+				if (userInfo.expiration > 0) {
+					let nowTime = Date.parse(new Date()) / 1000;
+					if (userInfo.expiration > nowTime) {
+						that.vipTime = userVIP.transformTime(userInfo.expiration * 1000)
+						that.timeShow = true
+					}
+				} else {
+					that.timeShow = false
+				}
 			},
 			// 获取支付所需参数
 			openVIP(e) {
@@ -132,6 +142,7 @@
 									if (res.code == 4000) {
 										that.userInfo = res.data
 										that.$store.commit('updateUserInfo', that.userInfo);
+										that._onLoad()
 									}
 									callBack && callBack();
 								})
