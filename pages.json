@@ -17,7 +17,7 @@
 			"path": "pages/identitySel/identitySel",
 			"style": {
 				"navigationBarTitleText": "身份选择",
-				// "enablePullDownRefresh": true,
+				"enablePullDownRefresh": false,
 				"navigationStyle": "custom",
 				"app-plus": {
 					"bounce": "none",
@@ -28,7 +28,7 @@
 			"path": "pages/news/news",
 			"style": {
 				"navigationBarTitleText": "消息",
-				"enablePullDownRefresh": true,
+				"enablePullDownRefresh": false,
 				// #ifdef H5
 				"navigationStyle": "custom",
 				// #endif
@@ -52,7 +52,7 @@
 			"path": "pages/managerDetails/managerDetails",
 			"style": {
 				"navigationBarTitleText": "个人主页",
-				"enablePullDownRefresh": true,
+				"enablePullDownRefresh": false,
 				// #ifdef H5
 				"navigationStyle": "custom",
 				// #endif
@@ -169,7 +169,7 @@
 			"path": "pages/managerList/managerList",
 			"style": {
 				"navigationBarTitleText": "客户经理",
-				"enablePullDownRefresh": true,
+				"enablePullDownRefresh": false,
 				// #ifdef H5
 				"navigationStyle": "custom",
 				// #endif
@@ -182,7 +182,7 @@
 			"path": "pages/articleList/articleList",
 			"style": {
 				"navigationBarTitleText": "更多资讯",
-				"enablePullDownRefresh": true,
+				"enablePullDownRefresh": false,
 				// #ifdef H5
 				"navigationStyle": "custom",
 				// #endif

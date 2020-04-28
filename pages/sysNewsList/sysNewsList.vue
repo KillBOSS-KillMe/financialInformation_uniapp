@@ -77,9 +77,9 @@
 		onPullDownRefresh() {
 			var that = this;
 			that.sysNewsNode = {
-					page: 1,
-					data: []
-				}
+				page: 1,
+				data: []
+			}
 			that._onLoad(() => {
 				uni.stopPullDownRefresh();
 			});

@@ -1,5 +1,6 @@
 {
   "navigationBarTitleText": "身份选择",
+  "enablePullDownRefresh": false,
   "navigationStyle": "custom",
   "usingComponents": {}
 }
