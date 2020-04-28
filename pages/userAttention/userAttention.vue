@@ -2,16 +2,16 @@
 	<view class="pageTopBorder">
 		<view class="content">
 			<notList v-if="attentionNode.data.length <= 0" />
-			<!-- <view class="item" v-for="(item,index) in attentionNode.data" :key="index" v-if="attentionNode.data.length > 0" @tap="goManagerDetails" :data-managerindex="index" :data-id="item.id"> -->
-			<view class="item" v-for="(item,index) in attentionNode.data" :key="index" v-if="attentionNode.data.length > 0">
+			<view class="item" v-for="(item,index) in attentionNode.data" :key="index" v-if="attentionNode.data.length > 0" @tap="goManagerDetails" :data-managerindex="index" :data-id="item.id">
+			<!-- <view class="item" v-for="(item,index) in attentionNode.data" :key="index" v-if="attentionNode.data.length > 0"> -->
 				<image :src="item.portrait" mode=""></image>
 				<view class="info">
 					<view class="con">
 						<view>{{item.name}}/{{item.company}}</view>
 						<text>{{item.post}}</text>
 					</view>
-					<button type="default" @tap="notAttention" :data-id="item.id" :data-index="index">已关注</button>
-					<!-- <button type="default" class="active">关注</button> -->
+					<button type="default" :data-id="item.id" :data-index="index">已关注</button>
+					<!-- <button type="default" @tap="notAttention" :data-id="item.id" :data-index="index">已关注</button> -->
 				</view>
 			</view>
 		</view>
@@ -36,6 +36,10 @@
 			};
 		},
 		onLoad() {
+			// const that = this
+			// that._onLoad()
+		},
+		onShow() {
 			const that = this
 			that._onLoad()
 		},
@@ -63,12 +67,12 @@
 				})
 			},
 			// // 进入--客户经理--详情页
-			// goManagerDetails(e) {
-			// 	const that = this;
-			// 	const managerindex = userAttention.get_data_set(e, "managerindex");
-			// 	let data = JSON.stringify(that.attentionNode.data[managerindex]);
-			// 	userAttention.navigate_to(`/pages/managerDetails/managerDetails?data=${data}`);
-			// },
+			goManagerDetails(e) {
+				const that = this;
+				const managerindex = userAttention.get_data_set(e, "managerindex");
+				let data = JSON.stringify(that.attentionNode.data[managerindex]);
+				userAttention.navigate_to(`/pages/managerDetails/managerDetails?data=${data}`);
+			},
 			// 取消关注
 			notAttention(e) {
 				const that = this

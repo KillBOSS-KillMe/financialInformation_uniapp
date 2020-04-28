@@ -291,7 +291,7 @@ var newsChat = new _newsChatModel.default();var _default = { data: function data
             direction: 1,
             portrait: that.userInfo.portrait };
 
-          that.newsNode.data.push(myNewMessage);
+          that.newList.push(myNewMessage);
           // 清空输入的消息
           that.message = '';
           // 滚动到聊天底部

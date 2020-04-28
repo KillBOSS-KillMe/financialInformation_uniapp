@@ -55,7 +55,7 @@
             "sdkConfigs" : {
                 "payment" : {
                     "weixin" : {
-                        "appid" : "wx5288d1f667f49f05",
+                        "appid" : "wx85ae2745ca3ac253",
                         "UniversalLinks" : ""
                     }
                 }
@@ -66,7 +66,7 @@
     "quickapp" : {},
     /* 小程序特有相关 */
     "mp-weixin" : {
-        "appid" : "wx5288d1f667f49f05",
+        "appid" : "wx85ae2745ca3ac253",
         "setting" : {
             "urlCheck" : false
         },

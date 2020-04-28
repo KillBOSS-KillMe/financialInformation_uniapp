@@ -169,6 +169,10 @@ var userAttention = new _userAttentionModel.default();var _default =
 
   },
   onLoad: function onLoad() {
+    // const that = this
+    // that._onLoad()
+  },
+  onShow: function onShow() {
     var that = this;
     that._onLoad();
   },
@@ -196,12 +200,12 @@ var userAttention = new _userAttentionModel.default();var _default =
       });
     },
     // // 进入--客户经理--详情页
-    // goManagerDetails(e) {
-    // 	const that = this;
-    // 	const managerindex = userAttention.get_data_set(e, "managerindex");
-    // 	let data = JSON.stringify(that.attentionNode.data[managerindex]);
-    // 	userAttention.navigate_to(`/pages/managerDetails/managerDetails?data=${data}`);
-    // },
+    goManagerDetails: function goManagerDetails(e) {
+      var that = this;
+      var managerindex = userAttention.get_data_set(e, "managerindex");
+      var data = JSON.stringify(that.attentionNode.data[managerindex]);
+      userAttention.navigate_to("/pages/managerDetails/managerDetails?data=".concat(data));
+    },
     // 取消关注
     notAttention: function notAttention(e) {
       var that = this;
