@@ -260,8 +260,7 @@ var _indexModel = _interopRequireDefault(__webpack_require__(/*! ./index-model.j
 //
 //
 //
-var index = new _indexModel.default();var _default = { data: function data() {return { options: {}, searchKey: '', // imageUrl: '',
-      authorizationButton: true, userInfo: {}, userInfoAll: {}, // 轮播图相关
+var index = new _indexModel.default();var _default = { data: function data() {return { options: {}, searchKey: '', imageUrl: '', authorizationButton: true, userInfo: {}, userInfoAll: {}, // 轮播图相关
       bannerData: [], indicatorDots: true, autoplay: true, interval: 2000, duration: 500, // 客户经理数据对象
       managerNode: { data: [] }, // 最新资讯
       informationNode: { data: [] } };}, onLoad: function onLoad(options) {var that = this;that.options = options; // that._onLoad()
@@ -274,14 +273,15 @@ var index = new _indexModel.default();var _default = { data: function data() {re
     // 		})
     // 	})
     // }
-  }, methods: { _onLoad: function _onLoad(callBack) {var that = this; // that.imageUrl = index.base_image_url
-      that.userInfo = that.$store.state.userInfo; // 轮播图加载
+  }, methods: { _onLoad: function _onLoad(callBack) {var that = this;that.imageUrl = index.base_image_url;that.userInfo = that.$store.state.userInfo; // 轮播图加载
       this.getBanner(function () {callBack && callBack();}); // 最新资讯列表加载
       this.getInformationList(function () {callBack && callBack();}); // 获取已授权类别
       uni.getSetting({ success: function success(res) {if (res.authSetting['scope.userInfo']) {// 隐藏授权按钮
             that.authorizationButton = false;that.$store.commit('updateAuthorizationButtonData', false);that.wx_login(function () {// 客户经理列表加载
               that.getManagerList(function () {callBack && callBack();});});} else {// 隐藏底部导航
-            uni.hideTabBar({ boolean: true });}}, fail: function fail() {console.log("获取授权信息授权失败");} });}, // 进入客户经理列表
+            uni.hideTabBar({ boolean: true });}}, fail: function fail() {console.log("获取授权信息授权失败");} });
+    },
+    // 进入客户经理列表
     goManagerList: function goManagerList() {
       index.navigate_to("/pages/managerList/managerList");
     },
@@ -386,7 +386,11 @@ var index = new _indexModel.default();var _default = { data: function data() {re
       var that = this;
       index.getBanner({}, function (res) {
         if (res.code == '4000') {
-          that.bannerData = res.data;
+          var list = res.data;
+          for (var i = 0; i < list.length; i++) {
+            list[i].img = that.imageUrl + list[i].img;
+          }
+          that.bannerData = list;
         }
         callBack && callBack();
       });

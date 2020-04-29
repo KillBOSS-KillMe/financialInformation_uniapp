@@ -70,7 +70,7 @@
 			return {
 				options: {},
 				searchKey: '',
-				// imageUrl: '',
+				imageUrl: '',
 				authorizationButton: true,
 				userInfo: {},
 				userInfoAll: {},
@@ -112,7 +112,7 @@
 		methods: {
 			_onLoad(callBack) {
 				const that = this
-				// that.imageUrl = index.base_image_url
+				that.imageUrl = index.base_image_url
 				that.userInfo = that.$store.state.userInfo;
 				// 轮播图加载
 				this.getBanner(() => {
@@ -253,7 +253,11 @@
 				const that = this
 				index.getBanner({}, (res) => {
 					if (res.code == '4000') {
-						that.bannerData = res.data
+            let list = res.data
+            for (let i = 0; i < list.length; i++) {
+              list[i].img = that.imageUrl + list[i].img
+            }
+						that.bannerData = list
 					}
 					callBack && callBack();
 				})
