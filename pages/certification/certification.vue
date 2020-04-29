@@ -23,10 +23,10 @@
 			</view>
 		</view>
 		<view class="upIDCard">
-			<image src="../../static/images/IDcard_1.png" mode="" v-if="formData.IDCard_1 == ''" @tap="upImage" data-type="1"></image>
-			<image :src="formData.IDCard_1" mode="" v-if="formData.IDCard_1 != ''" @tap="upImage" data-type="1"></image>
-			<image src="../../static/images/IDcard_2.png" mode="" v-if="formData.IDCard_2 == ''" @tap="upImage" data-type="2"></image>
-			<image :src="formData.IDCard_2" mode="" v-if="formData.IDCard_2 != ''" @tap="upImage" data-type="2"></image>
+			<image src="../../static/images/IDcard_1.png" mode="" v-if="formData.IDCard_1_show == ''" @tap="upImage" data-type="1"></image>
+			<image :src="formData.IDCard_1_show" mode="" v-if="formData.IDCard_1_show != ''" @tap="upImage" data-type="1"></image>
+			<image src="../../static/images/IDcard_2.png" mode="" v-if="formData.IDCard_2_show == ''" @tap="upImage" data-type="2"></image>
+			<image :src="formData.IDCard_2_show" mode="" v-if="formData.IDCard_2_show != ''" @tap="upImage" data-type="2"></image>
 		</view>
 		<view class="sub">
 			<view @tap="validation">提交</view>
@@ -48,7 +48,9 @@
 					experience: '',
 					IDNumber: '',
 					IDCard_1: '',
-					IDCard_2: ''
+          IDCard_1_show: '',
+					IDCard_2: '',
+          IDCard_2_show: ''
 				}
 			};
 		},
@@ -115,9 +117,11 @@
           // console.log(res)
 					res = res[0]
 					if (type == '1') {
-						that.formData.IDCard_1 = that.imgUrl + res.data.data
+           that.formData.IDCard_1 = res.data.data
+						that.formData.IDCard_1_show = that.imgUrl + res.data.data
 					} else {
-						that.formData.IDCard_2 = that.imgUrl + res.data.data
+            that.formData.IDCard_2 = res.data.data
+						that.formData.IDCard_2_show = that.imgUrl + res.data.data
 					}
 					certification.show_tips(res.data.explain)
 				})
