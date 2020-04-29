@@ -7,8 +7,8 @@ class SysNewsList extends Base {
 	getNewNewsList(data, callBack) {
 		var that = this;
 		var params = {
-			url: 'News/getNewsList',
-			method: 'GET',
+			url: 'News/news_system',
+			method: 'POST',
 			data: data,
 			sCallBack: function(res) {
 				callBack && callBack(res.data);

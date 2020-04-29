@@ -164,8 +164,9 @@ var sysNewsList = new _sysNewsListModel.default();var _default =
       userInfo: {},
       sysNewsNode: {
         page: 1,
-        data: [] } };
+        data: [] },
 
+      imgUrl: '' };
 
   },
   onLoad: function onLoad(options) {
@@ -179,6 +180,7 @@ var sysNewsList = new _sysNewsListModel.default();var _default =
     _onLoad: function _onLoad(callBack) {
       var that = this;
       that.userInfo = that.$store.state.userInfo;
+      that.imgUrl = sysNewsList.base_image_url;
       that.getNewNewsList();
     },
     // 加载新消息列表
@@ -192,6 +194,9 @@ var sysNewsList = new _sysNewsListModel.default();var _default =
           var list = res.data;
           for (var i = 0; i < list.length; i++) {
             list[i].createtime = sysNewsList.transformTime(list[i].createtime * 1000);
+            if (list[i].img) {
+              list[i].img = that.imgUrl + list[i].img;
+            }
           }
           res.data = that.sysNewsNode.data.concat(list);
           that.sysNewsNode = res;
@@ -203,6 +208,14 @@ var sysNewsList = new _sysNewsListModel.default();var _default =
     goNewDetails: function goNewDetails(e) {
       var that = this;
       var id = sysNewsList.get_data_set(e, "id");
+      // let data = that.sysNewsNode.data[index]
+      // 消息内容中包含'&'字符,无法通过路径传参
+      // 所以此处使用全局变量
+
+      // console.log(url)
+      // console.log(data)
+      // data = JSON.stringify(data)
+      // console.log(data)
       sysNewsList.navigate_to("/pages/sysNews/sysNews?id=".concat(id));
     } },
 

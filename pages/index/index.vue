@@ -177,6 +177,8 @@
 					provider: 'weixin',
 					success: function(loginRes) {
 						var code = loginRes.code;
+            // console.log(code)
+            // return false
 						uni.getUserInfo({
 							provider: 'weixin',
 							success: function(infoRes) {

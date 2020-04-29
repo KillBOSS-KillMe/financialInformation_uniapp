@@ -168,8 +168,6 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
-
-
 var _sysNewsModel = _interopRequireDefault(__webpack_require__(/*! ./sysNews-model.js */ 79));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
@@ -206,61 +204,65 @@ var _sysNewsModel = _interopRequireDefault(__webpack_require__(/*! ./sysNews-mod
 //
 //
 //
-//
-//
-var sysNews = new _sysNewsModel.default();var _default = { data: function data() {return { options: {}, userInfo: {}, informationNode: {}, // imageUrl: '',
-      commentCon: '' };}, onLoad: function onLoad(options) {var that = this;that.options = options;that._onLoad();}, methods: { _onLoad: function _onLoad(callBack) {var that = this; // that.imageUrl = sysNews.base_image_url
-      that.userInfo = that.$store.state.userInfo;that.getNewsContent(function () {callBack && callBack();});}, // 获取详情
-    getNewsContent: function getNewsContent(callBack) {var that = this;sysNews.getNewsContent({ openid: that.userInfo.openid, id: that.options.id }, function (res) {if (res.code == '4000') {var newsinfo = res.newsinfo;var CommentList = res.CommentList;newsinfo.createtime = sysNews.transformTime(newsinfo.createtime * 1000);for (var i = 0; i < CommentList.length; i++) {// CommentList[i].portrait = that.imageUrl + CommentList[i].portrait
-            CommentList[i].createtime = sysNews.transformTime(CommentList[i].createtime * 1000);}res.newsinfo = newsinfo;res.CommentList = CommentList;
-          that.informationNode = res;
+var sysNews = new _sysNewsModel.default();var _default = { data: function data() {return { options: {}, userInfo: {}, informationNode: {}, imageUrl: '', commentCon: '' };}, onLoad: function onLoad(options) {var that = this;that.options = options;console.log(options);that._onLoad();}, methods: { _onLoad: function _onLoad(callBack) {var that = this;that.imageUrl = sysNews.base_image_url;that.userInfo = that.$store.state.userInfo;that.getNewsContent(function () {callBack && callBack();});}, // 获取详情
+    getNewsContent: function getNewsContent(callBack) {var that = this;sysNews.getNewsContent({ openid: that.userInfo.openid, id: that.options.id }, function (res) {if (res.code == '4000') {var newsinfo = res.data; // let CommentList = res.CommentList
+          if (newsinfo.img) {newsinfo.img = that.imageUrl + newsinfo.img;
+          }
+          newsinfo.createtime = sysNews.transformTime(newsinfo.createtime * 1000);
+          // for (let i = 0; i < CommentList.length; i++) {
+          // 	// CommentList[i].portrait = that.imageUrl + CommentList[i].portrait
+          // 	CommentList[i].createtime = sysNews.transformTime(CommentList[i].createtime * 1000)
+          // }
+          // res.newsinfo = newsinfo
+          // res.CommentList = CommentList
+          that.informationNode = newsinfo;
         }
         callBack && callBack();
       });
-    },
-    // 获取评论内容
-    getCommentCon: function getCommentCon(e) {
-      var that = this;
-      that.commentCon = sysNews.get_input_val(e);
-    },
-    // 提交评论
-    sendComment: function sendComment(callBack) {
-      var that = this;
-      if (that.commentCon == '') {
-        sysNews.show_tips('请输入与评论内容');
-        return false;
-      }
-      sysNews.sendComment({
-        openid: that.userInfo.openid,
-        id: that.options.id,
-        content: that.commentCon },
-      function (res) {
-        if (res.code == '4000') {
-          sysNews.show_tips(res.explain);
-          that.commentCon = "";
-        }
-      });
-    },
+    }
+    // // 获取评论内容
+    // getCommentCon(e) {
+    // 	const that = this
+    // 	that.commentCon = sysNews.get_input_val(e)
+    // },
+    // // 提交评论
+    // sendComment(callBack) {
+    // 	const that = this
+    // 	if (that.commentCon == '') {
+    // 		sysNews.show_tips('请输入与评论内容')
+    // 		return false
+    // 	}
+    // 	sysNews.sendComment({
+    // 		openid: that.userInfo.openid,
+    // 		id: that.options.id,
+    // 		content: that.commentCon
+    // 	}, (res) => {
+    // 		if (res.code == '4000') {
+    // 			sysNews.show_tips(res.explain)
+    // 			that.commentCon = ""
+    // 		}
+    // 	})
+    // },
     // 点赞
-    like: function like(e) {
-      var that = this;
-      var id = sysNews.get_data_set(e, "id");
-      var index = sysNews.get_data_set(e, "index");
-      sysNews.like({
-        openid: that.userInfo.openid,
-        id: id,
-        vote_type: 1 },
-      function (res) {
-        if (res.code == '4000') {
-          sysNews.show_tips(res.explain);
-          that.informationNode.CommentList[index].support += 1;
-          that.informationNode.CommentList[index].vote_type = 1;
-        } else {
-          sysNews.show_tips(res.explain);
-        }
-      });
-    } },
-
+    // like(e) {
+    // 	const that = this
+    // 	let id = sysNews.get_data_set(e, "id")
+    // 	let index = sysNews.get_data_set(e, "index")
+    // 	sysNews.like({
+    // 		openid: that.userInfo.openid,
+    // 		id: id,
+    // 		vote_type: 1
+    // 	}, (res) => {
+    // 		if (res.code == '4000') {
+    // 			sysNews.show_tips(res.explain)
+    // 			that.informationNode.CommentList[index].support += 1
+    // 			that.informationNode.CommentList[index].vote_type = 1
+    // 		} else {
+    // 			sysNews.show_tips(res.explain)
+    // 		}
+    // 	})
+    // }
+  },
   // 下拉刷新
   // onPullDownRefresh() {
   // 	var that = this;

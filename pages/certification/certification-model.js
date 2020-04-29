@@ -20,7 +20,7 @@ class IdentitySel extends Base {
 	getCard(data, callBack) {
 		var that = this;
 		var params = {
-			url: 'Certificates/photo',
+			url: 'Certificates/upload',
 			method: 'POST',
 			data: data,
 			sCallBack: function(res) {

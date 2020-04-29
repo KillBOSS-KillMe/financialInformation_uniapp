@@ -1,3 +1,7 @@
+.titImg {
+  width: 690rpx;
+  margin: 30rpx 0;
+}
 .content {
   width: 690rpx !important;
   padding: 30rpx;

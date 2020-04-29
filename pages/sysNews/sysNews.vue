@@ -1,16 +1,14 @@
 <template>
 	<view class="pageTopBorder">
 		<view class="content">
-			<view class="articleTitle">{{informationNode.newsinfo.title}}</view>
+			<view class="articleTitle">{{informationNode.title}}</view>
 			<view class="articleInfo">
-				<text>{{informationNode.newsinfo.seenumber}}阅读</text>
-				<text>{{informationNode.newsinfo.createtime}}</text>
+				<!-- <text>{{informationNode.seenumber}}阅读</text> -->
+				<text>{{informationNode.createtime}}</text>
 			</view>
-			<!-- <view class="articleContent">
-				{{informationNode.newsinfo.content}}
-			</view> -->
-			<rich-text :nodes="informationNode.newsinfo.content" class="articleContent"></rich-text>
-			<view class="articleCommentList">
+      <image :src="informationNode.img" mode="" class="titImg" v-if="informationNode.img != ''"></image>
+			<rich-text :nodes="informationNode.content" class="articleContent"></rich-text>
+			<!-- <view class="articleCommentList">
 				<view class="item" v-for="(item,index) in informationNode.CommentList" :key="index">
 					<image :src="item.portrait" mode=""></image>
 					<view class="comment">
@@ -25,13 +23,13 @@
 						</view>
 					</view>
 				</view>
-			</view>
-			<view class="articleComment">
+			</view> -->
+			<!-- <view class="articleComment">
 				<view class="con">
 					<input type="text" :value="commentCon" @input="getCommentCon" placeholder="请填写您的评论信息" />
 					<button type="default" @tap="sendComment">发送</button>
 				</view>
-			</view>
+			</view> -->
 		</view>
 	</view>
 </template>
@@ -45,19 +43,20 @@
 				options: {},
 				userInfo: {},
 				informationNode: {},
-				// imageUrl: '',
+				imageUrl: '',
 				commentCon: ''
 			};
 		},
 		onLoad(options) {
 			const that = this
 			that.options = options
+      console.log(options)
 			that._onLoad()
 		},
 		methods: {
 			_onLoad(callBack) {
 				const that = this
-				// that.imageUrl = sysNews.base_image_url
+				that.imageUrl = sysNews.base_image_url
 				that.userInfo = that.$store.state.userInfo;
 				that.getNewsContent(() => {
 					callBack && callBack();
@@ -71,62 +70,65 @@
 					id: that.options.id
 				}, (res) => {
 					if (res.code == '4000') {
-						let newsinfo = res.newsinfo
-						let CommentList = res.CommentList
+						let newsinfo = res.data
+						// let CommentList = res.CommentList
+            if (newsinfo.img) {
+              newsinfo.img = that.imageUrl + newsinfo.img
+            }
 						newsinfo.createtime = sysNews.transformTime(newsinfo.createtime * 1000)
-						for (let i = 0; i < CommentList.length; i++) {
-							// CommentList[i].portrait = that.imageUrl + CommentList[i].portrait
-							CommentList[i].createtime = sysNews.transformTime(CommentList[i].createtime * 1000)
-						}
-						res.newsinfo = newsinfo
-						res.CommentList = CommentList
-						that.informationNode = res
+						// for (let i = 0; i < CommentList.length; i++) {
+						// 	// CommentList[i].portrait = that.imageUrl + CommentList[i].portrait
+						// 	CommentList[i].createtime = sysNews.transformTime(CommentList[i].createtime * 1000)
+						// }
+						// res.newsinfo = newsinfo
+						// res.CommentList = CommentList
+						that.informationNode = newsinfo
 					}
 					callBack && callBack();
 				})
 			},
-			// 获取评论内容
-			getCommentCon(e) {
-				const that = this
-				that.commentCon = sysNews.get_input_val(e)
-			},
-			// 提交评论
-			sendComment(callBack) {
-				const that = this
-				if (that.commentCon == '') {
-					sysNews.show_tips('请输入与评论内容')
-					return false
-				}
-				sysNews.sendComment({
-					openid: that.userInfo.openid,
-					id: that.options.id,
-					content: that.commentCon
-				}, (res) => {
-					if (res.code == '4000') {
-						sysNews.show_tips(res.explain)
-						that.commentCon = ""
-					}
-				})
-			},
+			// // 获取评论内容
+			// getCommentCon(e) {
+			// 	const that = this
+			// 	that.commentCon = sysNews.get_input_val(e)
+			// },
+			// // 提交评论
+			// sendComment(callBack) {
+			// 	const that = this
+			// 	if (that.commentCon == '') {
+			// 		sysNews.show_tips('请输入与评论内容')
+			// 		return false
+			// 	}
+			// 	sysNews.sendComment({
+			// 		openid: that.userInfo.openid,
+			// 		id: that.options.id,
+			// 		content: that.commentCon
+			// 	}, (res) => {
+			// 		if (res.code == '4000') {
+			// 			sysNews.show_tips(res.explain)
+			// 			that.commentCon = ""
+			// 		}
+			// 	})
+			// },
 			// 点赞
-			like(e) {
-				const that = this
-				let id = sysNews.get_data_set(e, "id")
-				let index = sysNews.get_data_set(e, "index")
-				sysNews.like({
-					openid: that.userInfo.openid,
-					id: id,
-					vote_type: 1
-				}, (res) => {
-					if (res.code == '4000') {
-						sysNews.show_tips(res.explain)
-						that.informationNode.CommentList[index].support += 1
-						that.informationNode.CommentList[index].vote_type = 1
-					} else {
-						sysNews.show_tips(res.explain)
-					}
-				})
-			}
+			// like(e) {
+			// 	const that = this
+			// 	let id = sysNews.get_data_set(e, "id")
+			// 	let index = sysNews.get_data_set(e, "index")
+			// 	sysNews.like({
+			// 		openid: that.userInfo.openid,
+			// 		id: id,
+			// 		vote_type: 1
+			// 	}, (res) => {
+			// 		if (res.code == '4000') {
+			// 			sysNews.show_tips(res.explain)
+			// 			that.informationNode.CommentList[index].support += 1
+			// 			that.informationNode.CommentList[index].vote_type = 1
+			// 		} else {
+			// 			sysNews.show_tips(res.explain)
+			// 		}
+			// 	})
+			// }
 		},
 		// 下拉刷新
 		// onPullDownRefresh() {
@@ -159,6 +161,10 @@
 
 <style lang="less">
 	@import url("../../static/css/variable.less");
+  .titImg {
+    width: 690rpx;
+    margin: 30rpx 0;
+  }
 	.content {
 		width: 690rpx !important;
 		padding: 30rpx;

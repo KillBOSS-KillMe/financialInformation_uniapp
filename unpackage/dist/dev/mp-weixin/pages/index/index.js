@@ -310,6 +310,8 @@ var index = new _indexModel.default();var _default = { data: function data() {re
         provider: 'weixin',
         success: function success(loginRes) {
           var code = loginRes.code;
+          // console.log(code)
+          // return false
           uni.getUserInfo({
             provider: 'weixin',
             success: function success(infoRes) {

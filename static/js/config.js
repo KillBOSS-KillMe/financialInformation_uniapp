@@ -4,7 +4,7 @@ class Config{
 }
 //接口域名
 Config.requset_url = "http://192.168.1.157:8009/home/";
-Config.img_url = "http://1th5928945.oicp.vip/static/rotation_chart/";
+Config.img_url = "http://192.168.1.157:8009/";
 Config.up_img_url = "http://1th5928945.oicp.vip/uploads/";
 //微信授权域名192.168.1.168
 

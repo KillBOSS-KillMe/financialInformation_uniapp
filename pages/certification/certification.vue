@@ -40,6 +40,7 @@
 	export default {
 		data() {
 			return {
+        imgUrl: '',
 				formData: {
 					name: '',
 					bank: '',
@@ -59,6 +60,7 @@
 			_onLoad(callBack) {
 				const that = this
 				that.userInfo = that.$store.state.userInfo;
+        that.imgUrl = certification.base_image_url
 			},
 			getformData(e) {
 				const that = this
@@ -109,11 +111,13 @@
 						photo_type: type
 					}
 				}, (res) => {
+          // console.log('-----------')
+          // console.log(res)
 					res = res[0]
-					if (res.data.photo_type == '1') {
-						that.formData.IDCard_1 = res.data.url
+					if (type == '1') {
+						that.formData.IDCard_1 = that.imgUrl + res.data.data
 					} else {
-						that.formData.IDCard_2 = res.data.url
+						that.formData.IDCard_2 = that.imgUrl + res.data.data
 					}
 					certification.show_tips(res.data.explain)
 				})

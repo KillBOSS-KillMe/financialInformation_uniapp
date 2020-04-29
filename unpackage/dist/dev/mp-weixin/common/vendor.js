@@ -1646,7 +1646,7 @@ function Config() {_classCallCheck(this, Config);
 
 //接口域名
 Config.requset_url = "http://192.168.1.157:8009/home/";
-Config.img_url = "http://1th5928945.oicp.vip/static/rotation_chart/";
+Config.img_url = "http://192.168.1.157:8009/";
 Config.up_img_url = "http://1th5928945.oicp.vip/uploads/";
 //微信授权域名192.168.1.168
 
@@ -1696,7 +1696,7 @@ IdentitySel = /*#__PURE__*/function (_Base) {_inherits(IdentitySel, _Base);
     value: function getCard(data, callBack) {
       var that = this;
       var params = {
-        url: 'Certificates/photo',
+        url: 'Certificates/upload',
         method: 'POST',
         data: data,
         sCallBack: function sCallBack(res) {
@@ -1728,8 +1728,8 @@ SysNewsList = /*#__PURE__*/function (_Base) {_inherits(SysNewsList, _Base);
   _createClass(SysNewsList, [{ key: "getNewNewsList", value: function getNewNewsList(data, callBack) {
       var that = this;
       var params = {
-        url: 'News/getNewsList',
-        method: 'GET',
+        url: 'News/news_system',
+        method: 'POST',
         data: data,
         sCallBack: function sCallBack(res) {
           callBack && callBack(res.data);
@@ -9218,7 +9218,7 @@ Base = /*#__PURE__*/function () {
     //图片上传
   }, { key: "upload", value: function upload(data, callBack) {
       var that = this;
-      var url = that.base_qequest_url + 'Certificates/photo';
+      var url = that.base_qequest_url + data.url;
       // var token = '';
       // var token_type = '';
       // that.get_storage('token', (res) => {
@@ -9234,7 +9234,7 @@ Base = /*#__PURE__*/function () {
               uni.uploadFile({
                 url: url,
                 filePath: item.path,
-                name: 'photo',
+                name: 'file',
                 formData: data.data.data,
                 success: function success(res) {
                   res = JSON.parse(res.data);
@@ -10679,33 +10679,7 @@ SysNews = /*#__PURE__*/function (_Base) {_inherits(SysNews, _Base);
   _createClass(SysNews, [{ key: "getNewsContent", value: function getNewsContent(data, callBack) {
       var that = this;
       var params = {
-        url: 'News/getNewsContent',
-        method: 'POST',
-        data: data,
-        sCallBack: function sCallBack(res) {
-          callBack && callBack(res.data);
-        } };
-
-      that.request(params);
-    } }, { key: "sendComment",
-    // 评论
-    value: function sendComment(data, callBack) {
-      var that = this;
-      var params = {
-        url: 'Comment/sendComment',
-        method: 'POST',
-        data: data,
-        sCallBack: function sCallBack(res) {
-          callBack && callBack(res.data);
-        } };
-
-      that.request(params);
-    } }, { key: "like",
-    // 点赞
-    value: function like(data, callBack) {
-      var that = this;
-      var params = {
-        url: 'vote/vote',
+        url: 'News/news_system_',
         method: 'POST',
         data: data,
         sCallBack: function sCallBack(res) {
@@ -10714,6 +10688,32 @@ SysNews = /*#__PURE__*/function (_Base) {_inherits(SysNews, _Base);
 
       that.request(params);
     } }]);return SysNews;}(_base.default);var _default =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 SysNews;exports.default = _default;

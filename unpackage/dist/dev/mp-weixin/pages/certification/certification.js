@@ -204,9 +204,11 @@ var _certificationModel = _interopRequireDefault(__webpack_require__(/*! ./certi
 //
 //
 //
-var certification = new _certificationModel.default();var _default = { data: function data() {return { formData: { name: '', bank: '', post: '', experience: '', IDNumber: '', IDCard_1: '', IDCard_2: '' } };}, onLoad: function onLoad() {var that = this;that._onLoad();}, methods: { _onLoad: function _onLoad(callBack) {var that = this;that.userInfo = that.$store.state.userInfo;}, getformData: function getformData(e) {var that = this;var val = certification.get_input_val(e);var key = certification.get_data_set(e, 'name');that.formData[key] = val;}, // 提交数据
+var certification = new _certificationModel.default();var _default = { data: function data() {return { imgUrl: '', formData: { name: '', bank: '', post: '', experience: '', IDNumber: '', IDCard_1: '', IDCard_2: '' } };}, onLoad: function onLoad() {var that = this;that._onLoad();}, methods: { _onLoad: function _onLoad(callBack) {var that = this;that.userInfo = that.$store.state.userInfo;that.imgUrl = certification.base_image_url;}, getformData: function getformData(e) {var that = this;var val = certification.get_input_val(e);var key = certification.get_data_set(e, 'name');that.formData[key] = val;}, // 提交数据
     validation: function validation() {var that = this;var formData = that.formData; // 数据非空校验
-      for (var key in formData) {if (formData[key] == '') {certification.show_tips('请完善认证信息');
+      for (var key in formData) {
+        if (formData[key] == '') {
+          certification.show_tips('请完善认证信息');
           return false;
         }
       }
@@ -242,11 +244,13 @@ var certification = new _certificationModel.default();var _default = { data: fun
           photo_type: type } },
 
       function (res) {
+        // console.log('-----------')
+        // console.log(res)
         res = res[0];
-        if (res.data.photo_type == '1') {
-          that.formData.IDCard_1 = res.data.url;
+        if (type == '1') {
+          that.formData.IDCard_1 = that.imgUrl + res.data.data;
         } else {
-          that.formData.IDCard_2 = res.data.url;
+          that.formData.IDCard_2 = that.imgUrl + res.data.data;
         }
         certification.show_tips(res.data.explain);
       });

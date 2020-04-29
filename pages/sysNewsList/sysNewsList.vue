@@ -9,7 +9,7 @@
 				</view>
 				<text>{{item.createtime}}</text>
 			</view>
-			<image :src="item.title_img" class="coverImg" mode=""></image>
+			<image :src="item.img" class="coverImg" mode="" v-if="item.img != ''"></image>
 			<view class="info">
 				<view>{{item.title}}</view>
 				<rich-text :nodes="item.content" class="content"></rich-text>
@@ -32,7 +32,8 @@
 				sysNewsNode: {
 					page: 1,
 					data: []
-				}
+				},
+        imgUrl: ''
 			}
 		},
 		onLoad(options) {
@@ -46,6 +47,7 @@
 			_onLoad(callBack) {
 				const that = this
 				that.userInfo = that.$store.state.userInfo;
+        that.imgUrl = sysNewsList.base_image_url
 				that.getNewNewsList()
 			},
 			// 加载新消息列表
@@ -59,6 +61,9 @@
 						let list = res.data
 						for (let i = 0; i < list.length; i++) {
 							list[i].createtime = sysNewsList.transformTime(list[i].createtime * 1000)
+              if (list[i].img) {
+                list[i].img = that.imgUrl + list[i].img
+              }
 						}
 						res.data = that.sysNewsNode.data.concat(list);
 						that.sysNewsNode = res
@@ -70,6 +75,14 @@
 			goNewDetails(e) {
 				const that = this;
 				const id = sysNewsList.get_data_set(e, "id");
+        // let data = that.sysNewsNode.data[index]
+        // 消息内容中包含'&'字符,无法通过路径传参
+        // 所以此处使用全局变量
+        
+        // console.log(url)
+        // console.log(data)
+        // data = JSON.stringify(data)
+        // console.log(data)
 				sysNewsList.navigate_to(`/pages/sysNews/sysNews?id=${id}`);
 			}
 		},
