@@ -23,9 +23,13 @@
   margin-right: 20rpx;
 }
 .articleContent {
+  width: 690rpx;
   font-size: 29rpx;
   color: #666666;
   border-bottom: 20rpx solid #F8F8F8;
+}
+.articleContent ._img {
+  width: 100% !important;
 }
 .articleCommentList {
   margin-bottom: 110rpx;

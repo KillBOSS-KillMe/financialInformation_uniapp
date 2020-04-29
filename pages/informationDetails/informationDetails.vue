@@ -45,7 +45,7 @@
 				options: {},
 				userInfo: {},
 				informationNode: {},
-				// imageUrl: '',
+				imageUrl: '',
 				commentCon: ''
 			};
 		},
@@ -57,7 +57,7 @@
 		methods: {
 			_onLoad(callBack) {
 				const that = this
-				// that.imageUrl = informationDetails.base_image_url
+				that.imageUrl = informationDetails.base_image_url
 				that.userInfo = that.$store.state.userInfo;
 				that.getNewsContent(() => {
 					callBack && callBack();
@@ -73,6 +73,15 @@
 					if (res.code == '4000') {
 						let newsinfo = res.newsinfo
 						let CommentList = res.CommentList
+            let imageUrl = '<img style="width:100%" src="' + that.imageUrl
+            let content = newsinfo.content;
+            content = content.split('<img src="');
+            let newContent = ''
+            for (let i = 0; i < content.length; i++) {
+              newContent += content[i] + imageUrl
+            }
+            newContent = newContent.substr(0, newContent.length - imageUrl.length);
+            newsinfo.content = newContent
 						newsinfo.createtime = informationDetails.transformTime(newsinfo.createtime * 1000)
 						for (let i = 0; i < CommentList.length; i++) {
 							// CommentList[i].portrait = that.imageUrl + CommentList[i].portrait
@@ -180,9 +189,13 @@
 		}
 	}
 	.articleContent {
+    width: 690rpx;
 		font-size: @fontSize_1;
 		color: @fontColor_2;
 		border-bottom: 20rpx solid #F8F8F8;
+    img {
+      width: 100% !important;
+    }
 	}
 	.articleCommentList {
 		margin-bottom: 110rpx;

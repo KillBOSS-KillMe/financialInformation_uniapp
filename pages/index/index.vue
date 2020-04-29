@@ -46,7 +46,8 @@
 				<view class="info">
 					<view class="details">
 						<view class="title">{{item.title}}</view>
-						<rich-text :nodes="item.content" class="content"></rich-text>
+            <text class="content">{{item.descs}}</text>
+						<!-- <rich-text :nodes="item.content" class="content"></rich-text> -->
 					</view>
 					<view class="features">
 						<view>{{item.seenumber}}阅读</view>

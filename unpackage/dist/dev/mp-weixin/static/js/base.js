@@ -3,7 +3,6 @@ class Base {
 	constructor() {
 		this.base_qequest_url = Config.requset_url;
 		this.base_image_url = Config.img_url;
-		this.base_up_image_url = Config.up_img_url;
 		this.base_wx_login_url = Config.wx_login_url;
 		this.base_wx_order_pay_url = Config.wx_order_pay_url;
 		this.apikey = Config.apikey;
@@ -152,7 +151,6 @@ class Base {
 									formData: data.data.data,
 									success(res) {
 										res = JSON.parse(res.data)
-										// res.url = that.base_up_image_url + res.url
 										resolve({
 											// path: JSON.parse(res.data)
 											data: res

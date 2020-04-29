@@ -196,7 +196,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 var _indexModel = _interopRequireDefault(__webpack_require__(/*! ./index-model.js */ 24));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
+//
 //
 //
 //
@@ -279,8 +281,7 @@ var index = new _indexModel.default();var _default = { data: function data() {re
       uni.getSetting({ success: function success(res) {if (res.authSetting['scope.userInfo']) {// 隐藏授权按钮
             that.authorizationButton = false;that.$store.commit('updateAuthorizationButtonData', false);that.wx_login(function () {// 客户经理列表加载
               that.getManagerList(function () {callBack && callBack();});});} else {// 隐藏底部导航
-            uni.hideTabBar({ boolean: true });}}, fail: function fail() {console.log("获取授权信息授权失败");} });
-    },
+            uni.hideTabBar({ boolean: true });}}, fail: function fail() {console.log("获取授权信息授权失败");} });},
     // 进入客户经理列表
     goManagerList: function goManagerList() {
       index.navigate_to("/pages/managerList/managerList");

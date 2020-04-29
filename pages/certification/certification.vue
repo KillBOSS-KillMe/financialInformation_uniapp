@@ -99,7 +99,7 @@
 					} else {
 						certification.show_tips(res.explain)
 					}
-					callBack && callBack();
+					// callBack && callBack();
 				})
 			},
 			// 图片上传

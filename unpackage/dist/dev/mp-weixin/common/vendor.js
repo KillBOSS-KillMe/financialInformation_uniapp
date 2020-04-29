@@ -1645,9 +1645,8 @@ function Config() {_classCallCheck(this, Config);
 };
 
 //接口域名
-Config.requset_url = "http://192.168.1.157:8009/home/";
-Config.img_url = "http://192.168.1.157:8009";
-Config.up_img_url = "http://1th5928945.oicp.vip/uploads/";
+Config.requset_url = "http://anrong.beaconway.cn/home/";
+Config.img_url = "http://anrong.beaconway.cn";
 //微信授权域名192.168.1.168
 
 //Config.wx_login_url = "https://diancan.lvacms.cn/wechat/login";
@@ -9089,7 +9088,6 @@ Base = /*#__PURE__*/function () {
   function Base() {_classCallCheck(this, Base);
     this.base_qequest_url = _config.default.requset_url;
     this.base_image_url = _config.default.img_url;
-    this.base_up_image_url = _config.default.up_img_url;
     this.base_wx_login_url = _config.default.wx_login_url;
     this.base_wx_order_pay_url = _config.default.wx_order_pay_url;
     this.apikey = _config.default.apikey;
@@ -9238,7 +9236,6 @@ Base = /*#__PURE__*/function () {
                 formData: data.data.data,
                 success: function success(res) {
                   res = JSON.parse(res.data);
-                  // res.url = that.base_up_image_url + res.url
                   resolve({
                     // path: JSON.parse(res.data)
                     data: res });
