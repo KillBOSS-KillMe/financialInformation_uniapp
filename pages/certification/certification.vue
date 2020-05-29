@@ -6,8 +6,8 @@
 				<input type="text" value="" @input="getformData" data-name="name" placeholder="请输入姓名" />
 			</view>
 			<view class="item">
-				<view>所在银行</view>
-				<input type="text" value="" @input="getformData" data-name="bank" placeholder="请输入您所在银行" />
+				<view>所在企业</view>
+				<input type="text" value="" @input="getformData" data-name="bank" placeholder="请输入您所在企业" />
 			</view>
 			<view class="item">
 				<view>岗位名称</view>

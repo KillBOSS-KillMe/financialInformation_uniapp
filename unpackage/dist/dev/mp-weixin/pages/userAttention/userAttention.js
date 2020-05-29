@@ -164,8 +164,9 @@ var userAttention = new _userAttentionModel.default();var _default =
       userInfo: {},
       attentionNode: {
         page: 1,
-        data: [] } };
+        data: [] },
 
+      originalPage: 0 };
 
   },
   onLoad: function onLoad() {
@@ -187,12 +188,16 @@ var userAttention = new _userAttentionModel.default();var _default =
     // 加载列表
     getList: function getList(callBack) {
       var that = this;
+      if (that.originalPage == that.attentionNode.page) {
+        return false;
+      }
       userAttention.getList({
         page: that.attentionNode.page || 1,
         openid: that.userInfo.openid },
       function (res) {
         // console.log(res)
         if (res.code == 4000) {
+          that.originalPage = that.attentionNode.page;
           res.data = that.attentionNode.data.concat(res.data);
           that.attentionNode = res;
         }
@@ -239,6 +244,7 @@ var userAttention = new _userAttentionModel.default();var _default =
   // 下拉刷新
   onPullDownRefresh: function onPullDownRefresh() {
     var that = this;
+    that.originalPage = 0;
     that.attentionNode = {
       page: 1,
       data: [] };

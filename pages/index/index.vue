@@ -117,12 +117,12 @@
 				that.userInfo = that.$store.state.userInfo;
 				// 轮播图加载
 				this.getBanner(() => {
-					callBack && callBack();
+					// callBack && callBack();
 				})
 				
 				// 最新资讯列表加载
 				this.getInformationList(() => {
-					callBack && callBack();
+					// callBack && callBack();
 				})
 				// 获取已授权类别
 				uni.getSetting({

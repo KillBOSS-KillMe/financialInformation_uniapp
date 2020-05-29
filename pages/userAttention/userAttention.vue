@@ -32,7 +32,8 @@
 				attentionNode: {
 					page: 1,
 					data: []
-				}
+				},
+        originalPage: 0
 			};
 		},
 		onLoad() {
@@ -54,12 +55,16 @@
 			// 加载列表
 			getList(callBack) {
 				const that = this
+        if (that.originalPage == that.attentionNode.page) {
+          return false
+        }
 				userAttention.getList({
 					page: that.attentionNode.page || 1,
 					openid: that.userInfo.openid
 				}, (res) => {
 					// console.log(res)
 					if (res.code == 4000) {
+            that.originalPage = that.attentionNode.page
 						res.data = that.attentionNode.data.concat(res.data);
 						that.attentionNode = res
 					}
@@ -106,6 +111,7 @@
 		// 下拉刷新
 		onPullDownRefresh() {
 			var that = this;
+      that.originalPage = 0
 			that.attentionNode = {
 				page: 1,
 				data: []

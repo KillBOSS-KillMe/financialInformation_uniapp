@@ -206,9 +206,7 @@ var _userVIPModel = _interopRequireDefault(__webpack_require__(/*! ./userVIP-mod
 //
 //
 //
-var userVIP = new _userVIPModel.default();var _default = { data: function data() {return { vipType: [{ type: '3', name: '年度会员', content: '年度卡会员享受更多权益' }, { type: '2', name: '季度卡会员', content: '季度卡会员享受更多权益' }, { type: '1', name: '月卡会员', content: '月卡会员享受更多权益' }], userInfo: {}, payData: {}, timeShow: false, vipTime: '' };}, onLoad: function onLoad() {var that = this;that._onLoad();}, methods: { _onLoad: function _onLoad(callBack) {var that = this;that.userInfo = that.$store.state.userInfo;var userInfo = that.userInfo;if (userInfo.expiration > 0) {
-        var nowTime = Date.parse(new Date()) / 1000;
-        if (userInfo.expiration > nowTime) {
+var userVIP = new _userVIPModel.default();var _default = { data: function data() {return { vipType: [{ type: '1', name: '月卡会员', content: '月卡会员享受更多权益' }, { type: '2', name: '季度卡会员', content: '季度卡会员享受更多权益' }, { type: '3', name: '年度会员', content: '年度卡会员享受更多权益' }], userInfo: {}, payData: {}, timeShow: false, vipTime: '' };}, onLoad: function onLoad() {var that = this;that._onLoad();}, methods: { _onLoad: function _onLoad(callBack) {var that = this;that.userInfo = that.$store.state.userInfo;var userInfo = that.userInfo;if (userInfo.expiration > 0) {var nowTime = Date.parse(new Date()) / 1000;if (userInfo.expiration > nowTime) {
           that.vipTime = userVIP.transformTime(userInfo.expiration * 1000);
           that.timeShow = true;
         }
@@ -244,8 +242,8 @@ var userVIP = new _userVIPModel.default();var _default = { data: function data()
         signType: payData.signType,
         paySign: payData.paySign,
         success: function success(res) {
-          console.log('success:' + JSON.stringify(res));
-          console.log(res);
+          // console.log('success:' + JSON.stringify(res));
+          // console.log(res)
           // if (res.errMsg == "requestPayment:ok") {
           that.getUserInfo();
           // }

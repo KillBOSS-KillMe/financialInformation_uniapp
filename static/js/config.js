@@ -3,8 +3,8 @@ class Config{
   }
 }
 //接口域名
-Config.requset_url = "http://anrong.beaconway.cn/home/";
-Config.img_url = "http://anrong.beaconway.cn";
+Config.requset_url = "https://anrong.beaconway.cn/home/";
+Config.img_url = "https://anrong.beaconway.cn";
 //微信授权域名192.168.1.168
 
 //Config.wx_login_url = "https://diancan.lvacms.cn/wechat/login";
